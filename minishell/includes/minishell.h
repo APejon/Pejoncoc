@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cafriem <cafriem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/12/14 13:48:12 by cafriem          ###   ########.fr       */
+=======
+/*   Updated: 2022/12/14 13:59:51 by amalbrei         ###   ########.fr       */
+>>>>>>> 9dad47c19bf5fc9ba9d2f759bc8f06098f5e18c7
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +63,7 @@ typedef struct s_command
 }	t_command;
 
 /*-------- utils.c --------*/
-char	*find_env(char **envp, char *line);
+void	msh_free(void *memory);
+char	*msh_find_env(char **envp, char *line);
 
 #endif

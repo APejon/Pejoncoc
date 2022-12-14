@@ -6,11 +6,16 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:29 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/13 14:28:53 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/14 14:10:07 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+msh_update_oldpwd(t_shell *shell, char *oldpwd)
+{
+	
+}
 
 void	msh_cd_home(t_shell *shell, char *home)
 {
@@ -18,11 +23,16 @@ void	msh_cd_home(t_shell *shell, char *home)
 
 	oldpwd = getcwd(NULL, 0);
 	if (!oldpwd)
-		oldpwd = find_env(shell->u_env, "PWD=");
+		oldpwd = msh_find_env(shell->u_env, "PWD=");
 	if (!oldpwd)
 		return ;
-	home = ft_substr(find_env(shell->u_env, "HOME="), 0, ft_strlen());
+	home = ft_substr(msh_find_env(shell->u_env, "HOME="), 0,
+			ft_strlen(msh_find_env(shell->u_env, "HOME=")));
 	chdir(home);
+	msh_update_oldpwd(shell, oldpwd);
+	msh_update_pwd(shell, home);
+	msh_free(&oldpwd);
+	msh_free(&home);
 }
 
 void	msh_cd_target(t_shell *shell)
