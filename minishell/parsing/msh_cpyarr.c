@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_cpyarr.c                                      :+:      :+:    :+:   */
+/*   msh_cpyarr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cafriem <cafriem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:45:07 by cafriem           #+#    #+#             */
-/*   Updated: 2022/12/14 13:20:49 by cafriem          ###   ########.fr       */
+/*   Updated: 2022/12/14 14:09:33 by cafriem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,17 @@ void	mini_cpyarr(int argc, char *argv[], char **string)
 		counter++;
 	}
 	string[counter] = NULL;
+}
+
+void	free_miniarr(char **string)
+{
+	int	counter;
+
+	counter = 0;
+	while (string[counter] != NULL)
+	{
+		free(string[counter]);
+		counter++;
+	}
+	free(string);
 }

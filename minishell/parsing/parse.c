@@ -6,13 +6,16 @@
 /*   By: cafriem <cafriem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 13:18:57 by cafriem           #+#    #+#             */
-/*   Updated: 2022/12/14 13:25:12 by cafriem          ###   ########.fr       */
+/*   Updated: 2022/12/14 14:29:59 by cafriem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char *argv[])
+int	parse(char *string)
 {
-	
+	int	counter;
+
+	if (string == NULL)
+		return ();
 }

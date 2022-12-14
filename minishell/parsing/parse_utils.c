@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cafriem <cafriem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/09 15:54:10 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/14 14:07:25 by cafriem          ###   ########.fr       */
+/*   Created: 2022/12/14 14:31:42 by cafriem           #+#    #+#             */
+/*   Updated: 2022/12/14 14:44:44 by cafriem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#include "minishell.h"
 
-//modules
-void	mini_cpyarr(int argc, char *argv[], char **string);
-//freeing
+char	*everything_smol(char *string)
+{
+	int	counter;
 
-
-#endif
+	counter = 0;
+	while (string[counter] != '\n')
+	{
+		if (string[counter] >= 65 && string[counter] <= 90)
+			string[counter] =+ 32;
+		counter++;
+	}
+}
