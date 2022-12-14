@@ -6,11 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/12/14 13:48:12 by cafriem          ###   ########.fr       */
-=======
-/*   Updated: 2022/12/14 13:59:51 by amalbrei         ###   ########.fr       */
->>>>>>> 9dad47c19bf5fc9ba9d2f759bc8f06098f5e18c7
+/*   Updated: 2022/12/14 18:58:04 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +23,10 @@
 
 /*-------- Header files made --------*/
 # include "builtins.h"
+# include "environment.h"
 # include "execution.h"
 # include "parsing.h"
 # include "signals.h"
-# include "tokens.h"
 
 /*-------- libft --------*/
 # include "libft.h"
@@ -62,7 +58,7 @@ typedef struct s_command
 	t_state	direct;
 }	t_command;
 
-/*-------- utils.c --------*/
+/*-------- msh_utils.c --------*/
 void	msh_free(void *memory);
 char	*msh_find_env(char **envp, char *line);
 

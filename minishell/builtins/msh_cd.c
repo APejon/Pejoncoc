@@ -6,16 +6,11 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:29 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/14 14:10:07 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/14 18:51:03 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-msh_update_oldpwd(t_shell *shell, char *oldpwd)
-{
-	
-}
 
 void	msh_cd_home(t_shell *shell, char *home)
 {
