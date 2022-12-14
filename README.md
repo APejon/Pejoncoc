@@ -5,8 +5,8 @@ Notes:
 - Use Linked lists for env and the commands struct
 
 Minishell:
--msh_free: Frees certain memories no longer needed within the shell program, note it takes void as a parameter
--find_env: Function used to find certain strings within the environment 2D array
+- msh_free: Frees certain memories no longer needed within the shell program, note it takes void as a parameter
+- find_env: Function used to find certain strings within the environment 2D array
 
 Parsing:
 
