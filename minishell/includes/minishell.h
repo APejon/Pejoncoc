@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/14 18:58:04 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/15 18:06:17 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,16 @@
 /*-------- libft --------*/
 # include "libft.h"
 
+/*-------- boolean --------*/
+# include <stdbool.h>
+
+/*-------- malloc, free and exit --------*/
+# include <stdlib.h>
+
 typedef enum e_philo_state
 {
 	DEFAULT,
+	PIPE,
 	RE_INPUT,
 	RE_OUTPUT,
 	HERE_DOC,
@@ -44,22 +51,27 @@ typedef struct s_shell
 {
 	char				*current_line;
 	char				*line;
-	char				**o_env;
-	char				**u_env;
 	int					exit_code;
+	struct s_env		*env;
+	struct s_env		*dec_env;
 	struct s_command	*command;
 }	t_shell;
 
+typedef struct s_env
+{
+	char				*variable;
+	char				*value;
+	struct s_env		*next;
+}	t_env;
 typedef struct s_command
 {
-	char	*command;
-	char	*flag;
-	char	*target;
-	t_state	direct;
+	char				*command;
+	char				*flag;
+	char				*target;
+	t_state				direct;
 }	t_command;
 
 /*-------- msh_utils.c --------*/
 void	msh_free(void *memory);
-char	*msh_find_env(char **envp, char *line);
 
 #endif
