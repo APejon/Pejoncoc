@@ -6,7 +6,7 @@
 /*   By: cafriem <cafriem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:54:10 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/14 14:07:25 by cafriem          ###   ########.fr       */
+/*   Updated: 2022/12/15 14:50:44 by cafriem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,5 @@
 //modules
 void	mini_cpyarr(int argc, char *argv[], char **string);
 //freeing
-
 
 #endif
