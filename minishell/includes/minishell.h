@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/15 18:06:17 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/16 19:48:53 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 /*-------- malloc, free and exit --------*/
 # include <stdlib.h>
 
-typedef enum e_philo_state
+typedef enum e_mini_state
 {
 	DEFAULT,
 	PIPE,
@@ -63,6 +63,7 @@ typedef struct s_env
 	char				*value;
 	struct s_env		*next;
 }	t_env;
+
 typedef struct s_command
 {
 	char				*command;
