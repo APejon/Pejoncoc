@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:44:19 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/16 20:16:17 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/18 16:58:52 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	msh_print_env(t_env *env)
  * 
  * @param env The struct containing the environment variables
  */
-void	msh_env(t_env *env)
+void	msh_env(t_shell *shell, t_env *env)
 {
 	t_env	*start;
 
@@ -40,4 +40,5 @@ void	msh_env(t_env *env)
 		env = env->next;
 	}
 	env = start;
+	shell->exit_code = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:29 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/16 20:14:33 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/18 15:59:12 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param shell The struct containing variables of used within the shell
  * @param target Array containing the target directory
  */
-void	msh_cd_target(t_shell *shell, char *target)
+void	msh_cd_target(t_shell *shell, t_command *command)
 {
 	char	*oldpwd;
 	char	*dest;
@@ -28,14 +28,16 @@ void	msh_cd_target(t_shell *shell, char *target)
 		oldpwd = msh_find_env(shell->env, "PWD=");
 	if (!oldpwd)
 		return ;
-	if (*target == '/')
-		dest = ft_strdup(target);
+	if (command->target == '/')
+		dest = ft_strdup(command->target);
 	else
 	{
 		dest = ft_strjoin(oldpwd, "/");
-		dest = ft_free_strjoin(dest, target, 1);
+		dest = ft_free_strjoin(dest, command->target, 1);
 	}
-	chdir(dest);
+	if (chdir(home) == -1)
+		pt_printf("minishell: %s: %s: %s", command->command,
+			command->target, strerror(errno));
 	msh_update_env(shell->env, "OLDPWD=", oldpwd);
 	msh_update_env(shell->env, "PWD=", dest);
 	msh_free(&oldpwd);
@@ -48,8 +50,9 @@ void	msh_cd_target(t_shell *shell, char *target)
  * @param shell The struct containing variables of used within the shell
  * @param parent The string that will contain the path to parent directory
  */
-void	msh_cd_parent(t_shell *shell, char *parent)
+void	msh_cd_parent(t_shell *shell, t_command *command)
 {
+	char	*parent;
 	char	*oldpwd;
 	char	*end;
 
@@ -61,11 +64,16 @@ void	msh_cd_parent(t_shell *shell, char *parent)
 	parent = ft_strdup(oldpwd);
 	end = ft_strrchr(parent, '/');
 	ft_bzero(end, ft_strlen(end));
-	chdir(parent);
-	msh_update_env(shell->env, "OLDPWD=", oldpwd);
-	msh_update_env(shell->env, "PWD=", parent);
-	msh_free(&oldpwd);
-	msh_free(&parent);
+	if (chdir(home) == -1)
+		pt_printf("minishell: %s: %s: %s", command->command,
+			command->target, strerror(errno));
+	else
+	{
+		msh_update_env(shell->env, "OLDPWD=", oldpwd);
+		msh_update_env(shell->env, "PWD=", parent);
+		msh_free(&oldpwd);
+		msh_free(&parent);
+	}
 }
 
 /**
@@ -74,9 +82,11 @@ void	msh_cd_parent(t_shell *shell, char *parent)
  * @param shell The struct containing variables of used within the shell
  * @param home Array containing the home directory
  */
-void	msh_cd_home(t_shell *shell, char *home)
+void	msh_cd_home(t_shell *shell, t_command *command)
 {
+	char	*home;
 	char	*oldpwd;
+	char	*home;
 
 	oldpwd = getcwd(NULL, 0);
 	if (!oldpwd)
@@ -85,7 +95,9 @@ void	msh_cd_home(t_shell *shell, char *home)
 		return ;
 	home = ft_substr(msh_find_env(shell->env, "HOME="), 0,
 			ft_strlen(msh_find_env(shell->env, "HOME=")));
-	chdir(home);
+	if (chdir(home) == -1)
+		pt_printf("minishell: %s: %s: %s", command->command,
+			command->target, strerror(errno));
 	msh_update_env(shell->env, "OLDPWD=", oldpwd);
 	msh_update_env(shell->env, "PWD=", home);
 	msh_free(&oldpwd);
@@ -100,23 +112,20 @@ void	msh_cd_home(t_shell *shell, char *home)
  */
 void	msh_cd(t_shell *shell, t_command *command)
 {
-	char	*home;
-	char	*parent;
-
-	if (!command->target)
+	if (!ft_strncmp(command->flag, "-L", 1)
+		|| !ft_strncmp(command->flag, "-P", 1)
+		|| !ft_strncmp(command->flag, "-LP", 1))
 	{
-		home = NULL;
-		msh_cd_home(shell, home);
-	}
-	else if (!ft_strncmp(command->target, ".", 1))
-		return ;
-	else if (!ft_strncmp(command->target, "..", 2))
-	{
-		parent = NULL;
-		msh_cd_parent(shell, parent);
+		if (!command->target)
+			msh_cd_home(shell, command);
+		else if (!ft_strncmp(command->target, ".", 1))
+			return ;
+		else if (!ft_strncmp(command->target, "..", 2))
+			msh_cd_parent(shell, command);
+		else
+			msh_cd_target(shell, command);
+		shell->exit_code = 0;
 	}
 	else
-		msh_cd_target(shell, command->target);
-	shell->exit_code = 0;
-	//Handle if the target is NULL or target that is not found
+		msh_print_flerror(shell, command, "[-L|-P] [dir]");
 }

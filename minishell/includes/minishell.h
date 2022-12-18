@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/16 19:48:53 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/18 15:13:20 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,14 @@
 /*-------- boolean --------*/
 # include <stdbool.h>
 
+/*-------- perror --------*/
+# include <stdio.h>
+
 /*-------- malloc, free and exit --------*/
 # include <stdlib.h>
+
+/*-------- strerror --------*/
+# include <string.h>
 
 typedef enum e_mini_state
 {
@@ -73,6 +79,7 @@ typedef struct s_command
 }	t_command;
 
 /*-------- msh_utils.c --------*/
+void	msh_print_flerror(t_shell *shell, t_command *command, char *rec_flags);
 void	msh_free(void *memory);
 
 #endif
