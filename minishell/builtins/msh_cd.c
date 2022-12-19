@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:29 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/18 15:59:12 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/19 17:11:12 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	msh_cd_target(t_shell *shell, t_command *command)
 		dest = ft_strjoin(oldpwd, "/");
 		dest = ft_free_strjoin(dest, command->target, 1);
 	}
-	if (chdir(home) == -1)
+	if (chdir(dest) == -1)
 		pt_printf("minishell: %s: %s: %s", command->command,
 			command->target, strerror(errno));
 	msh_update_env(shell->env, "OLDPWD=", oldpwd);
@@ -64,7 +64,7 @@ void	msh_cd_parent(t_shell *shell, t_command *command)
 	parent = ft_strdup(oldpwd);
 	end = ft_strrchr(parent, '/');
 	ft_bzero(end, ft_strlen(end));
-	if (chdir(home) == -1)
+	if (chdir(parent) == -1)
 		pt_printf("minishell: %s: %s: %s", command->command,
 			command->target, strerror(errno));
 	else
@@ -112,15 +112,16 @@ void	msh_cd_home(t_shell *shell, t_command *command)
  */
 void	msh_cd(t_shell *shell, t_command *command)
 {
-	if (!ft_strncmp(command->flag, "-L", 1)
-		|| !ft_strncmp(command->flag, "-P", 1)
-		|| !ft_strncmp(command->flag, "-LP", 1))
+	if (!ft_strncmp(command->flag, "-L", 3)
+		|| !ft_strncmp(command->flag, "-P", 3)
+		|| !ft_strncmp(command->flag, "-LP", 4)
+		|| command->flag == NULL)
 	{
 		if (!command->target)
 			msh_cd_home(shell, command);
-		else if (!ft_strncmp(command->target, ".", 1))
+		else if (!ft_strncmp(command->target, ".", 2))
 			return ;
-		else if (!ft_strncmp(command->target, "..", 2))
+		else if (!ft_strncmp(command->target, "..", 3))
 			msh_cd_parent(shell, command);
 		else
 			msh_cd_target(shell, command);

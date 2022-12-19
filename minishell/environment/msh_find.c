@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 13:27:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/16 19:51:26 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/19 17:11:40 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,12 @@
 t_env	*msh_find_last_node(t_env *env)
 {
 	t_env	*end;
-	t_env	*start;
+	t_env	*point;
 
-	start = env;
-	while (env->next != NULL)
-		env = env->next;
-	end = env;
-	env = start;
+	point = env;
+	while (point->next != NULL)
+		point = point->next;
+	end = point;
 	return (end);
 }
 
@@ -54,20 +53,14 @@ environment variable
 char	*msh_find_env(t_env *env, char *line)
 {
 	size_t	len;
-	t_env	*start;
+	t_env	*point;
 
-	start = env;
+	point = env;
 	len = ft_strlen(line);
-	while (ft_strncmp(line, env->variable, len) && env->next != NULL)
-		env = env->next;
-	if (env->next == NULL)
-	{
-		env = start;
+	while (ft_strncmp(line, point->variable, len) && point->next != NULL)
+		point = point->next;
+	if (point->next == NULL && !ft_strncmp(line, point->variable, len))
 		return (NULL);
-	}
 	else
-	{
-		env = start;
-		return (env->value);
-	}
+		return (point->value);
 }

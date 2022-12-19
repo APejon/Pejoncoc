@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:43 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/18 17:31:00 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/19 15:57:20 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void	msh_pwd(t_shell *shell, t_command *command)
 		msh_print_pwd(pwd);
 	else
 	{
-		if (!ft_strncmp(command->flag, "-L", 1)
-			|| !ft_strncmp(command->flag, "-P", 1)
-			|| !ft_strncmp(command->flag, "-LP", 1))
+		if (!ft_strncmp(command->flag, "-L", 3)
+			|| !ft_strncmp(command->flag, "-P", 3)
+			|| !ft_strncmp(command->flag, "-LP", 4))
 			msh_print_pwd(pwd);
 		else
 			msh_print_flerror(shell, command, "[-LP]");

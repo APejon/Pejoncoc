@@ -6,11 +6,25 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 17:42:22 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/18 15:34:33 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:22:29 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+ * @brief Prints out an error message
+ * 
+ * @param shell The struct containing shell variables
+ * @param command The struct containing the command
+ * @param err_message Error message to show
+ */
+void	msh_print_error(t_shell *shell, t_command *command, char *err_message)
+{
+	pt_printf("minishell: %s: %s: %s\n", command->command, command->target,
+		err_message);
+	shell->exit_code = 1;
+}
 
 /**
  * @brief Prints out an error incase of using the wrong flags

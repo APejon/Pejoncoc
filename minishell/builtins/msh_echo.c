@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:02 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/16 20:13:35 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/19 15:57:05 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	msh_echo(t_shell *shell, t_command *command)
 {
 	if (command->flag == NULL)
 		pt_printf("%s\n", command->target);
-	else if (!ft_strncmp(command->flag, "-n", 2))
+	else if (!ft_strncmp(command->flag, "-n", 3))
 		pt_printf("%s", command->target);
 	else
 		pt_printf("%s\n", command->target);
