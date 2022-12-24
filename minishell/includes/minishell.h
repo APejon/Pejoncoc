@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/18 15:13:20 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/24 16:19:38 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@
 /*-------- libft --------*/
 # include "libft.h"
 
+/*-------- printf --------*/
+# include "pt_printf.h"
+
 /*-------- boolean --------*/
 # include <stdbool.h>
 
@@ -42,6 +45,19 @@
 
 /*-------- strerror --------*/
 # include <string.h>
+
+/*-------- readline --------*/
+# include <readline/readline.h>
+# include <readline/history.h>
+
+/*-------- errno --------*/
+# include <sys/errno.h>
+
+// # include <string.h>
+// # include <sys/wait.h>
+// # include <fcntl.h>
+// # include <sys/stat.h>
+// # include <signal.h>
 
 typedef enum e_mini_state
 {
@@ -79,7 +95,10 @@ typedef struct s_command
 }	t_command;
 
 /*-------- msh_utils.c --------*/
+void	msh_print_error(t_shell *shell, t_command *command, char *err_message);
 void	msh_print_flerror(t_shell *shell, t_command *command, char *rec_flags);
+void	msh_free_node(t_env *node);
+void	msh_free_list(t_env **list);
 void	msh_free(void *memory);
 
 #endif

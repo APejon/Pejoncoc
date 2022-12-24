@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 17:42:22 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/19 16:22:29 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/24 16:19:56 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,41 @@ void	msh_print_flerror(t_shell *shell, t_command *command, char *rec_flags)
 {
 	pt_printf("minishell: %s: %s: invalid option\n",
 		command->command, command->flag);
-	pt_printf("%s: usage: %s %s\n", command->command, rec_flags);
+	pt_printf("%s: usage: %s %s\n", command->command, command->command,
+		rec_flags);
 	shell->exit_code = 1;
+}
+
+/**
+ * @brief Frees a node from the environment
+ * 
+ * @param node The node to be freed
+ */
+void	msh_free_node(t_env *node)
+{
+	free(node->variable);
+	free(node->value);
+	free(node);
+}
+
+/**
+ * @brief Frees an entire list of nodes
+ * 
+ * @param list The linked list
+ */
+void	msh_free_list(t_env **list)
+{
+	t_env	*temp;
+
+	if (list)
+	{
+		while (*list)
+		{
+			temp = (*list)->next;
+			msh_free_node(*list);
+			(*list) = temp;
+		}
+	}
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:29 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/19 17:11:12 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/24 17:32:38 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	msh_cd_target(t_shell *shell, t_command *command)
 		oldpwd = msh_find_env(shell->env, "PWD=");
 	if (!oldpwd)
 		return ;
-	if (command->target == '/')
+	if ((*command->target) == '/')
 		dest = ft_strdup(command->target);
 	else
 	{
@@ -36,12 +36,15 @@ void	msh_cd_target(t_shell *shell, t_command *command)
 		dest = ft_free_strjoin(dest, command->target, 1);
 	}
 	if (chdir(dest) == -1)
-		pt_printf("minishell: %s: %s: %s", command->command,
+		pt_printf("minishell: %s: %s: %s\n", command->command,
 			command->target, strerror(errno));
-	msh_update_env(shell->env, "OLDPWD=", oldpwd);
-	msh_update_env(shell->env, "PWD=", dest);
-	msh_free(&oldpwd);
-	msh_free(&dest);
+	else
+	{
+		msh_update_env(shell->env, "OLDPWD=", oldpwd);
+		msh_update_env(shell->env, "PWD=", dest);
+		msh_free(&oldpwd);
+		msh_free(&dest);
+	}
 }
 
 /**
@@ -65,7 +68,7 @@ void	msh_cd_parent(t_shell *shell, t_command *command)
 	end = ft_strrchr(parent, '/');
 	ft_bzero(end, ft_strlen(end));
 	if (chdir(parent) == -1)
-		pt_printf("minishell: %s: %s: %s", command->command,
+		pt_printf("minishell: %s: %s: %s\n", command->command,
 			command->target, strerror(errno));
 	else
 	{
@@ -86,7 +89,6 @@ void	msh_cd_home(t_shell *shell, t_command *command)
 {
 	char	*home;
 	char	*oldpwd;
-	char	*home;
 
 	oldpwd = getcwd(NULL, 0);
 	if (!oldpwd)
@@ -96,12 +98,15 @@ void	msh_cd_home(t_shell *shell, t_command *command)
 	home = ft_substr(msh_find_env(shell->env, "HOME="), 0,
 			ft_strlen(msh_find_env(shell->env, "HOME=")));
 	if (chdir(home) == -1)
-		pt_printf("minishell: %s: %s: %s", command->command,
+		pt_printf("minishell: %s: %s: %s\n", command->command,
 			command->target, strerror(errno));
-	msh_update_env(shell->env, "OLDPWD=", oldpwd);
-	msh_update_env(shell->env, "PWD=", home);
-	msh_free(&oldpwd);
-	msh_free(&home);
+	else
+	{
+		msh_update_env(shell->env, "OLDPWD=", oldpwd);
+		msh_update_env(shell->env, "PWD=", home);
+		msh_free(&oldpwd);
+		msh_free(&home);
+	}
 }
 
 /**

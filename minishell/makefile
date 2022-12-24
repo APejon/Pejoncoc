@@ -6,7 +6,7 @@
 #    By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 14:11:12 by amalbrei          #+#    #+#              #
-#    Updated: 2022/12/16 18:20:24 by amalbrei         ###   ########.fr        #
+#    Updated: 2022/12/20 11:42:14 by amalbrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ BLD_DIR			=	builtins
 PAR_DIR			=	parsing
 EXE_DIR			=	execution
 OBJ_DIR			=	object_files
-INC_DIR 		=	-Iincludes -Ilibft
+INC_DIR 		=	-Iincludes -Ilibft/includes
 LIBFT			=	libft/libft.a
 
 CC				=	gcc

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 13:27:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/19 17:11:40 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/19 17:28:59 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,35 @@ t_env	*msh_find_last_node(t_env *env)
 	return (end);
 }
 
+/**
+ * @brief Finds a specific node within the environment
+ * 
+ * @param env The struct containing the environment variables
+ * @param line The variable to be found
+ * @return t_env* The node found
+ */
+t_env	*msh_find_node(t_env *env, char *line)
+{
+	size_t	len;
+	t_env	*point;
+
+	point = env;
+	len = ft_strlen(line);
+	while (ft_strncmp(line, point->variable, len) && point->next != NULL)
+		point = point->next;
+	if (point->next == NULL && !ft_strncmp(line, point->variable, len))
+		return (NULL);
+	else
+		return (point);
+}
+
 /*DESCRIPTION
 
 Finds a specific line within the environment variable
 
 PARAMETERS
 
-char **envp: the environment variables, used to help programs know what
+char *envp: the environment variables, used to help programs know what
 directory to install files in, where to store temporary files and find user
 profile settings.
 char *line: The target to be found within the env.
