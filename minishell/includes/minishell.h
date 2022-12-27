@@ -6,7 +6,7 @@
 /*   By: cafriem <cafriem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/15 18:43:07 by cafriem          ###   ########.fr       */
+/*   Updated: 2022/12/27 19:37:26 by cafriem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,33 @@
 /*-------- libft --------*/
 # include "libft.h"
 
-typedef enum e_philo_state
+typedef enum e_mini_state
 {
 	DEFAULT,
+	PIPE,
 	RE_INPUT,
 	RE_OUTPUT,
 	HERE_DOC,
-	APPEND
+	APPEND,
+	ERROR
 }	t_state;
 
 typedef struct s_shell
 {
 	char				*current_line;
 	char				*line;
-	char				**o_env;
-	char				**u_env;
 	int					exit_code;
+	struct s_env		*env;
+	struct s_env		*dec_env;
 	struct s_command	*command;
 }	t_shell;
+
+typedef struct s_env
+{
+	char			*variable;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
 
 typedef struct s_command
 {
