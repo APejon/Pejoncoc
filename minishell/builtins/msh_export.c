@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:54 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/16 20:19:31 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/27 18:39:03 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*msh_separate(char *target)
 		i++;
 	}
 	value = ft_substr(target, i, len);
-	ft_bzero(target[i], len);
+	ft_bzero(&target[i], len);
 	return (value);
 }
 
@@ -107,7 +107,7 @@ void	msh_export(t_shell *shell, t_command *command)
 		dec_value = msh_separate(command->target);
 		msh_create_node(msh_find_last_node(shell->env),
 			command->target, dec_value);
-		dec_value = msh_quote(dec_value);
+		dec_value = msh_quotes(dec_value);
 		msh_create_node(msh_find_last_node(shell->dec_env),
 			command->target, dec_value);
 		msh_free(&dec_value);

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:53:07 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/20 12:11:21 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/27 13:33:40 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	msh_echo(t_shell *shell, t_command *command);
 
 /*-------- env --------*/
 void	msh_print_env(t_env *env);
-void	msh_env(t_env *env);
+void	msh_env(t_shell *shell, t_env *env);
 
 /*-------- exit --------*/
 void	msh_exit(t_command *command);

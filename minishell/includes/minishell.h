@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/24 16:19:38 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/27 19:10:44 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ typedef enum e_mini_state
 	RE_INPUT,
 	RE_OUTPUT,
 	HERE_DOC,
-	APPEND
+	APPEND,
+	ERROR,
 }	t_state;
 
 typedef struct s_shell

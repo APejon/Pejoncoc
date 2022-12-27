@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:43:39 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/19 15:53:07 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/27 14:03:28 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,25 @@ static	int	msh_count(char *target)
 
 	i = 0;
 	count = 0;
-	while (target[i])
+	while (target[i] && count < 2)
 	{
 		while (target[i] == ' ')
 			i++;
 		while (target[i] >= '0' && target[i] <= '9')
 		{
-			if (target[i + 1] == ' ')
+			if (target[i + 1] == ' ' || target[i + 1] == '\0')
 				count++;
 			i++;
 		}
-		if (!(target[i] >= '0' && target[i] <= '9'))
+		if (!(target[i] == ' ') && !(target[i] == '\0'))
+			break ;
+		else
 		{
 			count++;
 			break ;
 		}
 	}
+	printf("%d\n", count);
 	return (count);
 }
 
@@ -54,13 +57,12 @@ void	msh_exit(t_command *command)
 	int	exit_code;
 	int	count;
 
-	count = msh_count(command->target);
 	pt_printf("exit\n");
 	if (command->target == NULL)
 		exit(0);
+	count = msh_count(command->target);
 	if (command->target)
 	{
-		pt_printf("exit\n");
 		if (count == 0)
 		{
 			pt_printf("minishell: %s: %s: numeric argument required\n",
