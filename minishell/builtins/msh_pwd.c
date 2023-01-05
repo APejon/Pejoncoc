@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:43 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/19 15:57:20 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/05 19:48:26 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,5 @@ void	msh_pwd(t_shell *shell, t_command *command)
 		else
 			msh_print_flerror(shell, command, "[-LP]");
 	}
+	msh_free(&pwd);
 }

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:43:39 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/27 14:03:28 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/05 18:40:08 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,31 @@
  */
 static	int	msh_count(char *target)
 {
-	int	i;
-	int	count;
+	int	count[2];
 
-	i = 0;
-	count = 0;
-	while (target[i] && count < 2)
+	count[0] = 0;
+	count[1] = 0;
+	while (target[count[0]] && count[1] < 2)
 	{
-		while (target[i] == ' ')
-			i++;
-		while (target[i] >= '0' && target[i] <= '9')
+		while (target[count[0]] == ' ')
+			count[0]++;
+		if (target[count[0]] == '+' || target[count[0]] == '-')
+			count[0]++;
+		while ((target[count[0]] >= '0' && target[count[0]] <= '9'))
 		{
-			if (target[i + 1] == ' ' || target[i + 1] == '\0')
-				count++;
-			i++;
+			if (target[count[0] + 1] == ' ' || target[count[0] + 1] == '\0')
+				count[1]++;
+			count[0]++;
 		}
-		if (!(target[i] == ' ') && !(target[i] == '\0'))
-			break ;
-		else
+		if (target[count[0]] != ' ' && target[count[0]] != '\0')
 		{
-			count++;
-			break ;
+			if (count[1] == 0)
+				break ;
+			else
+				count[1]++;
 		}
 	}
-	printf("%d\n", count);
-	return (count);
+	return (count[1]);
 }
 
 /**
@@ -52,14 +52,18 @@ static	int	msh_count(char *target)
  * 
  * @param command The struct containing the command's components
  */
-void	msh_exit(t_command *command)
+void	msh_exit(t_shell *shell, t_command *command)
 {
 	int	exit_code;
 	int	count;
 
 	pt_printf("exit\n");
-	if (command->target == NULL)
+	if (!command->target)
+	{
+		msh_free_list(&shell->env);
+		msh_free_list(&shell->dec_env);
 		exit(0);
+	}
 	count = msh_count(command->target);
 	if (command->target)
 	{
@@ -67,6 +71,8 @@ void	msh_exit(t_command *command)
 		{
 			pt_printf("minishell: %s: %s: numeric argument required\n",
 				command->command, command->target);
+			msh_free_list(&shell->env);
+			msh_free_list(&shell->dec_env);
 			exit(255);
 		}
 		if (count > 1)
@@ -75,6 +81,8 @@ void	msh_exit(t_command *command)
 				command->command);
 			return ;
 		}
+		msh_free_list(&shell->env);
+		msh_free_list(&shell->dec_env);
 		exit_code = ft_atoi(command->target);
 		exit(exit_code);
 	}

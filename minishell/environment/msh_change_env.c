@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 13:38:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/20 12:12:39 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/05 20:02:58 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
  */
 void	msh_add_value(t_env *env, char *value)
 {
-	env->value = malloc(sizeof(char) * ft_strlen(value) + 1);
 	env->value = ft_strjoin(value, "\0");
 }
 
@@ -59,10 +58,10 @@ void	msh_remove_node(t_env *env, t_env *target)
 	{
 		anchor = point;
 		point = point->next;
+		anchor->next = anchor->next->next;
 		ft_bzero(point->variable, ft_strlen(point->variable));
 		ft_bzero(point->value, ft_strlen(point->value));
 		msh_free_node(point);
-		anchor->next = anchor->next->next;
 	}
 	else
 		return ;
@@ -95,10 +94,8 @@ void	msh_create_node(t_env *env, char *variable, char *value)
  */
 void	msh_update_env(t_env *env, char *variable, char *value)
 {
-	bool	changed;
 	t_env	*start;
 
-	changed = false;
 	start = env;
 	while (env)
 	{

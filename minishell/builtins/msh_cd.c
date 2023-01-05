@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:29 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/24 17:32:38 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/04 16:33:32 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,21 +117,13 @@ void	msh_cd_home(t_shell *shell, t_command *command)
  */
 void	msh_cd(t_shell *shell, t_command *command)
 {
-	if (!ft_strncmp(command->flag, "-L", 3)
-		|| !ft_strncmp(command->flag, "-P", 3)
-		|| !ft_strncmp(command->flag, "-LP", 4)
-		|| command->flag == NULL)
-	{
-		if (!command->target)
-			msh_cd_home(shell, command);
-		else if (!ft_strncmp(command->target, ".", 2))
-			return ;
-		else if (!ft_strncmp(command->target, "..", 3))
-			msh_cd_parent(shell, command);
-		else
-			msh_cd_target(shell, command);
-		shell->exit_code = 0;
-	}
+	if (!command->target)
+		msh_cd_home(shell, command);
+	else if (!ft_strncmp(command->target, ".", 2))
+		return ;
+	else if (!ft_strncmp(command->target, "..", 3))
+		msh_cd_parent(shell, command);
 	else
-		msh_print_flerror(shell, command, "[-L|-P] [dir]");
+		msh_cd_target(shell, command);
+	shell->exit_code = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:43:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/19 17:38:33 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/05 20:04:44 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,21 @@
  */
 void	msh_unset(t_shell *shell, t_command *command)
 {
-	if (ft_strchr(command->target, '='))
+	if (command->target)
 	{
-		msh_error_print(shell, command, "not a valid identifier");
-		return ;
+		if (ft_strchr(command->target, '='))
+		{
+			msh_print_error(shell, command, "not a valid identifier");
+			return ;
+		}
+		else
+		{
+			msh_remove_node(shell->env, msh_find_node(shell->env,
+					command->target));
+			msh_remove_node(shell->dec_env, msh_find_node(shell->dec_env,
+					command->target));
+		}
 	}
 	else
-	{
-		msh_remove_node(shell->env, msh_find_node(shell->env, command->target));
-		msh_remove_node(shell->env,
-			msh_find_node(shell->dec_env, command->target));
-	}
+		return ;
 }

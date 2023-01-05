@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:44:19 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/18 16:58:52 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/05 18:01:44 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	msh_env(t_shell *shell, t_env *env)
 	start = env;
 	while (env)
 	{
+		msh_print_env(env);
 		if (env->next == NULL)
 			break ;
-		msh_print_env(env);
 		env = env->next;
 	}
 	env = start;

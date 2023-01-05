@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 17:42:22 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/27 17:56:05 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/05 17:41:32 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	msh_print_flerror(t_shell *shell, t_command *command, char *rec_flags)
 void	msh_free_node(t_env *node)
 {
 	free(node->variable);
-	free(node->value);
+	if (node->value)
+		free(node->value);
 	free(node);
 }
 

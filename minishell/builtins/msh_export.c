@@ -6,25 +6,11 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:54 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/27 18:39:03 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/05 19:38:17 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * @brief Adds double quotation marks to the value of the declared environment
- * variable
- * 
- * @param value The value to be double quoted
- * @return char* The value with double quotes
- */
-char	*msh_quotes(char *value)
-{
-	value = ft_free_strjoin("\"", value, 3);
-	value = ft_free_strjoin(value, "\"", 1);
-	return (value);
-}
 
 /**
  * @brief Separates the target of export to gain the value portion of the 
@@ -93,23 +79,23 @@ void	msh_list_dec(t_env *dec_env)
  */
 void	msh_export(t_shell *shell, t_command *command)
 {
+	char	*value;
 	char	*dec_value;
+	t_env	*last;
+	t_env	*last_dec;
 
+	last = msh_find_last_node(shell->env);
+	last_dec = msh_find_last_node(shell->dec_env);
 	if (command->target == NULL)
 		msh_list_dec(shell->dec_env);
 	else if (!ft_strchr(command->target, '='))
-	{
-		msh_create_node(msh_find_last_node(shell->dec_env),
-			command->target, NULL);
-	}
+		msh_create_node(last_dec, command->target, NULL);
 	else
 	{
-		dec_value = msh_separate(command->target);
-		msh_create_node(msh_find_last_node(shell->env),
-			command->target, dec_value);
-		dec_value = msh_quotes(dec_value);
-		msh_create_node(msh_find_last_node(shell->dec_env),
-			command->target, dec_value);
-		msh_free(&dec_value);
+		value = msh_separate(command->target);
+		msh_create_node(last, command->target, value);
+		dec_value = ft_strjoin("\"", value);
+		dec_value = ft_free_strjoin(dec_value, "\"", 1);
+		msh_create_node(last_dec, ft_strdup(command->target), dec_value);
 	}
 }
