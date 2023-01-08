@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:29 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/04 16:33:32 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/08 19:13:32 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,28 @@
  */
 void	msh_cd_target(t_shell *shell, t_command *command)
 {
-	char	*oldpwd;
 	char	*dest;
 
-	oldpwd = getcwd(NULL, 0);
-	if (!oldpwd)
-		oldpwd = msh_find_env(shell->env, "PWD=");
-	if (!oldpwd)
-		return ;
+	if (!(shell->oldpwd))
+		shell->oldpwd = msh_find_env(shell->env, "PWD=");
 	if ((*command->target) == '/')
 		dest = ft_strdup(command->target);
 	else
 	{
-		dest = ft_strjoin(oldpwd, "/");
+		dest = ft_strjoin(shell->oldpwd, "/");
 		dest = ft_free_strjoin(dest, command->target, 1);
 	}
 	if (chdir(dest) == -1)
-		pt_printf("minishell: %s: %s: %s\n", command->command,
-			command->target, strerror(errno));
+		msh_print_error(shell, command, strerror(errno));
 	else
 	{
-		msh_update_env(shell->env, "OLDPWD=", oldpwd);
+		msh_update_env(shell->env, "OLDPWD=", shell->oldpwd);
 		msh_update_env(shell->env, "PWD=", dest);
-		msh_free(&oldpwd);
+		msh_update_dec_env(shell->dec_env, "OLDPWD=", shell->oldpwd);
+		msh_update_dec_env(shell->dec_env, "PWD=", dest);
 		msh_free(&dest);
+		shell->exit_code = 0;
+		shell->yet_to_execute = 0;
 	}
 }
 
@@ -56,26 +54,24 @@ void	msh_cd_target(t_shell *shell, t_command *command)
 void	msh_cd_parent(t_shell *shell, t_command *command)
 {
 	char	*parent;
-	char	*oldpwd;
 	char	*end;
 
-	oldpwd = getcwd(NULL, 0);
-	if (!oldpwd)
-		oldpwd = msh_find_env(shell->env, "PWD=");
-	if (!oldpwd)
-		return ;
-	parent = ft_strdup(oldpwd);
+	if (!(shell->oldpwd))
+		shell->oldpwd = msh_find_env(shell->env, "PWD=");
+	parent = ft_strdup(shell->oldpwd);
 	end = ft_strrchr(parent, '/');
 	ft_bzero(end, ft_strlen(end));
 	if (chdir(parent) == -1)
-		pt_printf("minishell: %s: %s: %s\n", command->command,
-			command->target, strerror(errno));
+		msh_print_error(shell, command, strerror(errno));
 	else
 	{
-		msh_update_env(shell->env, "OLDPWD=", oldpwd);
+		msh_update_env(shell->env, "OLDPWD=", shell->oldpwd);
 		msh_update_env(shell->env, "PWD=", parent);
-		msh_free(&oldpwd);
+		msh_update_dec_env(shell->dec_env, "OLDPWD=", shell->oldpwd);
+		msh_update_dec_env(shell->dec_env, "PWD=", parent);
 		msh_free(&parent);
+		shell->exit_code = 0;
+		shell->yet_to_execute = 0;
 	}
 }
 
@@ -88,24 +84,28 @@ void	msh_cd_parent(t_shell *shell, t_command *command)
 void	msh_cd_home(t_shell *shell, t_command *command)
 {
 	char	*home;
-	char	*oldpwd;
 
-	oldpwd = getcwd(NULL, 0);
-	if (!oldpwd)
-		oldpwd = msh_find_env(shell->env, "PWD=");
-	if (!oldpwd)
-		return ;
-	home = ft_substr(msh_find_env(shell->env, "HOME="), 0,
-			ft_strlen(msh_find_env(shell->env, "HOME=")));
-	if (chdir(home) == -1)
-		pt_printf("minishell: %s: %s: %s\n", command->command,
-			command->target, strerror(errno));
+	home = msh_find_env(shell->env, "HOME=");
+	if (home)
+		home = ft_substr(home, 0, ft_strlen(home));
 	else
 	{
-		msh_update_env(shell->env, "OLDPWD=", oldpwd);
+		msh_print_error(shell, command, "HOME not set");
+		return ;
+	}
+	if (!shell->oldpwd)
+		shell->oldpwd = msh_find_env(shell->env, "PWD=");
+	if (chdir(home) == -1)
+		msh_print_error(shell, command, strerror(errno));
+	else
+	{
+		msh_update_env(shell->env, "OLDPWD=", shell->oldpwd);
 		msh_update_env(shell->env, "PWD=", home);
-		msh_free(&oldpwd);
+		msh_update_dec_env(shell->dec_env, "OLDPWD=", shell->oldpwd);
+		msh_update_dec_env(shell->dec_env, "PWD=", home);
 		msh_free(&home);
+		shell->exit_code = 0;
+		shell->yet_to_execute = 0;
 	}
 }
 
@@ -125,5 +125,4 @@ void	msh_cd(t_shell *shell, t_command *command)
 		msh_cd_parent(shell, command);
 	else
 		msh_cd_target(shell, command);
-	shell->exit_code = 0;
 }

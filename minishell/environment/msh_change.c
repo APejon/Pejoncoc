@@ -6,22 +6,11 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 13:38:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/05 20:02:58 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/08 19:18:39 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * @brief Changes the value of the environmental variable
- * 
- * @param env The struct containing the variables and values
- * @param value The value to be inputted into the node
- */
-void	msh_add_value(t_env *env, char *value)
-{
-	env->value = ft_strjoin(value, "\0");
-}
 
 /**
  * @brief Deletes the value from the environmental variable
@@ -85,6 +74,32 @@ void	msh_create_node(t_env *env, char *variable, char *value)
 	env->next = pointer;
 }
 
+void	msh_update_dec_env(t_env *env, char *variable, char *value)
+{
+	t_env	*start;
+
+	start = env;
+	value = ft_strjoin("\"", value);
+	value = ft_free_strjoin(value, "\"", 1);
+	while (env)
+	{
+		if (!ft_strncmp(env->variable, variable, ft_strlen(variable)))
+		{
+			msh_remove_value(env);
+			env->value = ft_free_strjoin(value, "\0", 1);
+			break ;
+		}
+		else if (env->next == NULL)
+		{
+			msh_create_node(env, variable, value);
+			break ;
+		}
+		env = env->next;
+	}
+	env = start;
+	msh_free(&value);
+}
+
 /**
  * @brief Updates the environment variable linked list with new values
  * 
@@ -102,7 +117,7 @@ void	msh_update_env(t_env *env, char *variable, char *value)
 		if (!ft_strncmp(env->variable, variable, ft_strlen(variable)))
 		{
 			msh_remove_value(env);
-			msh_add_value(env, value);
+			env->value = ft_strjoin(value, "\0");
 			break ;
 		}
 		else if (env->next == NULL)

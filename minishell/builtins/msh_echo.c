@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:02 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/05 17:54:04 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/08 18:53:35 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,5 @@ void	msh_echo(t_shell *shell, t_command *command)
 	else
 		pt_printf("%s\n", command->target);
 	shell->exit_code = 0;
+	shell->yet_to_execute = 0;
 }

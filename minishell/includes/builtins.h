@@ -6,16 +6,12 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:53:07 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/05 18:09:20 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/08 19:40:46 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
-
-typedef struct s_shell		t_shell;
-typedef struct s_command	t_command;
-typedef struct s_env		t_env;
 
 /*-------- allocate --------*/
 void	msh_allocate(t_shell *shell);
@@ -37,7 +33,7 @@ void	msh_env(t_shell *shell, t_env *env);
 void	msh_exit(t_shell *shell, t_command *command);
 
 /*-------- export --------*/
-char	*msh_separate(char *target);
+char	*msh_separate(char *target, char sep);
 void	msh_print_dec(t_env *env);
 void	msh_list_dec(t_env *dec_env);
 void	msh_export(t_shell *shell, t_command *command);

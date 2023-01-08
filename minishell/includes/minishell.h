@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/27 19:10:44 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/07 13:42:49 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define PURPLE		"\033[0;35m"
 
 /*-------- Header files made --------*/
+# include "structs.h"
 # include "builtins.h"
 # include "environment.h"
 # include "execution.h"
@@ -58,42 +59,6 @@
 // # include <fcntl.h>
 // # include <sys/stat.h>
 // # include <signal.h>
-
-typedef enum e_mini_state
-{
-	DEFAULT,
-	PIPE,
-	RE_INPUT,
-	RE_OUTPUT,
-	HERE_DOC,
-	APPEND,
-	ERROR,
-}	t_state;
-
-typedef struct s_shell
-{
-	char				*current_line;
-	char				*line;
-	int					exit_code;
-	struct s_env		*env;
-	struct s_env		*dec_env;
-	struct s_command	*command;
-}	t_shell;
-
-typedef struct s_env
-{
-	char				*variable;
-	char				*value;
-	struct s_env		*next;
-}	t_env;
-
-typedef struct s_command
-{
-	char				*command;
-	char				*flag;
-	char				*target;
-	t_state				direct;
-}	t_command;
 
 /*-------- msh_utils.c --------*/
 void	msh_print_error(t_shell *shell, t_command *command, char *err_message);

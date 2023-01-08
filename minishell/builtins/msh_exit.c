@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:43:39 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/05 18:40:08 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/08 18:53:53 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	msh_exit(t_shell *shell, t_command *command)
 		{
 			pt_printf("minishell: %s: too many arguments\n",
 				command->command);
+			shell->exit_code = 1;
+			shell->yet_to_execute = 0;
 			return ;
 		}
 		msh_free_list(&shell->env);

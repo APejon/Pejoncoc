@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 14:14:39 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/04 14:01:36 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/08 19:56:06 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,11 @@ void	msh_create_rest(t_env **head, char **env, int *i)
  * 
  * @param shell The struct containing all variables for minishell
  * @param env Environment variables gained from the int main
+ * @note i[0] is for counting the index of the 2D array of the 
+ * environment variable
+ * @note i[1] is for counting the indexes before and at the "=" sign
+ * or as well as counting the indexes within an single array
+ * @note i[2] is for counting the indexes after the "=" sign
  */
 void	msh_create_denv(t_shell **shell, char **env)
 {
@@ -116,6 +121,11 @@ void	msh_create_denv(t_shell **shell, char **env)
  * 
  * @param shell The struct containing all variables for minishell
  * @param env Environment variables gained from the int main
+ * @note i[0] is for counting the index of the 2D array of the 
+ * environment variable
+ * @note i[1] is for counting the indexes before and at the "=" sign
+ * or as well as counting the indexes within an single array
+ * @note i[2] is for counting the indexes after the "=" sign
  */
 void	msh_create_env(t_shell **shell, char **env)
 {
