@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:43:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/08 18:55:56 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:22:01 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ void	msh_unset(t_shell *shell, t_command *command)
 	{
 		if (ft_strchr(command->target, '='))
 		{
-			msh_print_error(shell, command, "not a valid identifier");
+			msh_print_error(shell, command, "not a valid identifier", 1);
 			shell->exit_code = 1;
-			shell->yet_to_execute = 0;
 			return ;
 		}
 		else
@@ -38,5 +37,4 @@ void	msh_unset(t_shell *shell, t_command *command)
 		}
 	}
 	shell->exit_code = 0;
-	shell->yet_to_execute = 0;
 }

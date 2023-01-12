@@ -6,7 +6,7 @@
 #    By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 14:11:12 by amalbrei          #+#    #+#              #
-#    Updated: 2023/01/08 19:57:50 by amalbrei         ###   ########.fr        #
+#    Updated: 2023/01/12 19:49:34 by amalbrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,14 +31,14 @@ CFLAGS			=	-Wall -Wextra -Werror
 MINI_FLAGS 		=	-I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline 
 RM				=	rm	-rf
 
-BUILTINS_SRC 	=	msh_allocate.c msh_cd.c	msh_echo.c	msh_env.c	msh_exit.c	\
+BUILTINS_SRC 	=	msh_a_allocate.c msh_cd.c	msh_echo.c	msh_env.c	msh_exit.c	\
 					msh_export.c	msh_pwd.c	msh_unset.c
 BUILTINS_SRC 	:=	$(addprefix builtins/, $(BUILTINS_SRC))
 
 ENVIRONMENT_SRC	=	msh_change.c	msh_create.c	msh_find.c
 ENVIRONMENT_SRC	:=	$(addprefix environment/, $(ENVIRONMENT_SRC))
 
-EXECUTION_SRC	=	msh_check.c
+EXECUTION_SRC	=	msh_a_check.c	msh_execute.c	msh_locate.c	msh_pipex_split.c	\
 EXECUTION_SRC	:=	$(addprefix execution/, $(EXECUTION_SRC))
 
 PARSING_SRC		=

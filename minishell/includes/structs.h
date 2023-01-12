@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:41:52 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/08 18:51:26 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/10 14:52:41 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ typedef enum e_mini_state
 	PIPE,
 	RE_INPUT,
 	RE_OUTPUT,
-	HERE_DOC,
-	APPEND
+	APPEND,
+	HERE_DOC
 }	t_state;
 
 typedef struct s_shell
@@ -29,7 +29,6 @@ typedef struct s_shell
 	char				*line;
 	char				*oldpwd;
 	int					exit_code;
-	int					yet_to_execute;
 	struct s_env		*env;
 	struct s_env		*dec_env;
 	struct s_command	*command;

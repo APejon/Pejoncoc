@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:29 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/08 19:13:32 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:21:40 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	msh_cd_target(t_shell *shell, t_command *command)
 		dest = ft_free_strjoin(dest, command->target, 1);
 	}
 	if (chdir(dest) == -1)
-		msh_print_error(shell, command, strerror(errno));
+		msh_print_error(shell, command, strerror(errno), 1);
 	else
 	{
 		msh_update_env(shell->env, "OLDPWD=", shell->oldpwd);
@@ -41,7 +41,6 @@ void	msh_cd_target(t_shell *shell, t_command *command)
 		msh_update_dec_env(shell->dec_env, "PWD=", dest);
 		msh_free(&dest);
 		shell->exit_code = 0;
-		shell->yet_to_execute = 0;
 	}
 }
 
@@ -62,7 +61,7 @@ void	msh_cd_parent(t_shell *shell, t_command *command)
 	end = ft_strrchr(parent, '/');
 	ft_bzero(end, ft_strlen(end));
 	if (chdir(parent) == -1)
-		msh_print_error(shell, command, strerror(errno));
+		msh_print_error(shell, command, strerror(errno), 1);
 	else
 	{
 		msh_update_env(shell->env, "OLDPWD=", shell->oldpwd);
@@ -71,7 +70,6 @@ void	msh_cd_parent(t_shell *shell, t_command *command)
 		msh_update_dec_env(shell->dec_env, "PWD=", parent);
 		msh_free(&parent);
 		shell->exit_code = 0;
-		shell->yet_to_execute = 0;
 	}
 }
 
@@ -90,13 +88,13 @@ void	msh_cd_home(t_shell *shell, t_command *command)
 		home = ft_substr(home, 0, ft_strlen(home));
 	else
 	{
-		msh_print_error(shell, command, "HOME not set");
+		msh_print_error(shell, command, "HOME not set", 1);
 		return ;
 	}
 	if (!shell->oldpwd)
 		shell->oldpwd = msh_find_env(shell->env, "PWD=");
 	if (chdir(home) == -1)
-		msh_print_error(shell, command, strerror(errno));
+		msh_print_error(shell, command, strerror(errno), 1);
 	else
 	{
 		msh_update_env(shell->env, "OLDPWD=", shell->oldpwd);
@@ -105,7 +103,6 @@ void	msh_cd_home(t_shell *shell, t_command *command)
 		msh_update_dec_env(shell->dec_env, "PWD=", home);
 		msh_free(&home);
 		shell->exit_code = 0;
-		shell->yet_to_execute = 0;
 	}
 }
 

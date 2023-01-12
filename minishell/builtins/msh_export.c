@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:54 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/08 19:40:57 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/10 13:32:07 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,4 @@ void	msh_export(t_shell *shell, t_command *command)
 	else
 		msh_export_node(shell, command);
 	shell->exit_code = 0;
-	shell->yet_to_execute = 0;
 }

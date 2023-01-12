@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:43 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/08 18:57:39 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/10 13:32:16 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,4 @@ void	msh_pwd(t_shell *shell, t_command *command)
 {
 	msh_print_pwd(shell->oldpwd);
 	shell->exit_code = 0;
-	shell->yet_to_execute = 0;
 }
