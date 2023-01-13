@@ -6,7 +6,7 @@
 #    By: cafriem <cafriem@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 14:11:12 by amalbrei          #+#    #+#              #
-#    Updated: 2022/12/15 14:46:32 by cafriem          ###   ########.fr        #
+#    Updated: 2023/01/13 12:49:15 by cafriem          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ BLD_DIR			=	builtins
 PAR_DIR			=	parsing
 EXE_DIR			=	execution
 OBJ_DIR			=	object_files
-INC_DIR 		=	-Iincludes -Ilibft
+INC_DIR 		=	-Iincludes -Ilibft/includes
 LIBFT			=	libft/libft.a
 
 CC				=	gcc
@@ -31,13 +31,14 @@ CFLAGS			=	-Wall -Wextra -Werror
 MINI_FLAGS 		=	-I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline 
 RM				=	rm	-rf
 
-BUILTINS_SRC 	=
+BUILTINS_SRC 	=	msh_a_allocate.c msh_cd.c	msh_echo.c	msh_env.c	msh_exit.c	\
+					msh_export.c	msh_pwd.c	msh_unset.c
 BUILTINS_SRC 	:=	$(addprefix builtins/, $(BUILTINS_SRC))
 
-ENVIRONMENT_SRC	=
+ENVIRONMENT_SRC	=	msh_change.c	msh_create.c	msh_find.c
 ENVIRONMENT_SRC	:=	$(addprefix environment/, $(ENVIRONMENT_SRC))
 
-EXECUTION_SRC	=
+EXECUTION_SRC	=	msh_a_check.c	msh_execute.c	msh_locate.c	msh_pipex_split.c\
 EXECUTION_SRC	:=	$(addprefix execution/, $(EXECUTION_SRC))
 
 PARSING_SRC		=
@@ -46,7 +47,7 @@ PARSING_SRC		:=	$(addprefix parsing/, $(PARSING_SRC))
 SIGNALS_SRC		=
 SIGNALS_SRC		:=	$(addprefix signals/, $(SIGNALS_SRC))
 
-MAIN_SRC 		=
+MAIN_SRC 		=	msh_utils.c
 MAIN_SRC 		:=	$(addprefix source_files/, $(MAIN_SRC))
 
 SRC				=	$(BUILTINS_SRC) $(EXECUTION_SRC) $(PARSING_SRC) $(SIGNALS_SRC) $(ENVIRONMENT_SRC) $(MAIN_SRC)

@@ -6,7 +6,7 @@
 #    By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/21 19:43:26 by amalbrei          #+#    #+#              #
-#    Updated: 2022/12/13 13:52:55 by amalbrei         ###   ########.fr        #
+#    Updated: 2022/12/20 12:58:22 by amalbrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,9 @@ PURPLE	=	\033[0;35m
 CYAN	=	\033[1;36m
 
 NAME	=	libft.a
-SRC_DIR	=	Source_Files
-OBJ_DIR	=	Object_Files
-INC_DIR =	-IIncludes
+SRC_DIR	=	source_files
+OBJ_DIR	=	object_files
+INC_DIR =	-Iincludes
 CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror
 LIB		=	ar	-rcs

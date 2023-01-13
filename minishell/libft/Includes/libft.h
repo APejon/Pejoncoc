@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 19:45:57 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/13 13:52:32 by amalbrei         ###   ########.fr       */
+/*   Updated: 2022/12/30 14:49:41 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <stdint.h>
 
 typedef struct s_list
 {

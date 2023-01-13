@@ -6,7 +6,7 @@
 /*   By: cafriem <cafriem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/03 12:44:15 by cafriem          ###   ########.fr       */
+/*   Updated: 2023/01/13 12:49:58 by cafriem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,52 +22,50 @@
 # define PURPLE		"\033[0;35m"
 
 /*-------- Header files made --------*/
+# include "structs.h"
 # include "builtins.h"
+# include "environment.h"
 # include "execution.h"
 # include "parsing.h"
 # include "signals.h"
-# include "tokens.h"
 
 /*-------- libft --------*/
 # include "libft.h"
 
-typedef enum e_mini_state
-{
-	DEFAULT,
-	PIPE,
-	RE_INPUT,
-	RE_OUTPUT,
-	HERE_DOC,
-	APPEND
-}	t_state;
+/*-------- printf --------*/
+# include "pt_printf.h"
 
-typedef struct s_shell
-{
-	char				*current_line;
-	char				*line;
-	int					exit_code;
-	struct s_env		*env;
-	struct s_env		*dec_env;
-	struct s_command	*command;
-}	t_shell;
+/*-------- boolean --------*/
+# include <stdbool.h>
 
-typedef struct s_env
-{
-	char			*variable;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
+/*-------- perror --------*/
+# include <stdio.h>
 
-typedef struct s_command
-{
-	char	*command;
-	char	*flag;
-	char	*target;
-	t_state	direct;
-}	t_command;
+/*-------- malloc, free and exit --------*/
+# include <stdlib.h>
 
-/*-------- utils.c --------*/
+/*-------- strerror --------*/
+# include <string.h>
+
+/*-------- readline --------*/
+# include <readline/readline.h>
+# include <readline/history.h>
+
+/*-------- errno --------*/
+# include <sys/errno.h>
+
+// # include <string.h>
+// # include <sys/wait.h>
+// # include <fcntl.h>
+// # include <sys/stat.h>
+// # include <signal.h>
+
+/*-------- msh_utils.c --------*/
+void	msh_print_error(t_shell *shell, t_command *command, char *err_message,
+			int exit);
+void	msh_print_flerror(t_shell *shell, t_command *command, char *rec_flags);
+void	msh_free_node(t_env *node);
+void	msh_free_list(t_env **list);
 void	msh_free(void *memory);
-char	*msh_find_env(char **envp, char *line);
 
 #endif
