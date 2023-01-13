@@ -6,7 +6,7 @@
 /*   By: cafriem <cafriem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/27 19:37:26 by cafriem          ###   ########.fr       */
+/*   Updated: 2023/01/03 12:44:15 by cafriem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ typedef enum e_mini_state
 	RE_INPUT,
 	RE_OUTPUT,
 	HERE_DOC,
-	APPEND,
-	ERROR
+	APPEND
 }	t_state;
 
 typedef struct s_shell

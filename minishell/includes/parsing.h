@@ -6,7 +6,7 @@
 /*   By: cafriem <cafriem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:54:10 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/27 19:37:21 by cafriem          ###   ########.fr       */
+/*   Updated: 2022/12/30 14:37:51 by cafriem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include "libft.h"
+# include "minishell.h"
 
 typedef struct s_parse
 {
 	char	**pipe;
 	char	**command;
+	char	**target;
 }	t_parse;
 
 
