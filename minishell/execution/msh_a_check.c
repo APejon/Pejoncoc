@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/12 19:32:28 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:21:23 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ void	msh_check_link(t_shell *shell, t_command *command)
 	cwd = getcwd(NULL, 0);
 	if (cwd)
 		shell->oldpwd = getcwd(NULL, 0);
-	if (command->direct == DEFAULT)
+	if (command->redir == NULL)
 		msh_check_command(shell, command, 'p');
 	else
 	{
-		if (command->direct == RE_INPUT)
-		else if (command->direct == RE_OUTPUT)
-		else if (command->direct == APPEND)
-		else if (command->direct == HERE_DOC)
+		if (command->redir == RE_INPUT)
+		else if (command->redir == RE_OUTPUT)
+		else if (command->redir == APPEND)
+		else if (command->redir == HERE_DOC)
 		else
 	}
 	if (cwd)

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:41:52 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/10 14:52:41 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:25:26 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 typedef enum e_mini_state
 {
-	DEFAULT,
-	PIPE,
 	RE_INPUT,
 	RE_OUTPUT,
 	APPEND,
@@ -41,12 +39,18 @@ typedef struct s_env
 	struct s_env		*next;
 }	t_env;
 
+typedef struct s_direct
+{
+	char				*file;
+	t_state				direct;
+}	t_direct;
+
 typedef struct s_command
 {
 	char				*command;
 	char				*flag;
 	char				*target;
-	t_state				direct;
+	t_direct			*redir;
 }	t_command;
 
 #endif
