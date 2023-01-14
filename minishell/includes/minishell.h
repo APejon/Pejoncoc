@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/12 17:19:55 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/14 18:31:02 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,14 @@
 # define RED		"\033[1;31m"
 # define PURPLE		"\033[0;35m"
 
-/*-------- Header files made --------*/
-# include "structs.h"
-# include "builtins.h"
-# include "environment.h"
-# include "execution.h"
-# include "parsing.h"
-# include "signals.h"
-
 /*-------- libft --------*/
 # include "libft.h"
 
 /*-------- printf --------*/
 # include "pt_printf.h"
+
+/*write, read, close, access, pipe, dup, dup2, execve and fork */
+# include <unistd.h>
 
 /*-------- boolean --------*/
 # include <stdbool.h>
@@ -53,6 +48,14 @@
 
 /*-------- errno --------*/
 # include <sys/errno.h>
+
+/*-------- Header files made --------*/
+# include "structs.h"
+# include "builtins.h"
+# include "environment.h"
+# include "execution.h"
+# include "parsing.h"
+# include "signals.h"
 
 // # include <string.h>
 // # include <sys/wait.h>

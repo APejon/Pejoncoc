@@ -6,18 +6,44 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:19:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/12 19:28:59 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/14 19:29:36 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static	char	**msh_convert(const t_env *enviro)
-// {
-// 	t_env *pointer;
+/**
+ * @brief Converts a linked list environment variable into a 2D array for execve
+ * 
+ * @param enviro The linked list of the environment variables
+ * @return char** The environment variables as a 2D array
+ */
+static	char	**msh_convert(const t_env *enviro)
+{
+	char	**envp;
+	int		count[2];
+	t_env	*pointer;
 
-// 	pointer = 
-// }
+	count[0] = 0;
+	count[1] = 0;
+	pointer = enviro;
+	while (pointer)
+	{
+		count[0]++;
+		pointer = pointer->next;
+	}	
+	pointer = enviro;
+	envp = (char **)malloc((count[0] + 1) * sizeof(char *));
+	while (count[1] < count[0])
+	{
+		envp[count[1]] = ft_strjoin(pointer->variable, pointer->value);
+		pointer = pointer->next;
+		count[1]++;
+	}
+	envp[count[1]] = 0;
+	return (envp);
+}
+
 /**
  * @brief Identifies whether the commands are accessable or not, then returns it
  * 
@@ -64,13 +90,12 @@ void	msh_execute(t_shell *shell, char **cmd_paths)
 	char	**envp;
 	char	*cmd;
 
-	if (check_doublequotes(shell->command->target))
-		cmd_args = msh_pipex_split(shell->command->target, ' ');
-	else
-		cmd_args = ft_split(shell->command->target, ' ');
 	cmd = retrieve_cmd(cmd_paths, shell->command->command);
 	if (!cmd)
+	{
 		msh_print_error(shell, shell->command, "command not found", 127);
+		return ;
+	}
 	envp = msh_convert(shell->env);
-	execve(cmd, cmd_args, envp);
+	execve(cmd, shell->command->cmd_args, envp);
 }

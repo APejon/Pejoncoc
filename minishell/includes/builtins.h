@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:53:07 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/10 13:39:43 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/14 18:28:57 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 # define BUILTINS_H
 
 /*-------- allocate --------*/
-bool	msh_is_bultin(t_shell *shell);
-void	msh_a_allocate(t_shell *shell);
+bool	msh_is_parent(t_shell *shell);
+bool	msh_is_child(t_shell *shell);
+void	msh_allocate_child(t_shell *shell);
+void	msh_allocate_parent(t_shell *shell);
 
 /*-------- cd -------- */
 void	msh_cd_target(t_shell *shell, t_command *command);

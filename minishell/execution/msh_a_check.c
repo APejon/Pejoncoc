@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/13 12:21:23 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/14 18:55:28 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,39 @@
  * @param command Struct containing the command's details
  * @param flag Checks whether its a command for parent or child
  */
-void	msh_check_command(t_shell *shell, t_command *command, char flag)
+void	msh_check_command(t_shell *shell, t_command *command)
 {
 	char	**cmd_paths;
+	int		status;
+	pid_t	pid;
 
-	if (command->command && flag == 'p')
+	if (command->command)
 	{
-		if (msh_is_builtin(shell))
+		if (msh_is_parent(shell))
 			msh_allocate_parent(shell);
 		else
 		{
-			cmd_paths = msh_locate(shell);
-			if (cmd_paths == NULL)
-				return ;
-			msh_execute(shell, cmd_paths);
+			if (msh_is_child(shell))
+			{
+				pid = fork();
+				if (pid == 0)
+					msh_allocate_child(shell);
+				waitpid(pid, &status, 0);
+				shell->exit_code = WEXITSTATUS(status);
+			}
+			else
+			{
+				cmd_paths = msh_locate(shell);
+				if (cmd_paths == NULL)
+					return ;
+				pid = fork();
+				if (pid == 0)
+					msh_execute(shell, cmd_paths);
+				waitpid(pid, &status, 0);
+				shell->exit_code = WEXITSTATUS(status);
+			}
 		}
 	}
-	// if (command->command && flag == 'c')
 }
 
 /**
@@ -53,7 +69,7 @@ void	msh_check_link(t_shell *shell, t_command *command)
 	if (cwd)
 		shell->oldpwd = getcwd(NULL, 0);
 	if (command->redir == NULL)
-		msh_check_command(shell, command, 'p');
+		msh_check_command(shell, command);
 	else
 	{
 		if (command->redir == RE_INPUT)
