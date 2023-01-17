@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/14 18:55:28 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/15 14:24:56 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	msh_check_command(t_shell *shell, t_command *command)
 
 	if (command->command)
 	{
-		if (msh_is_parent(shell))
+		if (msh_is_parent(shell))  
 			msh_allocate_parent(shell);
 		else
 		{
