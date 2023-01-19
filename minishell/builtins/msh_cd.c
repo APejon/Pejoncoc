@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:29 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/12 17:21:40 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/17 20:23:59 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	msh_cd_target(t_shell *shell, t_command *command)
 
 	if (!(shell->oldpwd))
 		shell->oldpwd = msh_find_env(shell->env, "PWD=");
-	if ((*command->target) == '/')
-		dest = ft_strdup(command->target);
+	if ((command->cmd_args[1][0]) == '/')
+		dest = ft_strdup(command->cmd_args[0]);
 	else
 	{
 		dest = ft_strjoin(shell->oldpwd, "/");
-		dest = ft_free_strjoin(dest, command->target, 1);
+		dest = ft_free_strjoin(dest, command->cmd_args[1], 1);
 	}
 	if (chdir(dest) == -1)
 		msh_print_error(shell, command, strerror(errno), 1);
@@ -114,11 +114,11 @@ void	msh_cd_home(t_shell *shell, t_command *command)
  */
 void	msh_cd(t_shell *shell, t_command *command)
 {
-	if (!command->target)
+	if (!command->cmd_args[1])
 		msh_cd_home(shell, command);
-	else if (!ft_strncmp(command->target, ".", 2))
+	else if (!ft_strncmp(command->cmd_args[1], ".", 2))
 		return ;
-	else if (!ft_strncmp(command->target, "..", 3))
+	else if (!ft_strncmp(command->cmd_args[1], "..", 3))
 		msh_cd_parent(shell, command);
 	else
 		msh_cd_target(shell, command);

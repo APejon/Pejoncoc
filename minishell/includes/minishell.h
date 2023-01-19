@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/14 18:31:02 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/17 20:19:51 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@
 /*-------- msh_utils.c --------*/
 void	msh_print_error(t_shell *shell, t_command *command, char *err_message,
 			int exit);
-void	msh_print_flerror(t_shell *shell, t_command *command, char *rec_flags);
+void	msh_complete_free(t_shell *shell);
+// void	msh_print_flerror(t_shell *shell, t_command *command, char *rec_flags);
 void	msh_free_node(t_env *node);
 void	msh_free_list(t_env **list);
 void	msh_free(void *memory);

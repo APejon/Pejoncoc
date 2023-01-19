@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:28:47 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/14 19:05:40 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:24:03 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
  */
 bool	msh_is_parent(t_shell *shell)
 {
-	if (!ft_strncmp(shell->command->command, "cd", 3)
-		|| !ft_strncmp(shell->command->command, "exit", 5)
-		|| !ft_strncmp(shell->command->command, "export", 7)
-		|| !ft_strncmp(shell->command->command, "unset", 6))
+	if (!ft_strncmp(shell->command->cmd_args[0], "cd", 3)
+		|| !ft_strncmp(shell->command->cmd_args[0], "exit", 5)
+		|| !ft_strncmp(shell->command->cmd_args[0], "export", 7)
+		|| !ft_strncmp(shell->command->cmd_args[0], "unset", 6))
 		return (true);
 	else
 		return (false);
@@ -32,9 +32,9 @@ bool	msh_is_parent(t_shell *shell)
 
 bool	msh_is_child(t_shell *shell)
 {
-	if (!ft_strncmp(shell->command->command, "echo", 5)
-		|| !ft_strncmp(shell->command->command, "pwd", 4)
-		|| !ft_strncmp(shell->command->command, "env", 4))
+	if (!ft_strncmp(shell->command->cmd_args[0], "echo", 5)
+		|| !ft_strncmp(shell->command->cmd_args[0], "pwd", 4)
+		|| !ft_strncmp(shell->command->cmd_args[0], "env", 4))
 		return (true);
 	else
 		return (false);
@@ -48,21 +48,21 @@ bool	msh_is_child(t_shell *shell)
  */
 void	msh_allocate_child(t_shell *shell)
 {
-	if (!ft_strncmp(shell->command->command, "cd", 3))
+	if (!ft_strncmp(shell->command->cmd_args[0], "cd", 3))
 		msh_cd(shell, shell->command);
-	else if (!ft_strncmp(shell->command->command, "echo", 5))
+	else if (!ft_strncmp(shell->command->cmd_args[0], "echo", 5))
 		msh_echo(shell, shell->command);
-	else if (!ft_strncmp(shell->command->command, "env", 4))
+	else if (!ft_strncmp(shell->command->cmd_args[0], "env", 4))
 		msh_env(shell, shell->command);
-	else if (!ft_strncmp(shell->command->command, "exit", 5))
+	else if (!ft_strncmp(shell->command->cmd_args[0], "exit", 5))
 		msh_exit(shell, shell->command);
-	else if (!ft_strncmp(shell->command->command, "export", 7))
+	else if (!ft_strncmp(shell->command->cmd_args[0], "export", 7))
 		msh_export(shell, shell->command);
-	else if (!ft_strncmp(shell->command->command, "pwd", 4))
+	else if (!ft_strncmp(shell->command->cmd_args[0], "pwd", 4))
 		msh_pwd(shell, shell->command);
-	else if (!ft_strncmp(shell->command->command, "export", 7))
+	else if (!ft_strncmp(shell->command->cmd_args[0], "export", 7))
 		msh_export(shell, shell->command);
-	else if (!ft_strncmp(shell->command->command, "unset", 6))
+	else if (!ft_strncmp(shell->command->cmd_args[0], "unset", 6))
 		msh_unset(shell, shell->command);
 	exit (shell->exit_code);
 }
@@ -75,12 +75,12 @@ void	msh_allocate_child(t_shell *shell)
  */
 void	msh_allocate_parent(t_shell *shell)
 {
-	if (!ft_strncmp(shell->command->command, "cd", 3))
+	if (!ft_strncmp(shell->command->cmd_args[0], "cd", 3))
 		msh_cd(shell, shell->command);
-	else if (!ft_strncmp(shell->command->command, "exit", 5))
+	else if (!ft_strncmp(shell->command->cmd_args[0], "exit", 5))
 		msh_exit(shell, shell->command);
-	else if (!ft_strncmp(shell->command->command, "export", 7))
+	else if (!ft_strncmp(shell->command->cmd_args[0], "export", 7))
 		msh_export(shell, shell->command);
-	else if (!ft_strncmp(shell->command->command, "unset", 6))
+	else if (!ft_strncmp(shell->command->cmd_args[0], "unset", 6))
 		msh_unset(shell, shell->command);
 }

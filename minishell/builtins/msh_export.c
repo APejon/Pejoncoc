@@ -6,42 +6,43 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:54 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/10 13:32:07 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/19 19:22:58 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief Updates or adds a node within the env and dec_env, depending on
- * whether it already exists or not
+ * @brief Updates the environment and declared environment variables
  * 
  * @param shell The struct containing variables of used within the shell
- * @param command The struct containing the variables of a command block
+ * @param target Whatever is inputted BEFORE the '='
+ * @param value Whatever is inputted AFTER the '='
+ * 
+ * @note value might contain a null terminator ONLY
  */
-void	msh_export_node(t_shell *shell, t_command *command)
+void	msh_export_node(t_shell *shell, char *target, char *value)
 {
-	char	*value;
 	char	*dec_value;
-	t_env	*last;
-	t_env	*last_dec;
+	t_env	*node;
+	t_env	*dec_node;
 
-	value = msh_separate(command->target, '=');
-	last = msh_find_node(shell->env, command->target);
-	if (last)
-		msh_update_env(last, command->target, value);
+	node = msh_find_node(shell->env, target);
+	if (node)
+		msh_update_env(node, target, value);
 	else
-		msh_update_env(msh_find_last_node(shell->env), command->target,
+		msh_update_env(msh_find_last_node(shell->env), target,
 			value);
-	dec_value = ft_strjoin("\"", value);
-	dec_value = ft_free_strjoin(dec_value, "\"", 1);
-	last_dec = msh_find_node(shell->dec_env, command->target);
-	if (last_dec)
-		msh_update_env(last_dec, command->target, dec_value);
+	if (*value == '\0')
+		dec_value = ft_strdup("\"\"");
 	else
-		msh_update_env(msh_find_last_node(shell->dec_env), command->target,
+		dec_value = msh_quotes(value);
+	dec_node = msh_find_node(shell->dec_env, target);
+	if (dec_node)
+		msh_update_env(dec_node, target, dec_value);
+	else
+		msh_update_env(msh_find_last_node(shell->dec_env), target,
 			dec_value);
-	msh_free(&value);
 	msh_free(&dec_value);
 }
 
@@ -70,20 +71,42 @@ char	*msh_separate(char *target, char sep)
 		}
 		i++;
 	}
-	value = ft_substr(target, i, len);
+	if (*value == '\0')
+		value = ft_strdup("\0");
+	else
+		value = ft_substr(target, i, len);
 	ft_bzero(&target[i], len);
 	return (value);
 }
 
 /**
- * @brief Prints out the declared environment variables
+ * @brief Prepares the arguments to be placed in the environment variables
  * 
- * @param env Struct containing the declared environment variables
+ * @param shell The struct containing variables of used within the shell
+ * @param cmd The struct containing the command's arguments
+ * @param target The argument selected
  */
-void	msh_print_dec(t_env *env)
+void	msh_prep_export(t_shell *shell, t_command *cmd, char *target)
 {
-	pt_printf("declare -x ");
-	pt_printf("%s%s\n", env->variable, env->value);
+	char	*value;
+	t_env	*check;
+
+	if (target[0] == '=')
+	{
+		msh_print_error(shell, shell->command, "not a valid identifier", 1);
+		return ;
+	}
+	value = msh_separate(target, '=');
+	check = msh_find_node(shell->env, target);
+	if (check)
+	{
+		if (!ft_strncmp(check->value, value, ft_strlen(value)))
+		{
+			msh_free(&value);
+			return ;
+		}
+	}
+	msh_export_node(shell, target, value);
 }
 
 /**
@@ -99,7 +122,8 @@ void	msh_list_dec(t_env *dec_env)
 	start = dec_env;
 	while (dec_env->next != NULL)
 	{
-		msh_print_dec(dec_env);
+		pt_printf("declare -x ");
+		pt_printf("%s%s\n", dec_env->variable, dec_env->value);
 		dec_env = dec_env->next;
 	}
 	dec_env = start;
@@ -109,20 +133,29 @@ void	msh_list_dec(t_env *dec_env)
  * @brief Uses export command to update the environmental variable struct
  * 
  * @param shell The struct containing variables of used within the shell
- * @param command The struct containing the variables of a command block
+ * @param command The struct containing the command's arguments
  */
-void	msh_export(t_shell *shell, t_command *command)
+void	msh_export(t_shell *shell, t_command *cmd)
 {
-	if (command->target == NULL)
+	int	i;
+
+	if (cmd->cmd_args[1] == NULL)
 		msh_list_dec(shell->dec_env);
-	else if (!ft_strchr(command->target, '='))
-	{
-		if (msh_find_env(shell->dec_env, command->target))
-			return ;
-		msh_update_env(msh_find_last_node(shell->dec_env), command->target,
-			NULL);
-	}
 	else
-		msh_export_node(shell, command);
+	{
+		i = 0;
+		while (cmd->cmd_args[++i])
+		{
+			if (!ft_strchr(cmd->cmd_args[i], '='))
+			{
+				if (msh_find_env(shell->dec_env, cmd->cmd_args[i]))
+					continue ;
+				msh_update_env(msh_find_last_node(shell->dec_env),
+					cmd->cmd_args[i], NULL);
+			}
+			else
+				msh_prep_export(shell, cmd, cmd->cmd_args[i]);
+		}
+	}
 	shell->exit_code = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:41:52 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/14 19:24:41 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:19:47 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ typedef struct s_direct
 
 typedef struct s_command
 {
-	char				*command;
 	char				**cmd_args;
 	t_direct			*redir;
 }	t_command;

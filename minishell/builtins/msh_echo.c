@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:02 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/10 13:31:49 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:36:08 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,27 @@
  */
 void	msh_echo(t_shell *shell, t_command *command)
 {
-	if (!command->target)
+	int	i;
+
+	if (!command->cmd_args[1])
 	{
-		if (command->flag)
-		{
-			if (!ft_strncmp(command->flag, "-n", 3))
-				return ;
-		}
+		if (!ft_strncmp(command->cmd_args[1], "-n", 3))
+			return ;
 		else
 			pt_printf("\n");
 	}
-	else if (command->flag == NULL)
-		pt_printf("%s\n", command->target);
-	else if (!ft_strncmp(command->flag, "-n", 3))
-		pt_printf("%s", command->target);
+	else if (!ft_strncmp(command->cmd_args[1], "-n", 3))
+	{
+		i = 1;
+		while (command->cmd_args[++i])
+			pt_printf("%s", command->cmd_args[i]);
+	}
 	else
-		pt_printf("%s\n", command->target);
+	{
+		i = 0;
+		while (command->cmd_args[++i])
+			pt_printf("%s", command->cmd_args[i]);
+		pt_printf("\n");
+	}
 	shell->exit_code = 0;
 }
