@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:19:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/14 19:29:36 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/20 16:49:06 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,18 +84,18 @@ static char	*msh_retrieve_command(char **paths, char *cmd)
  * @note Needs to convert linked list environment variable to a 2D array
  * environment variable
  */
-void	msh_execute(t_shell *shell, char **cmd_paths)
+void	msh_execute(t_shell *shell, t_command *command, char **cmd_paths)
 {
 	char	**cmd_args;
 	char	**envp;
 	char	*cmd;
 
-	cmd = retrieve_cmd(cmd_paths, shell->command->command);
+	cmd = retrieve_cmd(cmd_paths, command->cmd_args[0]);
 	if (!cmd)
 	{
 		msh_print_error(shell, shell->command, "command not found", 127);
 		return ;
 	}
 	envp = msh_convert(shell->env);
-	execve(cmd, shell->command->cmd_args, envp);
+	execve(cmd, command->cmd_args, envp);
 }

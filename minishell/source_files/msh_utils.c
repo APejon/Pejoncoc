@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 17:42:22 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/18 17:48:02 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/20 16:21:05 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ void	msh_complete_free(t_shell *shell)
 	while (shell->command[++i])
 	{
 		j = -1;
-		while (shell->command->cmd_args[++j])
-			msh_free(&shell->command->cmd_args[j]);
-		msh_free(&shell->command->cmd_args);
-		msh_free(&shell->command->redir->file);
-		msh_free(&shell->command->redir);
+		while (shell->command[i]->cmd_args[++j])
+			msh_free(&shell->command[i]->cmd_args[j]);
+		msh_free(&shell->command[i]->cmd_args);
+		msh_free(&shell->command[i]->redir->file);
+		msh_free(&shell->command[i]->redir);
 		msh_free(&shell->command[i]);
 	}
 	msh_free_list(&shell->env);

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:41:52 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/18 17:19:47 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/20 16:19:19 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_shell
 	int					exit_code;
 	struct s_env		*env;
 	struct s_env		*dec_env;
-	struct s_command	*command;
+	struct s_command	**command;
 }	t_shell;
 
 typedef struct s_env
