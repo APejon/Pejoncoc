@@ -6,7 +6,7 @@
 #    By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 14:11:12 by amalbrei          #+#    #+#              #
-#    Updated: 2023/01/13 12:18:59 by amalbrei         ###   ########.fr        #
+#    Updated: 2023/01/25 22:00:24 by amalbrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ BUILTINS_SRC 	:=	$(addprefix builtins/, $(BUILTINS_SRC))
 ENVIRONMENT_SRC	=	msh_change.c	msh_create.c	msh_find.c
 ENVIRONMENT_SRC	:=	$(addprefix environment/, $(ENVIRONMENT_SRC))
 
-EXECUTION_SRC	=	msh_a_check.c	msh_execute.c	msh_locate.c	msh_pipex_split.c\
+EXECUTION_SRC	=	msh_a_check.c	msh_execute.c	msh_here_doc.c	msh_locate.c	\
+					msh_pipex_split.c	msh_redirect.c\
 EXECUTION_SRC	:=	$(addprefix execution/, $(EXECUTION_SRC))
 
 PARSING_SRC		=
