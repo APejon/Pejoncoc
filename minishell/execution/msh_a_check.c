@@ -6,12 +6,19 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/20 20:39:09 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/25 21:28:16 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief Checks whether the command is builtin or binary, which will then be
+ * executed as a child considering it is piped as well
+ * 
+ * @param shell The struct containing variables of used within the shell
+ * @param command Struct containing the command's details
+ */
 void	msh_check_command_piped(t_shell *shell, t_command *command)
 {
 	char	**cmd_paths;
@@ -40,7 +47,6 @@ void	msh_check_command_piped(t_shell *shell, t_command *command)
  * 
  * @param shell The struct containing variables of used within the shell
  * @param command Struct containing the command's details
- * @param flag Checks whether its a command for parent or child
  */
 void	msh_check_command(t_shell *shell, t_command *command)
 {
@@ -70,33 +76,46 @@ void	msh_check_command(t_shell *shell, t_command *command)
 	}
 }
 
-void	msh_redirect(t_shell *shell, t_command *command)
-{
-	
-}
-
 /**
  * @brief Checks on the redirection, whether or not they are there
  * and which one they are.
  * 
- * @param shell The struct containing variables of used within the shell
+ * @param shell The struct containing variables used within the shell
  * @param command The struct containing the command block's components
+ * @param fd File descriptors to be changed if redirections exist
  */
-void	msh_check_link(t_shell *shell, t_command *command)
+void	msh_check_link(t_shell *shell, t_command *command, int *fd)
 {
-	char	*cwd;
-
-	cwd = getcwd(NULL, 0);
-	if (cwd)
-		shell->oldpwd = getcwd(NULL, 0);
 	if (command->redir)
-		msh_redirect(shell, command);
+		msh_redirect(shell, command, command->redir, fd);
 	else if (!shell->command[1])
 		msh_check_command(shell, command);
 	else
 		msh_check_command_piped(shell, command);
+}
+
+/**
+ * @brief Prepares the fds, current working directory and here_doc files (if 
+ * applicable) before moving on to the command blocks
+ * 
+ * @param shell The struct containing variables used within the shell
+ */
+void	msh_command_dispenser(t_shell *shell)
+{
+	int		i;
+	int		fd[2];
+	char	*cwd;
+
+	i = -1;
+	fd[0] = 0;
+	fd[1] = 1;
+	cwd = getcwd(NULL, 0);
+	if (cwd)
+		shell->oldpwd = getcwd(NULL, 0);
+	if (shell->nohd != 0)
+		msh_create_here_doc(shell, shell->nohd);
+	while (shell->command[++i])
+		msh_check_link(shell, shell->command[i], fd); //code pipes here somewhere
 	if (cwd)
 		msh_free(&cwd);
 }
-
-//make central function here

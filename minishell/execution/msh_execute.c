@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:19:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/20 16:49:06 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/25 21:35:17 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param enviro The linked list of the environment variables
  * @return char** The environment variables as a 2D array
  */
-static	char	**msh_convert(const t_env *enviro)
+char	**msh_convert(const t_env *enviro)
 {
 	char	**envp;
 	int		count[2];

@@ -1,42 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   msh_utils.c                                        :+:      :+:    :+:   */
+/*   msh_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/12 17:42:22 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/20 16:21:05 by amalbrei         ###   ########.fr       */
+/*   Created: 2023/01/22 22:39:41 by amalbrei          #+#    #+#             */
+/*   Updated: 2023/01/25 21:43:56 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * @brief Prints out an error message
- * 
- * @param shell The struct containing shell variables
- * @param command The struct containing the command
- * @param err_message Error message to show
- */
-void	msh_print_error(t_shell *shell, t_command *command, char *err_message,
-		int exit)
-{
-	int	i;
-
-	if (command->cmd_args)
-	{
-		if (command->cmd_args[1][0] == '-')
-			i = 2;
-		else
-			i = 1;
-		pt_printf("minishell: %s:", command->cmd_args[0]);
-		while (command->cmd_args[++i])
-			pt_printf("%s:", command->cmd_args[i]);
-		pt_printf("%s\n", err_message);
-	}
-	shell->exit_code = exit;
-}
 
 /**
  * @brief Completely frees all malloced pointers
@@ -55,7 +29,13 @@ void	msh_complete_free(t_shell *shell)
 		while (shell->command[i]->cmd_args[++j])
 			msh_free(&shell->command[i]->cmd_args[j]);
 		msh_free(&shell->command[i]->cmd_args);
-		msh_free(&shell->command[i]->redir->file);
+		j = -1;
+		while (shell->command[i]->redir[++j])
+		{
+			msh_free(&shell->command[i]->redir[j]->file);
+			msh_free(&shell->command[i]->redir[j]->hd_content);
+			msh_free(&shell->command[i]->redir[j]);
+		}
 		msh_free(&shell->command[i]->redir);
 		msh_free(&shell->command[i]);
 	}
@@ -64,20 +44,6 @@ void	msh_complete_free(t_shell *shell)
 	msh_free(&shell->oldpwd);
 	msh_free(&shell);
 }
-// /**
-//  * @brief Prints out an error incase of using the wrong flags
-//  * 
-//  * @param command The struct containing the command
-//  * @param rec_flags The reccommended flags to use for the command to work
-//  */
-// void	msh_print_flerror(t_shell *shell, t_command *command, char *rec_flags)
-// {
-// 	pt_printf("minishell: %s: %s: invalid option\n",
-// 		command->command, command->flag);
-// 	pt_printf("%s: usage: %s %s\n", command->command, command->command,
-// 		rec_flags);
-// 	shell->exit_code = 1;
-// }
 
 /**
  * @brief Frees a node from the environment
@@ -86,10 +52,9 @@ void	msh_complete_free(t_shell *shell)
  */
 void	msh_free_node(t_env *node)
 {
-	free(node->variable);
-	if (node->value)
-		free(node->value);
-	free(node);
+	msh_free(&node->variable);
+	msh_free(&node->value);
+	msh_free(&node);
 }
 
 /**
