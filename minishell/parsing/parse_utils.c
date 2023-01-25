@@ -6,10 +6,14 @@
 /*   By: cafriem <cafriem@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:31:42 by cafriem           #+#    #+#             */
-/*   Updated: 2023/01/10 14:33:00 by cafriem          ###   ########.fr       */
+/*   Updated: 2023/01/21 15:36:44 by cafriem          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+# include <unistd.h>
+# include <stdlib.h>
+# include <string.h>
+# include <stdio.h>
 
 // void	everything_smol(char *string, size_t len)
 // {
@@ -22,16 +26,6 @@
 // 			string[counter] += 32;
 // 		counter++;
 // 	}
-// }
-
-// void	op_finder(char *string, t_shell shell, char *string2)
-// {
-// 	int	counter;
-
-// 	counter = 0;
-// 	while (string[counter] != '\0' || string[counter] != '|')
-// 		counter++;
-// 	string2 = ft_substr(string, counter, ft_strlen(string));
 // }
 
 // int	n_finder(char *string, t_shell shell)
@@ -77,38 +71,78 @@
 // }
 
 // // strlen till operand
-// int	ft_operfinder(const char *c)
-// {
-// 	int	sp_mark;
-// 	int	s_mark;
-// 	int	i;
+int	ft_operfinder(const char *c)
+{
+	int	sp_mark;
+	int	s_mark;
+	int	i;
 
-// 	i = 0;
-// 	sp_mark = 0;
-// 	s_mark = 0;
-// 	while (c[i])
-// 	{
-// 		if (c[i] == '\'')
-// 			s_mark++;
-// 		if (c[i] == '"')
-// 			sp_mark++;
-// 		while (s_mark % 2 != 0 || sp_mark % 2 != 0)
-// 		{
-// 			i++;
-// 			if (c[i] == '\'')
-// 				s_mark++;
-// 			if (c[i] == '"')
-// 				sp_mark++;
-// 		}
-// 		if (c[i] == '>' || c[i] == '<')
-// 		{
-// 			i--;
-// 			return (i);
-// 		}
-// 		i++;
-// 	}
-// 	return (i);
-// }
+	i = 0;
+	sp_mark = 0;
+	s_mark = 0;
+	while (c[i])
+	{
+		if (c[i] == '\'')
+			s_mark++;
+		if (c[i] == '"')
+			sp_mark++;
+		while (s_mark % 2 != 0 || sp_mark % 2 != 0)
+		{
+			i++;
+			if (c[i] == '\'')
+				s_mark++;
+			if (c[i] == '"')
+				sp_mark++;
+		}
+		if (c[i] == '>' || c[i] == '<')
+		{
+			i--;
+			return (i);
+		}
+		i++;
+	}
+	return (i);
+}
+
+int	ft_2ndoperand(const char *c)
+{
+	int	sp_mark;
+	int	s_mark;
+	int	oper;
+	int	i;
+
+	sp_mark = 0;
+	s_mark = 0;
+	oper = 0;
+	i = 0;
+	while (c[i])
+	{
+		if (c[i] == '\'')
+			s_mark++;
+		if (c[i] == '"')
+			sp_mark++;
+		while (s_mark % 2 != 0 || sp_mark % 2 != 0)
+		{
+			i++;
+			if (c[i] == '\'')
+				s_mark++;
+			if (c[i] == '"')
+				sp_mark++;
+		}
+		if ((c[i] == '>' && c[i + 1] == '>') || (c[i] == '<' && c[i + 1] == '<'))
+		{
+			i += 2;
+			oper++;
+		}
+		if (c[i] == '>' || c[i] == '<')
+		{
+			i++;
+			oper++;
+		if 
+		i++;
+	}
+	return (i);
+}
 
 int	ft_cmd_counter(const char *c)
 {
@@ -153,10 +187,9 @@ int	ft_cmd_counter(const char *c)
 	return (op_counter);
 }
 
-
 int main(void)
 {
 	int	malloc;
 
-	printf("num = %d\n", ft_opr_counter("lsai|uah\"diuwa ht"));
+	printf("num = %d\n", strlen("lsaiuahd>>iuwa ht"));
 }
