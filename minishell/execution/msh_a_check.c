@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/25 21:28:16 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/27 21:04:29 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ void	msh_check_command(t_shell *shell, t_command *command)
  * @param command The struct containing the command block's components
  * @param fd File descriptors to be changed if redirections exist
  */
-void	msh_check_link(t_shell *shell, t_command *command, int *fd)
+void	msh_check_link(t_shell *shell, t_command *command)
 {
 	if (command->redir)
-		msh_redirect(shell, command, command->redir, fd);
+		msh_redirect(shell, command, command->redir);
 	else if (!shell->command[1])
 		msh_check_command(shell, command);
 	else
@@ -103,19 +103,20 @@ void	msh_check_link(t_shell *shell, t_command *command, int *fd)
 void	msh_command_dispenser(t_shell *shell)
 {
 	int		i;
-	int		fd[2];
 	char	*cwd;
 
 	i = -1;
-	fd[0] = 0;
-	fd[1] = 1;
 	cwd = getcwd(NULL, 0);
 	if (cwd)
 		shell->oldpwd = getcwd(NULL, 0);
 	if (shell->nohd != 0)
 		msh_create_here_doc(shell, shell->nohd);
 	while (shell->command[++i])
-		msh_check_link(shell, shell->command[i], fd); //code pipes here somewhere
+	{
+		shell->command[i]->fd_in = 0;
+		shell->command[i]->fd_out = 1;
+		msh_check_link(shell, shell->command[i]); //code pipes here somewhere
+	}
 	if (cwd)
 		msh_free(&cwd);
 }

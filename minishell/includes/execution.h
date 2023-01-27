@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:53:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/25 21:38:06 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/27 21:29:55 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /*-------- msh_a_check.c --------*/
 void	msh_check_command_piped(t_shell *shell, t_command *command);
 void	msh_check_command(t_shell *shell, t_command *command);
-void	msh_check_link(t_shell *shell, t_command *command, int *fd);
+void	msh_check_link(t_shell *shell, t_command *command);
 void	msh_command_dispenser(t_shell *shell);
 
 /*-------- msh_execute.c --------*/
@@ -37,13 +37,10 @@ void	pipex_assigns(const char *s, char **str, char c, int count);
 char	**pipex_split(const char *s, char c);
 
 /*-------- msh_redirect.c --------*/
-// void	msh_hd_node(t_direct *redir, t_here_doc *hd, char *content);
-// int		msh_here_doc(t_direct *redir);
 int		msh_in_direct(t_shell *shell, t_command *command, t_direct *redir,
 			int fd);
 int		msh_out_direct(t_shell *shell, t_command *command, t_direct *redir,
 			int fd);
-int		*msh_redirect(t_shell *shell, t_command *command, t_direct **redir,
-			int *fd);
+int		*msh_redirect(t_shell *shell, t_command *command, t_direct **redir);
 
 #endif

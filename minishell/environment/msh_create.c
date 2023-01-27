@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 14:14:39 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/10 14:17:11 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/27 21:51:56 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	msh_create_rest(t_env **head, char **env, int *i)
  * @note i[0] is for counting the index of the 2D array of the 
  * environment variable
  * @note i[1] is for counting the indexes before and at the "=" sign
- * or as well as counting the indexes within an single array
+ * as well as counting the indexes within an single array
  * @note i[2] is for counting the indexes after the "=" sign
  */
 void	msh_create_denv(t_shell **shell, char **env)
@@ -124,7 +124,7 @@ void	msh_create_denv(t_shell **shell, char **env)
  * @note i[0] is for counting the index of the 2D array of the 
  * environment variable
  * @note i[1] is for counting the indexes before and at the "=" sign
- * or as well as counting the indexes within an single array
+ * as well as counting the indexes within an single array
  * @note i[2] is for counting the indexes after the "=" sign
  */
 void	msh_create_env(t_shell **shell, char **env)

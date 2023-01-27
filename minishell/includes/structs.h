@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:41:52 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/25 19:39:56 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/27 20:59:19 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ typedef enum e_mini_state
 
 typedef struct s_shell
 {
+	int					exit_code;
+	int					nohd;
 	char				*current_line;
 	char				*line;
 	char				*oldpwd;
-	int					exit_code;
-	int					nohd;
 	struct s_env		*env;
 	struct s_env		*dec_env;
 	struct s_command	**command;
@@ -42,12 +42,15 @@ typedef struct s_env
 
 typedef struct s_command
 {
+	int					fd_in;
+	int					fd_out;
 	char				**cmd_args;
 	t_direct			**redir;
 }	t_command;
 
 typedef struct s_direct
 {
+	int					fd;
 	char				*file;
 	char				*hd_content;
 	t_state				direct;
