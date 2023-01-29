@@ -6,11 +6,11 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 22:39:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/25 21:43:56 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/29 14:57:11 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 /**
  * @brief Completely frees all malloced pointers

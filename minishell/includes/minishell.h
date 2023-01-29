@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/25 21:41:23 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/29 14:58:45 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@
 # define PURPLE		"\033[0;35m"
 
 /*-------- libft --------*/
-# include "libft.h"
+# include "../libft/includes/libft.h"
 
 /*-------- printf --------*/
-# include "pt_printf.h"
+# include "../libft/includes/pt_printf.h"
 
 /*-------- get_next_line --------*/
-# include "get_next_line.h"
+# include "../libft/includes/get_next_line.h"
 
 /*write, read, close, access, pipe, dup, dup2, execve and fork */
 # include <unistd.h>

@@ -6,11 +6,11 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 19:23:22 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/25 21:37:58 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/29 14:57:11 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 /**
  * @brief Receives input from the standard input and places it within the struct

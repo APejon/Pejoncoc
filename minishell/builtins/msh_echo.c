@@ -6,11 +6,11 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:02 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/18 17:36:08 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/29 14:57:11 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 /**
  * @brief Uses the echo command to print out a message onto the shell terminal

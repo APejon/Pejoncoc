@@ -6,11 +6,11 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 20:31:59 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/27 21:44:25 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/29 14:57:11 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 int	msh_in_direct(t_shell *shell, t_command *command, t_direct *redir, int fd)
 {
@@ -71,10 +71,5 @@ int	*msh_redirect(t_shell *shell, t_command *command, t_direct **redir)
 	{
 		msh_complete_free(shell);
 		exit(shell->exit_code);
-	}
-	else
-	{
-		dup2(command->fd_out, 0);
-		dup2(command->fd_in, 1);
 	}
 }

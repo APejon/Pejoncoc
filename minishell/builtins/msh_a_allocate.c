@@ -6,11 +6,11 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:28:47 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/20 16:43:04 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/29 15:21:26 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 /**
  * @brief Checks whether the command is a builtin or not for a parent process
@@ -49,21 +49,21 @@ bool	msh_is_child(t_command *command)
 void	msh_allocate_child(t_shell *shell, t_command *command)
 {
 	if (!ft_strncmp(command->cmd_args[0], "cd", 3))
-		msh_cd(shell, shell->command);
+		msh_cd(shell, command);
 	else if (!ft_strncmp(command->cmd_args[0], "echo", 5))
-		msh_echo(shell, shell->command);
+		msh_echo(shell, command);
 	else if (!ft_strncmp(command->cmd_args[0], "env", 4))
-		msh_env(shell, shell->command);
+		msh_env(shell, shell->env);
 	else if (!ft_strncmp(command->cmd_args[0], "exit", 5))
-		msh_exit(shell, shell->command);
+		msh_exit(shell, command);
 	else if (!ft_strncmp(command->cmd_args[0], "export", 7))
-		msh_export(shell, shell->command);
+		msh_export(shell, command);
 	else if (!ft_strncmp(command->cmd_args[0], "pwd", 4))
-		msh_pwd(shell, shell->command);
+		msh_pwd(shell);
 	else if (!ft_strncmp(command->cmd_args[0], "export", 7))
-		msh_export(shell, shell->command);
+		msh_export(shell, command);
 	else if (!ft_strncmp(command->cmd_args[0], "unset", 6))
-		msh_unset(shell, shell->command);
+		msh_unset(shell, command);
 	exit (shell->exit_code);
 }
 

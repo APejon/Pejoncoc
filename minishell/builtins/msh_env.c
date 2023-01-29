@@ -6,11 +6,11 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:44:19 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/10 13:31:54 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/29 14:57:11 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 /**
  * @brief Prints out one line of the env with a newline

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:53:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/27 21:29:55 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/29 14:48:43 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /*-------- msh_a_check.c --------*/
 void	msh_check_command_piped(t_shell *shell, t_command *command);
 void	msh_check_command(t_shell *shell, t_command *command);
-void	msh_check_link(t_shell *shell, t_command *command);
+void	msh_check_link(t_shell *shell, t_command *command, int tmp_fd, int i);
 void	msh_command_dispenser(t_shell *shell);
 
 /*-------- msh_execute.c --------*/
@@ -30,6 +30,9 @@ void	msh_create_here_doc(t_shell *shell, int nohd);
 /*-------- msh_locate.c --------*/
 char	*msh_find_path(const t_env *enviro);
 char	**msh_locate(t_shell *shell, t_command *command);
+
+/*-------- msh_pipes.c --------*/
+void	msh_create_pipe(t_shell *shell, t_command *command, int tmp_fd);
 
 /*-------- msh_pipex_split.c --------*/
 int		pipex_getwordcount(const char *s, char c);

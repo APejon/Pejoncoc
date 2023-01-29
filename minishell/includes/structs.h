@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:41:52 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/27 20:59:19 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/29 14:59:41 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,6 @@ typedef struct s_env
 	struct s_env		*next;
 }	t_env;
 
-typedef struct s_command
-{
-	int					fd_in;
-	int					fd_out;
-	char				**cmd_args;
-	t_direct			**redir;
-}	t_command;
-
 typedef struct s_direct
 {
 	int					fd;
@@ -55,5 +47,15 @@ typedef struct s_direct
 	char				*hd_content;
 	t_state				direct;
 }	t_direct;
+
+typedef struct s_command
+{
+	int					fd_in;
+	int					fd_out;
+	int					p_fd[2];
+	pid_t				pid;
+	char				**cmd_args;
+	t_direct			**redir;
+}	t_command;
 
 #endif

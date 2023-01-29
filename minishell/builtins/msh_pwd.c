@@ -6,11 +6,11 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:43 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/10 13:32:16 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/29 15:02:20 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 /**
  * @brief Prints out the pwd
@@ -30,7 +30,7 @@ void	msh_print_pwd(char *pwd)
  * @note Flags will not be implemented due to the project's request 
  * to NOT handle them
  */
-void	msh_pwd(t_shell *shell, t_command *command)
+void	msh_pwd(t_shell *shell)
 {
 	msh_print_pwd(shell->oldpwd);
 	shell->exit_code = 0;

@@ -6,11 +6,11 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:54 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/19 19:22:58 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/29 15:01:39 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 /**
  * @brief Updates the environment and declared environment variables
@@ -93,7 +93,7 @@ void	msh_prep_export(t_shell *shell, t_command *cmd, char *target)
 
 	if (target[0] == '=')
 	{
-		msh_print_error(shell, shell->command, "not a valid identifier", 1);
+		msh_print_error(shell, cmd, "not a valid identifier", 1);
 		return ;
 	}
 	value = msh_separate(target, '=');
