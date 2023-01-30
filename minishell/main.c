@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 13:23:14 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/29 14:57:11 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/29 18:14:44 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,18 @@ int	main(int ac, char **av, char **env)
 	t_shell		*shell;
 	t_command	*command;
 	// t_env		*first;
-	char		*value;
 	// char		*oldpwd;
 
 	(void)ac;
 	shell = malloc(sizeof(t_shell));
+	shell->command = malloc(sizeof(char *) * 1);
 	command = malloc(sizeof(t_command));
-	command->command = av[1];
-	command->flag =	NULL;
-	if (av[2])
-		value = ft_strdup(av[2]);
-	else
-		value = NULL;
-	command->target = value;
-	shell->command = command;
-	printf("%s, %s and %s\n", shell->command->command, shell->command->flag, shell->command->target);
+	command->cmd_args = malloc(sizeof(char *) * ac - 1);
+	command->cmd_args[0] = av[1];
+	command->cmd_args[1] = av[2];
+	command->cmd_args[2] = av[3];
+	shell->command[0] = command;
+	printf("%s, %s and %s\n", shell->command[0]->cmd_args[0], shell->command[0]->cmd_args[1], shell->command[0]->cmd_args[2]);
 	// oldpwd = getcwd(NULL, 0);
 	// printf("%s\n", oldpwd);
 	// free (oldpwd);
@@ -52,7 +49,7 @@ int	main(int ac, char **av, char **env)
 	// 	shell->dec_env = shell->dec_env->next;
 	// }
 	// shell->dec_env = first;
-	msh_allocate(shell);
+	msh_command_dispenser(shell);
 	// printf("AFTER===========\n");
 	// first = shell->env;
 	// while (shell->env)
@@ -68,11 +65,7 @@ int	main(int ac, char **av, char **env)
 	// 	shell->dec_env = shell->dec_env->next;
 	// }
 	// shell->dec_env = first;
-	msh_free_list(&shell->env);
-	msh_free_list(&shell->dec_env);
-	free(value);
-	free(command);
-	free(shell);
+	msh_complete_free(shell);
 	// oldpwd = getcwd(NULL, 0);
 	// printf("%s\n", oldpwd);
 	// free (oldpwd);

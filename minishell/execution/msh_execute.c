@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:19:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/29 14:57:11 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/29 16:33:34 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param enviro The linked list of the environment variables
  * @return char** The environment variables as a 2D array
  */
-char	**msh_convert(const t_env *enviro)
+char	**msh_convert(t_env *enviro)
 {
 	char	**envp;
 	int		count[2];
@@ -86,14 +86,13 @@ static char	*msh_retrieve_command(char **paths, char *cmd)
  */
 void	msh_execute(t_shell *shell, t_command *command, char **cmd_paths)
 {
-	char	**cmd_args;
 	char	**envp;
 	char	*cmd;
 
-	cmd = retrieve_cmd(cmd_paths, command->cmd_args[0]);
+	cmd = msh_retrieve_command(cmd_paths, command->cmd_args[0]);
 	if (!cmd)
 	{
-		msh_print_error(shell, shell->command, "command not found", 127);
+		msh_print_error(shell, command, "command not found", 127);
 		exit (shell->exit_code);
 	}
 	envp = msh_convert(shell->env);

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 14:44:52 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/29 14:57:11 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/29 16:37:26 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @param enviro The struct containing the environment variables
  * @return char* The paths extracted
  */
-char	*msh_find_path(const t_env *enviro)
+char	*msh_find_path(t_env *enviro)
 {
 	t_env	*pointer;
 
@@ -50,7 +50,7 @@ char	**msh_locate(t_shell *shell, t_command *command)
 	cmd_paths = NULL;
 	path = msh_find_path(shell->env);
 	if (path == NULL)
-		msh_print_error(shell, command->cmd_args[0],
+		msh_print_error(shell, command,
 			"No such file or directory", 127);
 	else
 		cmd_paths = ft_split(path, ':');

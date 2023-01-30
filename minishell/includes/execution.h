@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:53:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/29 14:48:43 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/29 16:40:36 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	msh_check_link(t_shell *shell, t_command *command, int tmp_fd, int i);
 void	msh_command_dispenser(t_shell *shell);
 
 /*-------- msh_execute.c --------*/
-char	**msh_convert(const t_env *enviro);
+char	**msh_convert(t_env *enviro);
 void	msh_execute(t_shell *shell, t_command *command, char **cmd_paths);
 
 /*-------- msh_here_doc.c --------*/
@@ -28,7 +28,7 @@ void	msh_input_hd(t_direct *redir);
 void	msh_create_here_doc(t_shell *shell, int nohd);
 
 /*-------- msh_locate.c --------*/
-char	*msh_find_path(const t_env *enviro);
+char	*msh_find_path(t_env *enviro);
 char	**msh_locate(t_shell *shell, t_command *command);
 
 /*-------- msh_pipes.c --------*/
@@ -44,6 +44,6 @@ int		msh_in_direct(t_shell *shell, t_command *command, t_direct *redir,
 			int fd);
 int		msh_out_direct(t_shell *shell, t_command *command, t_direct *redir,
 			int fd);
-int		*msh_redirect(t_shell *shell, t_command *command, t_direct **redir);
+void	msh_redirect(t_shell *shell, t_command *command, t_direct **redir);
 
 #endif

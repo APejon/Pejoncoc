@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 19:23:22 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/29 14:57:11 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/29 16:35:33 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,18 @@
  */
 void	msh_input_hd(t_direct *redir)
 {
-	int			fd;
 	char		*limiter;
 
 	pt_printf("> ");
 	limiter = get_next_line(0);
-	redir->hd_content = ft_free_strjoin(limiter, '\0', '1');
+	redir->hd_content = ft_free_strjoin(limiter, "\0", '1');
 	while (limiter != redir->file)
 	{
 		pt_printf("> ");
 		limiter = get_next_line(0);
 		redir->hd_content = ft_free_strjoin(redir->hd_content, limiter, '2');
 	}
-	redir->hd_content = ft_free_strjoin(redir->hd_content, '\0', '1');
+	redir->hd_content = ft_free_strjoin(redir->hd_content, "\0", '1');
 }
 
 /**

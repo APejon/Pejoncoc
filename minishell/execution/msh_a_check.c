@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/29 14:57:11 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/29 18:35:23 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void	msh_check_command(t_shell *shell, t_command *command)
  */
 void	msh_check_link(t_shell *shell, t_command *command, int tmp_fd, int i)
 {
+	(void)tmp_fd;
+	(void)i;
 	command->fd_in = STDIN_FILENO;
 	command->fd_out = STDOUT_FILENO;
 	if (!(shell->command[1]))

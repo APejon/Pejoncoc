@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 20:31:59 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/29 14:57:11 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/29 16:40:25 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	msh_in_direct(t_shell *shell, t_command *command, t_direct *redir, int fd)
 		fd = redir->fd;
 		return (fd);
 	}
+	return (fd);
 }
 
 int	msh_out_direct(t_shell *shell, t_command *command, t_direct *redir, int fd)
@@ -41,7 +42,7 @@ int	msh_out_direct(t_shell *shell, t_command *command, t_direct *redir, int fd)
 		close(fd);
 	if (redir->direct == RE_OUTPUT)
 		redir->fd = open(redir->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	else if (redir == APPEND)
+	else if (redir->direct == APPEND)
 		redir->fd = open(redir->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (redir->fd == -1)
 	{
@@ -53,17 +54,17 @@ int	msh_out_direct(t_shell *shell, t_command *command, t_direct *redir, int fd)
 	return (fd);
 }
 
-int	*msh_redirect(t_shell *shell, t_command *command, t_direct **redir)
+void	msh_redirect(t_shell *shell, t_command *command, t_direct **redir)
 {
 	int	i;
 
 	i = -1;
 	while (redir[++i] && command->fd_in != -1 && command->fd_out != -1)
 	{
-		if (redir[i] == RE_INPUT || redir[i] == HERE_DOC)
+		if (redir[i]->direct == RE_INPUT || redir[i]->direct == HERE_DOC)
 			command->fd_out = msh_in_direct(shell, command, redir[i],
 					command->fd_out);
-		else if (redir[i] == RE_OUTPUT || redir[i] == APPEND)
+		else if (redir[i]->direct == RE_OUTPUT || redir[i]->direct == APPEND)
 			command->fd_in = msh_out_direct(shell, command, redir[i],
 					command->fd_in);
 	}

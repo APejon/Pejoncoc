@@ -6,7 +6,7 @@
 #    By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/21 19:43:26 by amalbrei          #+#    #+#              #
-#    Updated: 2022/12/20 12:58:22 by amalbrei         ###   ########.fr        #
+#    Updated: 2023/01/29 18:21:37 by amalbrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,7 +97,7 @@ gnl: $(G_OBJ)
 
 list:
 	@ar -t $(NAME)
-	@echo Object files above are within your library.
+	@echo Object files above are within your Libft library.
 
 clean:
 	@printf "$(RED)CLEANING LIB.O FILES\n"
