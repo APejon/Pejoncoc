@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 13:38:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/29 14:57:11 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:53:13 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	msh_update_dec_env(t_env *env, char *variable, char *value)
 
 	start = env;
 	value = ft_strjoin("\"", value);
-	value = ft_free_strjoin(value, "\"", 1);
+	value = ft_free_strjoin(value, "\"", '1');
 	while (env)
 	{
 		if (!ft_strncmp(env->variable, variable, ft_strlen(variable)))
@@ -117,7 +117,7 @@ void	msh_update_env(t_env *env, char *variable, char *value)
 		if (!ft_strncmp(env->variable, variable, ft_strlen(variable)))
 		{
 			msh_remove_value(env);
-			env->value = ft_strjoin(value, "\0");
+			env->value = ft_strdup(value);
 			break ;
 		}
 		else if (env->next == NULL)

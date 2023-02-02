@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 22:39:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/29 14:57:11 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/31 20:41:26 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,16 @@ void	msh_complete_free(t_shell *shell)
 			msh_free(&shell->command[i]->cmd_args[j]);
 		msh_free(&shell->command[i]->cmd_args);
 		j = -1;
-		while (shell->command[i]->redir[++j])
-		{
-			msh_free(&shell->command[i]->redir[j]->file);
-			msh_free(&shell->command[i]->redir[j]->hd_content);
-			msh_free(&shell->command[i]->redir[j]);
-		}
-		msh_free(&shell->command[i]->redir);
+		// while (shell->command[i]->redir[++j])
+		// {
+		// 	msh_free(&shell->command[i]->redir[j]->file);
+		// 	msh_free(&shell->command[i]->redir[j]->hd_content);
+		// 	msh_free(&shell->command[i]->redir[j]);
+		// }
+		// msh_free(&shell->command[i]->redir);
 		msh_free(&shell->command[i]);
 	}
+	msh_free(&shell->command);
 	msh_free_list(&shell->env);
 	msh_free_list(&shell->dec_env);
 	msh_free(&shell->oldpwd);

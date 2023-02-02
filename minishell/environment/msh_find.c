@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 13:27:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/29 14:57:11 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/02/02 19:34:13 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_env	*msh_find_node(t_env *env, char *line)
 	len = ft_strlen(line);
 	while (ft_strncmp(line, point->variable, len) && point->next != NULL)
 		point = point->next;
-	if (point->next == NULL && !ft_strncmp(line, point->variable, len))
+	if (point->next == NULL && ft_strncmp(line, point->variable, len))
 		return (NULL);
 	else
 		return (point);
@@ -78,11 +78,10 @@ char	*msh_find_env(t_env *env, char *line)
 	t_env	*point;
 
 	point = env;
-	len = ft_strlen(line);
+	len = ft_strlen(line) + 1;
 	while (ft_strncmp(line, point->variable, len) && point->next != NULL)
 		point = point->next;
-	if (point->next == NULL && !ft_strncmp(line, point->variable, len))
+	if (point->next == NULL && ft_strncmp(line, point->variable, len))
 		return (NULL);
-	else
-		return (point->value);
+	return (point->value);
 }

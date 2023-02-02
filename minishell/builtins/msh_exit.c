@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:43:39 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/29 14:57:11 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/02/02 17:32:31 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,18 @@ void	msh_exit(t_shell *shell, t_command *command)
 	{
 		if (command->cmd_args[2])
 		{
-			pt_printf("minishell: %s: too many arguments\n",
-				command->cmd_args[0]);
-			shell->exit_code = 1;
+			msh_print_error(shell, command, "too many arguments", 1);
 			return ;
 		}
 		count = msh_count(command->cmd_args[1]);
 		if (count == 0)
-		{
-			pt_printf("minishell: %s: %s: numeric argument required\n",
-				command->cmd_args[0], command->cmd_args[1]);
-			shell->exit_code = 255;
-		}
+			msh_print_error(shell, command, "numeric argument required", 255);
 		else
 			shell->exit_code = ft_atoi(command->cmd_args[1]);
+		
 	}
+	count = shell->exit_code;
 	msh_complete_free(shell);
-	exit(shell->exit_code);
+	printf("%d is the exit code\n", count);
+	exit(count);
 }

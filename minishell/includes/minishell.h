@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/29 14:58:45 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:39:09 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@
 
 /*-------- open and unlink --------*/
 # include <fcntl.h>
+
+/*-------- waitpid --------*/
+# include <sys/wait.h>
 
 /*-------- Header files made --------*/
 # include "structs.h"

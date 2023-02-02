@@ -6,7 +6,7 @@
 #    By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 14:11:12 by amalbrei          #+#    #+#              #
-#    Updated: 2023/01/30 13:49:28 by amalbrei         ###   ########.fr        #
+#    Updated: 2023/02/02 19:44:15 by amalbrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ LIB				=	ar	-rcs
 LIBFT			=	-Llibft -lft
 
 CC				=	gcc
-CFLAGS			=	-Wall -Wextra -Werror
+CFLAGS			=	-Wall -Wextra -Werror -g
 #MINI_FLAGS 		=	-I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline 
 RM				=	rm	-rf
 
@@ -48,7 +48,7 @@ PARSING_SRC		=
 
 SIGNALS_SRC		=
 
-MAIN_SRC 		=	msh_error.c		msh_free.c
+MAIN_SRC 		=	main.c	msh_error.c	msh_free.c
 
 SRC				=	$(BUILTINS_SRC) $(EXECUTION_SRC) $(PARSING_SRC) $(SIGNALS_SRC) $(ENVIRONMENT_SRC) $(MAIN_SRC)
 
@@ -92,7 +92,7 @@ $(OBJ_DIR)/%.o: $(MAIN_DIR)/%.c
 	$(CC) $(CFLAGS) $(INC_DIR) $(MINI_FLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(INC_DIR) $(MINI_FLAGS) $(LIBFT) $(OBJ) main.c -o $(NAME)
+	@$(CC) $(CFLAGS) $(INC_DIR) $(MINI_FLAGS) $(OBJ) $(LIBFT) -o $(NAME)
 	@printf "$(CYAN)\n==========================\n"
 	@printf "$(CYAN) MINISHELL COMPILED\n"
 	@printf "$(CYAN)==========================\n"

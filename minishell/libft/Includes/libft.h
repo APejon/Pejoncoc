@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 19:45:57 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/30 14:49:41 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:58:16 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ void		ft_lstiter(t_list *lst, void (*f) (void *));
 t_list		*ft_lstmap(t_list *lst, void *(*f) (void *), void (*del) (void *));
 int			ft_check_doublequotes(char *command);
 int			ft_error_msg(char *err);
+void		ft_free(void *memory);
 
 #endif

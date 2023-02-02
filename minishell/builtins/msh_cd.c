@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:29 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/29 14:57:11 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/31 20:47:03 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,17 @@ void	msh_cd_target(t_shell *shell, t_command *command)
 	if (!(shell->oldpwd))
 		shell->oldpwd = msh_find_env(shell->env, "PWD=");
 	if ((command->cmd_args[1][0]) == '/')
-		dest = ft_strdup(command->cmd_args[0]);
+		dest = ft_strdup(command->cmd_args[1]);
 	else
 	{
 		dest = ft_strjoin(shell->oldpwd, "/");
-		dest = ft_free_strjoin(dest, command->cmd_args[1], 1);
+		dest = ft_free_strjoin(dest, command->cmd_args[1], '1');
 	}
 	if (chdir(dest) == -1)
+	{		
 		msh_print_error(shell, command, strerror(errno), 1);
+		msh_free(&dest);
+	}
 	else
 	{
 		msh_update_env(shell->env, "OLDPWD=", shell->oldpwd);
@@ -61,7 +64,10 @@ void	msh_cd_parent(t_shell *shell, t_command *command)
 	end = ft_strrchr(parent, '/');
 	ft_bzero(end, ft_strlen(end));
 	if (chdir(parent) == -1)
+	{
 		msh_print_error(shell, command, strerror(errno), 1);
+		msh_free(&parent);
+	}
 	else
 	{
 		msh_update_env(shell->env, "OLDPWD=", shell->oldpwd);
@@ -94,7 +100,10 @@ void	msh_cd_home(t_shell *shell, t_command *command)
 	if (!shell->oldpwd)
 		shell->oldpwd = msh_find_env(shell->env, "PWD=");
 	if (chdir(home) == -1)
+	{
 		msh_print_error(shell, command, strerror(errno), 1);
+		msh_free(&home);
+	}
 	else
 	{
 		msh_update_env(shell->env, "OLDPWD=", shell->oldpwd);

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 22:38:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/29 14:57:11 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/01/31 18:55:06 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void	msh_print_error(t_shell *shell, t_command *command, char *err_message,
 
 	if (command->cmd_args)
 	{
-		if (command->cmd_args[1][0] == '-')
-			i = 2;
-		else
-			i = 1;
-		pt_printf("minishell: %s:", command->cmd_args[0]);
-		while (command->cmd_args[++i])
-			pt_printf("%s:", command->cmd_args[i]);
+		i = 1;
+		pt_printf("minishell: %s: ", command->cmd_args[0]);
+		while (command->cmd_args[i])
+		{
+			pt_printf("%s: ", command->cmd_args[i]);
+			i++;
+		}
 		pt_printf("%s\n", err_message);
 	}
 	shell->exit_code = exit;

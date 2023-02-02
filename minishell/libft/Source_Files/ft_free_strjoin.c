@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 13:42:36 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/10 14:17:28 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/02/02 19:00:21 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ char	*ft_free_strjoin(char *s1, char *s2, char flag)
 
 	combine = ft_strjoin(s1, s2);
 	if (flag == '1')
-		free (s1);
+		ft_free(&s1);
 	if (flag == '2')
 	{
-		free(s1);
-		free(s2);
+		ft_free(&s1);
+		ft_free(&s2);
 	}
 	if (flag == '3')
-		free (s2);
+		ft_free(&s2);
 	return (combine);
 }
