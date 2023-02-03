@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/31 21:05:09 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/02/03 21:10:21 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ void	msh_check_link(t_shell *shell, t_command *command, int tmp_fd, int i)
 	command->fd_out = STDOUT_FILENO;
 	if (!(shell->command[1]))
 	{
-		// if (command->redir)
-		// 	msh_redirect(shell, command, command->redir);
+		if (command->redir)
+			msh_redirect(shell, command, command->redir);
 		msh_check_command(shell, command);
 	}
 	// else
@@ -127,7 +127,7 @@ void	msh_command_dispenser(t_shell *shell)
 {
 	int		i;
 	int		tmp_fd;
-	// int		status;
+	int		status;
 	char	*cwd;
 
 	i = -1;
@@ -142,8 +142,9 @@ void	msh_command_dispenser(t_shell *shell)
 	// 	msh_create_here_doc(shell, shell->nohd);
 	while (shell->command[++i])
 		msh_check_link(shell, shell->command[i], tmp_fd, i);
-	// i = -1;
-	// while (shell->command[++i])
-	// 	waitpid(shell->command[i]->pid, &status, 0);
-	// shell->exit_code = WEXITSTATUS(status);
+	i = -1;
+	while (shell->command[++i])
+		waitpid(shell->command[i]->pid, &status, 0);
+	close(tmp_fd);
+	shell->exit_code = WEXITSTATUS(status);
 }

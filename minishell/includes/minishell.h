@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/30 20:39:09 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/02/03 22:02:48 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,14 @@
 // # include <signal.h>
 
 /*-------- msh_error.c --------*/
+void	msh_complete_close(t_direct **redir);
+void	msh_file_error(t_shell *shell, t_direct *redir, char *err_message,
+			int exit);
 void	msh_print_error(t_shell *shell, t_command *command, char *err_message,
 			int exit);
 
 /*-------- msh_free.c --------*/
+void	msh_array_free(t_shell *shell, int i);
 void	msh_complete_free(t_shell *shell);
 void	msh_free_node(t_env *node);
 void	msh_free_list(t_env **list);
