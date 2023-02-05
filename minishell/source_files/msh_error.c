@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 22:38:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/02/03 22:00:31 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/02/05 15:26:27 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,19 @@
  * 
  * @param redir The 2d array that contains all redirections' data
  */
-void	msh_complete_close(t_direct **redir)
+void	msh_complete_close(t_shell *shell, t_direct **redir)
 {
 	int	i;
 
 	i = -1;
 	while (redir[++i])
 	{
+		if (redir[i] && redir[i]->direct == HERE_DOC)
+		{
+			shell->nohd--;
+			if (shell->nohd == 0)
+				unlink("here_doc_tmp");
+		}
 		if (redir[i])
 			close(redir[i]->fd);
 	}

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 20:31:59 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/02/03 21:52:00 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/02/05 14:53:41 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,14 @@ int	msh_in_direct(t_shell *shell, t_direct *redir, int fd)
 	}
 	else if (redir->direct == HERE_DOC)
 	{
-		redir->fd = open("here_doc_tmp", O_CREAT | O_RDWR | O_TRUNC);
+		redir->fd = open("here_doc_tmp", O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if (redir->fd == -1)
 			msh_file_error(shell, redir, strerror(errno), 1);
-		write(redir->fd, redir->hd_content, ft_strlen(redir->hd_content));
+		if (redir->fd != -1 && redir->hd_content != NULL)
+			write(redir->fd, redir->hd_content, ft_strlen(redir->hd_content));
 		fd = redir->fd;
+		close(redir->fd);
+		redir->fd = open("here_doc_tmp", O_RDONLY);
 		return (fd);
 	}
 	return (fd);

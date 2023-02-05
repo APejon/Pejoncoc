@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:28:47 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/31 21:03:23 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/02/04 16:07:03 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool	msh_is_child(t_command *command)
 void	msh_allocate_child(t_shell *shell, t_command *command)
 {
 	int	exit_number;
-	
+
 	if (!ft_strncmp(command->cmd_args[0], "cd", 3))
 		msh_cd(shell, command);
 	else if (!ft_strncmp(command->cmd_args[0], "echo", 5))

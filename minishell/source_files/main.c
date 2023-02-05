@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 13:23:14 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/02/03 21:39:07 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/02/05 14:34:52 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int ac, char **av, char **env)
 	no_of_commands = 1;
 	shell = malloc(sizeof(t_shell));
 	shell->exit_code = 0;
-	shell->nohd = 0;
+	shell->nohd = 1;
 	shell->current_line = NULL;
 	shell->line = NULL;
 	shell->oldpwd = NULL;
@@ -35,12 +35,24 @@ int	main(int ac, char **av, char **env)
 	while (++i < no_of_commands)
 		shell->command[i] = malloc(sizeof(t_command));
 	shell->command[i] = NULL;
-	shell->command[0]->cmd_args = malloc(sizeof(char *) * 2);
+	shell->command[0]->cmd_args = malloc(sizeof(char *) * 3);
 	i = -1;
 	j = 0;
-	while (++i < 1)
+	while (++i < 2)
 		shell->command[j]->cmd_args[i] = ft_strdup(av[i + 1]);
 	shell->command[j]->cmd_args[i] = NULL;
+	// shell->command[j]->redir = NULL;
+	// j++;
+	// i++;
+	// k = -1;
+	// shell->command[1]->cmd_args = malloc(sizeof(char *) * 3);
+	// while (++k < 2)
+	// {
+	// 	shell->command[j]->cmd_args[k] = ft_strdup(av[i + 1]);
+	// 	i++;
+	// }
+	// shell->command[j]->cmd_args[k] = NULL;
+	// shell->command[j]->redir = NULL;
 	shell->command[j]->redir = malloc(sizeof(t_direct *) * 2);
 	i++;
 	k = -1;
@@ -48,10 +60,14 @@ int	main(int ac, char **av, char **env)
 	{
 		shell->command[j]->redir[k] = malloc(sizeof(t_direct));
 		if (k == 0)
-			shell->command[j]->redir[k]->direct = RE_INPUT;
+			shell->command[j]->redir[k]->direct = HERE_DOC;
 		else if (k == 1)
 			shell->command[j]->redir[k]->direct = RE_OUTPUT;
-		shell->command[j]->redir[k]->file = ft_strdup(av[i + 1]);
+		if (shell->command[j]->redir[k]->direct == HERE_DOC)
+			shell->command[j]->redir[k]->file = ft_strjoin(av[i + 1], "\n");
+		else
+			shell->command[j]->redir[k]->file = ft_strdup(av[i + 1]);
+		shell->command[j]->redir[k]->hd_content = NULL;
 		i = i + 2;
 	}
 	shell->command[j]->redir[k] = NULL;
