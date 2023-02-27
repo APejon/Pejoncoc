@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:54 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/02/02 19:42:52 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:25:36 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ void	msh_export_node(t_shell *shell, char *target, char *value)
 		msh_update_env(msh_find_last_node(shell->env), target,
 			value);
 	if (*value == '\0')
-		dec_value = ft_strdup("\"\"");
+		dec_value = "\"\"";
 	else
-		dec_value = msh_quotes(ft_strdup(value));
+		dec_value = msh_quotes(value);
 	dec_node = msh_find_node(shell->dec_env, target);
 	if (dec_node)
-		msh_update_env(dec_node, ft_strdup(target), dec_value);
+		msh_update_env(dec_node, target, dec_value);
 	else
-		msh_update_env(msh_find_last_node(shell->dec_env), ft_strdup(target),
+		msh_update_env(msh_find_last_node(shell->dec_env), target,
 			dec_value);
 }
 
@@ -71,7 +71,7 @@ char	*msh_separate(char *target, char sep)
 		i++;
 	}
 	if (*value == '\0')
-		value = ft_strdup("\0");
+		value = "\0";
 	else
 		value = ft_substr(target, i, len);
 	ft_bzero(&target[i], len);
@@ -97,7 +97,7 @@ void	msh_prep_export(t_shell *shell, t_command *cmd, char *target)
 		return ;
 	}
 	value = msh_separate(target, '=');
-	ntarget = ft_strdup(target);
+	ntarget = target;
 	check = msh_find_node(shell->env, target);
 	if (check)
 	{
@@ -155,7 +155,7 @@ void	msh_export(t_shell *shell, t_command *cmd)
 				if (msh_find_env(shell->dec_env, cmd->cmd_args[i]))
 					continue ;
 				msh_update_env(msh_find_last_node(shell->dec_env),
-					ft_strdup(cmd->cmd_args[i]), NULL);
+					cmd->cmd_args[i], NULL);
 			}
 			else
 				msh_prep_export(shell, cmd, cmd->cmd_args[i]);

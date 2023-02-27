@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 13:38:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/02/02 18:53:13 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:02:36 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ void	msh_remove_node(t_env *env, t_env *target)
 		ft_bzero(point->value, ft_strlen(point->value));
 		msh_free_node(point);
 	}
-	else
-		return ;
 }
 
 /**
@@ -68,8 +66,8 @@ void	msh_create_node(t_env *env, char *variable, char *value)
 	t_env	*pointer;
 
 	pointer = malloc(sizeof(t_env));
-	pointer->variable = variable;
-	pointer->value = value;
+	pointer->variable = ft_strdup(variable);
+	pointer->value = ft_strdup(value);
 	pointer->next = NULL;
 	env->next = pointer;
 }
@@ -97,7 +95,6 @@ void	msh_update_dec_env(t_env *env, char *variable, char *value)
 		env = env->next;
 	}
 	env = start;
-	msh_free(&value);
 }
 
 /**

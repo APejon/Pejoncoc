@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:43:39 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/02/02 17:32:31 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/02/27 13:47:42 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	msh_exit(t_shell *shell, t_command *command)
 			msh_print_error(shell, command, "numeric argument required", 255);
 		else
 			shell->exit_code = ft_atoi(command->cmd_args[1]);
-		
 	}
 	count = shell->exit_code;
 	msh_complete_free(shell);

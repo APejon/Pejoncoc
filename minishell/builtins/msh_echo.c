@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:02 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/31 20:59:05 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/02/27 13:19:02 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,7 @@ void	msh_echo(t_shell *shell, t_command *command)
 	int	i;
 
 	if (!command->cmd_args[1])
-	{
-		if (command->cmd_args[1])
-		{
-		if (!ft_strncmp(command->cmd_args[1], "-n", 3))
-			return ;
-		}
-		else
-			pt_printf("\n");
-	}
+		pt_printf("\n");
 	else if (!ft_strncmp(command->cmd_args[1], "-n", 3))
 	{
 		i = 1;
