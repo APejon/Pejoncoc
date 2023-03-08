@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/02/04 20:18:21 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/08 14:34:33 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,11 @@ void	msh_check_command_piped(t_shell *shell, t_command *command)
 void	msh_check_command(t_shell *shell, t_command *command)
 {
 	char	**cmd_paths;
-	int		exit_number;
 
-	printf("%d IS FD_IN, %d IS FD_OUT\n", command->fd_in, command->fd_out);
 	if (command->cmd_args[0])
 	{
-		if (command->fd_in != STDIN_FILENO)
-			dup2(command->fd_in, STDIN_FILENO);
-		if (command->fd_out != STDOUT_FILENO)
-			dup2(command->fd_out, STDOUT_FILENO);
+		dup2(command->fd_in, STDIN_FILENO);
+		dup2(command->fd_out, STDOUT_FILENO);
 		if (msh_is_parent(command))
 			msh_allocate_parent(shell, command);
 		else
@@ -74,11 +70,7 @@ void	msh_check_command(t_shell *shell, t_command *command)
 			{
 				cmd_paths = msh_locate(shell, command);
 				if (cmd_paths == NULL)
-				{
-					exit_number = shell->exit_code;
-					msh_complete_free(shell);
-					exit (exit_number);
-				}
+					msh_free_to_exit(shell);
 				msh_execute(shell, command, cmd_paths);
 			}
 		}
@@ -95,12 +87,9 @@ void	msh_check_command(t_shell *shell, t_command *command)
  */
 void	msh_check_link(t_shell *shell, t_command *command, int tmp_fd, int i)
 {
-	command->fd_in = STDIN_FILENO;
-	command->fd_out = STDOUT_FILENO;
-	command->p_fd[0] = 0;
-	command->p_fd[1] = 1;
 	if (!(shell->command[1]))
 	{
+		close(tmp_fd);
 		if (command->redir)
 			msh_redirect(shell, command, command->redir);
 		msh_check_command(shell, command);
@@ -108,23 +97,9 @@ void	msh_check_link(t_shell *shell, t_command *command, int tmp_fd, int i)
 	else
 	{
 		if (shell->command[i + 1])
-		{
-			msh_create_pipe(shell, command, tmp_fd);
-			if (command->redir)
-				msh_redirect(shell, command, command->redir);
-			msh_check_command_piped(shell, command);
-			close(command->p_fd[1]);
-			close(tmp_fd);
-			tmp_fd = command->p_fd[0];
-		}
+			msh_pipe_command(shell, command, tmp_fd);
 		else if (!shell->command[i + 1])
-		{
-			command->fd_in = tmp_fd;
-			if (command->redir)
-				msh_redirect(shell, command, command->redir);
-			msh_check_command_piped(shell, command);
-			close(tmp_fd);
-		}
+			msh_last_command(shell, command, tmp_fd);
 	}
 }
 
@@ -154,8 +129,8 @@ void	msh_command_dispenser(t_shell *shell)
 	while (shell->command[++i])
 		msh_check_link(shell, shell->command[i], tmp_fd, i);
 	i = -1;
-	while (shell->command[++i])
+	while (shell->command[++i] && shell->command[i]->pid != 0)
 		waitpid(shell->command[i]->pid, &status, 0);
-	close(tmp_fd);
-	shell->exit_code = WEXITSTATUS(status);
+	if (shell->command[0]->pid != 0)
+		shell->exit_code = WEXITSTATUS(status);
 }

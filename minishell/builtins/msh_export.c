@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:54 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/02/27 14:25:36 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/06 15:21:07 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	msh_export_node(t_shell *shell, char *target, char *value)
 		msh_update_env(msh_find_last_node(shell->env), target,
 			value);
 	if (*value == '\0')
-		dec_value = "\"\"";
+		dec_value = ft_strdup("\"\"");
 	else
 		dec_value = msh_quotes(value);
 	dec_node = msh_find_node(shell->dec_env, target);
@@ -43,6 +43,7 @@ void	msh_export_node(t_shell *shell, char *target, char *value)
 	else
 		msh_update_env(msh_find_last_node(shell->dec_env), target,
 			dec_value);
+	msh_free(&dec_value);
 }
 
 /**
@@ -125,7 +126,7 @@ void	msh_list_dec(t_env *dec_env)
 	while (dec_env->next != NULL)
 	{
 		pt_printf("declare -x ");
-		pt_printf("%s\n", dec_env->variable);
+		pt_printf("%s", dec_env->variable);
 		if (dec_env->value)
 			pt_printf("%s\n", dec_env->value);
 		dec_env = dec_env->next;

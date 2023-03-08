@@ -6,71 +6,122 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 13:23:14 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/02/05 14:34:52 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/08 13:57:47 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(int ac, char **av, char **env)
+t_direct	**redir_content_init(t_direct **redir, int no_of_redir, int *avi,
+char **av)
+{
+	int			k;
+
+	k = -1;
+	*avi = *avi + 1;
+	while (++k < no_of_redir)
+	{
+		redir[k] = malloc(sizeof(t_direct));
+		if (k == 0)
+			redir[k]->direct = HERE_DOC;
+		else if (k == 1)
+			redir[k]->direct = HERE_DOC;
+		if (redir[k]->direct == HERE_DOC)
+			redir[k]->file = ft_strjoin(av[*avi], "\n");
+		else
+			redir[k]->file = ft_strdup(av[*avi]);
+		redir[k]->hd_content = NULL;
+		*avi = *avi + 2;
+	}
+	redir[k] = NULL;
+	return (redir);
+}
+
+t_direct	**redir_init(int no_of_redir, int *avi, char **av)
+{
+	t_direct	**redir;
+
+	if (no_of_redir == 0)
+		return (NULL);
+	else
+		redir = malloc(sizeof(t_direct *) * (no_of_redir + 1));
+	redir = redir_content_init(redir, no_of_redir, avi, av);
+	return (redir);
+}
+
+char	**command_args_init(int no_of_cmd_args, int *avi, char **av)
+{
+	int		j;
+	char	**args;
+
+	j = -1;
+	args = malloc(sizeof(char *) * (no_of_cmd_args + 1));
+	while (++j < no_of_cmd_args)
+	{
+		args[j] = ft_strdup(av[*avi]);
+		*avi = *avi + 1;
+	}
+	args[j] = NULL;
+	return (args);
+}
+
+void	commands_init(t_shell *shell, int no_of_commands)
 {
 	int			i;
-	int			j;
-	int			k;
-	int			no_of_commands;
-	t_shell		*shell;
-	// t_env		*first;
-	// char		*oldpwd;
 
-	(void)ac;
-	no_of_commands = 1;
-	shell = malloc(sizeof(t_shell));
-	shell->exit_code = 0;
-	shell->nohd = 1;
-	shell->current_line = NULL;
-	shell->line = NULL;
-	shell->oldpwd = NULL;
 	shell->command = malloc(sizeof(t_command *) * (no_of_commands + 1));
 	i = -1;
 	while (++i < no_of_commands)
 		shell->command[i] = malloc(sizeof(t_command));
 	shell->command[i] = NULL;
-	shell->command[0]->cmd_args = malloc(sizeof(char *) * 3);
+}
+
+void	shell_init(t_shell *shell)
+{
+	shell->exit_code = 0;
+	shell->nohd = 0;
+	shell->current_line = NULL;
+	shell->line = NULL;
+	shell->oldpwd = NULL;
+}
+
+int	main(int ac, char **av, char **env)
+{
+	int		no_of_commands;
+	int		no_of_cmd_args[2];
+	int		no_of_redir[2];
+	int		avi;
+	int		i;
+	int		exit;
+	t_shell	*shell;
+	// t_env		*first;
+	// char		*oldpwd;
+
+	(void)ac;
+	shell = malloc(sizeof(t_shell));
+	no_of_commands = 2;
+	no_of_cmd_args[0] = 1;
+	no_of_cmd_args[1] = 2;
+	// no_of_cmd_args[2] = 2;
+	no_of_redir[0] = 0;
+	no_of_redir[1] = 0;
+	// no_of_redir[2] = 0;
+	shell_init(shell);
+	commands_init(shell, no_of_commands);
+	avi = 1;
 	i = -1;
-	j = 0;
-	while (++i < 2)
-		shell->command[j]->cmd_args[i] = ft_strdup(av[i + 1]);
-	shell->command[j]->cmd_args[i] = NULL;
-	// shell->command[j]->redir = NULL;
-	// j++;
-	// i++;
-	// k = -1;
-	// shell->command[1]->cmd_args = malloc(sizeof(char *) * 3);
-	// while (++k < 2)
-	// {
-	// 	shell->command[j]->cmd_args[k] = ft_strdup(av[i + 1]);
-	// 	i++;
-	// }
-	// shell->command[j]->cmd_args[k] = NULL;
-	// shell->command[j]->redir = NULL;
-	shell->command[j]->redir = malloc(sizeof(t_direct *) * 2);
-	i++;
-	k = -1;
-	while (++k < 1)
+	while (++i < no_of_commands)
 	{
-		shell->command[j]->redir[k] = malloc(sizeof(t_direct));
-		if (k == 0)
-			shell->command[j]->redir[k]->direct = HERE_DOC;
-		else if (k == 1)
-			shell->command[j]->redir[k]->direct = RE_OUTPUT;
-		if (shell->command[j]->redir[k]->direct == HERE_DOC)
-			shell->command[j]->redir[k]->file = ft_strjoin(av[i + 1], "\n");
-		else
-			shell->command[j]->redir[k]->file = ft_strdup(av[i + 1]);
-		shell->command[j]->redir[k]->hd_content = NULL;
-		i = i + 2;
+		shell->command[i]->cmd_args = command_args_init(no_of_cmd_args[i],
+				&avi, av);
+		shell->command[i]->fd_in = STDIN_FILENO;
+		shell->command[i]->fd_out = STDOUT_FILENO;
+		shell->command[i]->p_fd[0] = STDIN_FILENO;
+		shell->command[i]->p_fd[1] = STDOUT_FILENO;
+		shell->command[i]->pid = 0;
+		shell->command[i]->redir = redir_init(no_of_redir[i], &avi, av);
+		avi++;
 	}
-	shell->command[j]->redir[k] = NULL;
 	// oldpwd = getcwd(NULL, 0);
 	// printf("%s\n", oldpwd);
 	// free (oldpwd);
@@ -107,9 +158,10 @@ int	main(int ac, char **av, char **env)
 	// 	shell->dec_env = shell->dec_env->next;
 	// }
 	// shell->dec_env = first;
+	exit = shell->exit_code;
 	msh_complete_free(shell);
 	// oldpwd = getcwd(NULL, 0);
 	// printf("%s\n", oldpwd);
 	// msh_free(&oldpwd);
-	return (0);
+	return (exit);
 }

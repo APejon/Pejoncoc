@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:29 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/02/27 13:35:31 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:36:16 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	msh_cd_target(t_shell *shell, t_command *command)
 	if (!(shell->oldpwd))
 		shell->oldpwd = msh_find_env(shell->env, "PWD=");
 	if ((command->cmd_args[1][0]) == '/')
-		dest = command->cmd_args[1];
+		dest = ft_strdup(command->cmd_args[1]);
 	else
 	{
 		dest = ft_strjoin(shell->oldpwd, "/");
@@ -41,6 +41,7 @@ void	msh_cd_target(t_shell *shell, t_command *command)
 		msh_update_dec_env(shell->dec_env, "PWD=", dest);
 		shell->exit_code = 0;
 	}
+	msh_free(&dest);
 }
 
 /**
@@ -82,7 +83,7 @@ void	msh_cd_home(t_shell *shell, t_command *command)
 	char	*home;
 
 	home = msh_find_env(shell->env, "HOME=");
-	else
+	if (!home)
 	{
 		msh_print_error(shell, command, "HOME not set", 1);
 		return ;

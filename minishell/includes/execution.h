@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:53:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/02/04 20:18:32 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/08 13:38:11 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ char	**msh_locate(t_shell *shell, t_command *command);
 
 /*-------- msh_pipes.c --------*/
 void	msh_create_pipe(t_shell *shell, t_command *command, int tmp_fd);
+void	msh_pipe_command(t_shell *shell, t_command *command, int tmp_fd);
+void	msh_last_command(t_shell *shell, t_command *command, int tmp_fd);
 
 /*-------- msh_pipex_split.c --------*/
 int		pipex_getwordcount(const char *s, char c);
