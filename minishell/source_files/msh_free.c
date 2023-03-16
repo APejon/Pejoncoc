@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 22:39:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/08 13:52:17 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/16 13:10:37 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	msh_array_free(t_shell *shell, int i)
 		}
 		msh_free(&shell->command[i]->redir);
 	}
+	else
+		msh_complete_close(shell, shell->command[i]);
 	msh_free(&shell->command[i]);
 }
 

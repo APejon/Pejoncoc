@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 22:38:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/08 14:13:08 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/16 13:10:01 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,20 @@ void	msh_complete_close(t_shell *shell, t_command *command)
 	close(command->fd_out);
 	close(command->p_fd[0]);
 	close(command->p_fd[1]);
-	while (command->redir[++i])
+	if (command->redir)
 	{
-		if (command->redir[i] && command->redir[i]->direct == HERE_DOC)
+		while (command->redir[++i])
 		{
-			shell->nohd--;
-			if (shell->nohd == 0)
-				unlink("here_doc_tmp");
+			if (command->redir[i] && command->redir[i]->direct == HERE_DOC)
+			{
+				shell->nohd--;
+				if (shell->nohd == 0)
+					unlink("here_doc_tmp");
+			}
+			if (command->redir[i])
+				close(command->redir[i]->fd);
 		}
-		if (command->redir[i])
-			close(command->redir[i]->fd);
 	}
-	close(STDIN_FILENO);
-	close(STDOUT_FILENO);
-	close(STDERR_FILENO);
 }
 
 /**
