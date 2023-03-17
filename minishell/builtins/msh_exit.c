@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:43:39 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/02/27 13:47:42 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/16 13:17:09 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,5 @@ void	msh_exit(t_shell *shell, t_command *command)
 		else
 			shell->exit_code = ft_atoi(command->cmd_args[1]);
 	}
-	count = shell->exit_code;
-	msh_complete_free(shell);
-	printf("%d is the exit code\n", count);
-	exit(count);
+	msh_free_to_exit(shell);
 }

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 13:23:14 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/16 12:56:42 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/17 15:40:56 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ void	shell_init(t_shell *shell)
 int	main(int ac, char **av, char **env)
 {
 	int		no_of_commands;
-	int		no_of_cmd_args[3];
-	int		no_of_redir[3];
+	int		no_of_cmd_args[2];
+	int		no_of_redir[2];
 	int		avi;
 	int		i;
 	int		exit;
@@ -99,13 +99,13 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	shell = malloc(sizeof(t_shell));
-	no_of_commands = 3;
-	no_of_cmd_args[0] = 1;
-	no_of_cmd_args[1] = 2;
-	no_of_cmd_args[2] = 2;
+	no_of_commands = 2;
+	no_of_cmd_args[0] = 2;
+	no_of_cmd_args[1] = 3;
+	// no_of_cmd_args[2] = 2;
 	no_of_redir[0] = 0;
 	no_of_redir[1] = 0;
-	no_of_redir[2] = 0;
+	// no_of_redir[2] = 0;
 	shell_init(shell);
 	commands_init(shell, no_of_commands);
 	avi = 1;

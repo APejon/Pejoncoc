@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/16 13:13:32 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/17 15:51:54 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	msh_check_command_piped(t_shell *shell, t_command *command, int tmp_fd)
 		command->pid = fork();
 		if (command->pid == 0)
 		{
+			(void)tmp_fd;
 			dup2(command->fd_out, STDOUT_FILENO);
 			close(command->p_fd[0]);
 			dup2(command->fd_in, STDIN_FILENO);

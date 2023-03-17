@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 22:38:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/16 13:10:01 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/17 15:33:04 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	msh_free_to_exit(t_shell *shell)
 
 	exit_number = shell->exit_code;
 	msh_complete_free(shell);
-	exit (exit_number);
+	exit(exit_number);
 }
 
 /**
@@ -38,10 +38,10 @@ void	msh_complete_close(t_shell *shell, t_command *command)
 	int	i;
 
 	i = -1;
-	close(command->fd_in);
-	close(command->fd_out);
-	close(command->p_fd[0]);
-	close(command->p_fd[1]);
+	// close(command->fd_in);
+	// close(command->fd_out);
+	// close(command->p_fd[0]);
+	// close(command->p_fd[1]);
 	if (command->redir)
 	{
 		while (command->redir[++i])
