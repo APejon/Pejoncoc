@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/08 13:54:22 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/30 16:49:41 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@
 /*-------- waitpid --------*/
 # include <sys/wait.h>
 
+/*-------- signal --------*/
+# include <signal.h>
+
 /*-------- Header files made --------*/
 # include "structs.h"
 # include "builtins.h"
@@ -66,10 +69,7 @@
 # include "parsing.h"
 # include "signals.h"
 
-// # include <string.h>
-// # include <sys/wait.h>
 // # include <sys/stat.h>
-// # include <signal.h>
 
 /*-------- msh_error.c --------*/
 void	msh_free_to_exit(t_shell *shell);

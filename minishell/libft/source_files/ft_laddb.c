@@ -1,20 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.h                                          :+:      :+:    :+:   */
+/*   ft_laddb.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/09 15:54:59 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/30 16:50:08 by amalbrei         ###   ########.fr       */
+/*   Created: 2023/03/30 00:14:51 by yhaidar           #+#    #+#             */
+/*   Updated: 2023/03/30 17:32:09 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNALS_H
-# define SIGNALS_H
+#include "libft.h"
 
-typedef struct s_shell	t_shell;
+/*
+**	Adds the element ’new’ at the end of the list.
+**	#1. The address of a pointer to the first link of a list.
+**	#2. The address of a pointer to the element to be added to the list.
+*/
 
-void	signal_handler_parent(int signum);
+void	ft_laddb(t_list **lst, t_list *new)
+{
+	t_list	*temp;
 
-#endif
+	temp = *lst;
+	if (*lst)
+	{
+		while (temp->next != NULL)
+			temp = temp->next;
+		temp->next = new;
+	}
+	else
+		*lst = new;
+}

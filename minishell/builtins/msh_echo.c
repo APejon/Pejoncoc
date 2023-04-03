@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:02 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/02/27 13:19:02 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/24 14:56:51 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	msh_echo(t_shell *shell, t_command *command)
 	{
 		i = 0;
 		while (command->cmd_args[++i])
-			pt_printf("%s", command->cmd_args[i]);
+			pt_printf("%s ", command->cmd_args[i]);
 		pt_printf("\n");
 	}
 	shell->exit_code = 0;

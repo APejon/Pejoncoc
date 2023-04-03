@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:54 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/06 15:21:07 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:41:38 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,12 @@ void	msh_prep_export(t_shell *shell, t_command *cmd, char *target)
 	char	*ntarget;
 	t_env	*check;
 
+	(void)cmd;
 	if (target[0] == '=')
 	{
-		msh_print_error(shell, cmd, "not a valid identifier", 1);
+		write(2, "minishell: export: ", 19);
+		write(2, target, ft_strlen(target));
+		write(2, ": not a valid identifier\n", 25);
 		return ;
 	}
 	value = msh_separate(target, '=');

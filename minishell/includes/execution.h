@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:53:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/09 14:42:50 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/22 17:48:05 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**msh_locate(t_shell *shell, t_command *command);
 
 /*-------- msh_pipes.c --------*/
 void	msh_create_pipe(t_shell *shell, t_command *command, int tmp_fd);
-void	msh_pipe_command(t_shell *shell, t_command *command, int tmp_fd);
+void	msh_pipe_command(t_shell *shell, t_command *command, int *tmp_fd);
 void	msh_last_command(t_shell *shell, t_command *command, int tmp_fd);
 
 /*-------- msh_pipex_split.c --------*/

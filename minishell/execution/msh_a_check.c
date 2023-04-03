@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/17 15:51:54 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:22:47 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void	msh_check_command_piped(t_shell *shell, t_command *command, int tmp_fd)
 		command->pid = fork();
 		if (command->pid == 0)
 		{
-			(void)tmp_fd;
 			dup2(command->fd_out, STDOUT_FILENO);
 			close(command->p_fd[0]);
+			close(command->fd_out);
 			dup2(command->fd_in, STDIN_FILENO);
 			close(tmp_fd);
 			if ((msh_is_child(command) || msh_is_parent(command))
 				&& command->pid == 0)
-				msh_allocate_child(shell, command);
+				msh_allocate_child_piped(shell, command);
 			else if (command->pid == 0)
 			{
 				cmd_paths = msh_locate(shell, command);
@@ -59,10 +59,10 @@ void	msh_check_command(t_shell *shell, t_command *command)
 
 	if (command->cmd_args[0])
 	{
-		if (command->fd_in != STDIN_FILENO)
-			dup2(command->fd_in, STDIN_FILENO);
 		if (command->fd_out != STDOUT_FILENO)
 			dup2(command->fd_out, STDOUT_FILENO);
+		if (command->fd_in != STDIN_FILENO)
+			dup2(command->fd_in, STDIN_FILENO);
 		if (msh_is_parent(command))
 			msh_allocate_parent(shell, command);
 		else
@@ -107,7 +107,7 @@ void	msh_check_link(t_shell *shell)
 		while (shell->command[++i])
 		{
 			if (shell->command[i + 1])
-				msh_pipe_command(shell, shell->command[i], tmp_fd);
+				msh_pipe_command(shell, shell->command[i], &tmp_fd);
 			else if (!shell->command[i + 1])
 				msh_last_command(shell, shell->command[i], tmp_fd);
 		}

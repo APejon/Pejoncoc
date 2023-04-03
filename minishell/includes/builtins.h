@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:53:07 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/29 15:02:52 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/22 18:56:44 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 /*-------- allocate --------*/
 bool	msh_is_parent(t_command *command);
 bool	msh_is_child(t_command *command);
+void	msh_allocate_child_piped(t_shell *shell, t_command *command);
 void	msh_allocate_child(t_shell *shell, t_command *command);
 void	msh_allocate_parent(t_shell *shell, t_command *command);
 

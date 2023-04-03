@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 22:38:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/17 15:33:04 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/24 14:45:48 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	msh_complete_close(t_shell *shell, t_command *command)
 	int	i;
 
 	i = -1;
-	// close(command->fd_in);
-	// close(command->fd_out);
-	// close(command->p_fd[0]);
-	// close(command->p_fd[1]);
+	close(command->fd_in);
+	close(command->fd_out);
+	close(command->p_fd[0]);
+	close(command->p_fd[1]);
 	if (command->redir)
 	{
 		while (command->redir[++i])
@@ -71,8 +71,11 @@ void	msh_file_error(t_shell *shell, t_direct *redir, char *err_message,
 {
 	if (redir->file)
 	{
-		pt_printf("minishell: %s: ", redir->file);
-		pt_printf("%s\n", err_message);
+		write(2, "minishell: ", 11);
+		write(2, redir->file, ft_strlen(redir->file));
+		write(2, ": ", 2);
+		write(2, err_message, ft_strlen(err_message));
+		write(2, "\n", 1);
 	}
 	shell->exit_code = exit;
 }
@@ -93,13 +96,17 @@ void	msh_print_error(t_shell *shell, t_command *command, char *err_message,
 	if (command->cmd_args)
 	{
 		i = 1;
-		pt_printf("minishell: %s: ", command->cmd_args[0]);
+		write(2, "minishell: ", 11);
+		write(2, command->cmd_args[0], ft_strlen(command->cmd_args[0]));
+		write(2, ": ", 2);
 		while (command->cmd_args[i])
 		{
-			pt_printf("%s: ", command->cmd_args[i]);
+			write(2, command->cmd_args[i], ft_strlen(command->cmd_args[i]));
+			write(2, ": ", 2);
 			i++;
 		}
-		pt_printf("%s\n", err_message);
+		write(2, err_message, ft_strlen(err_message));
+		write(2, "\n", 1);
 	}
 	shell->exit_code = exit;
 }

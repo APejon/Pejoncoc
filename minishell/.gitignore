@@ -11,3 +11,8 @@ object_files
 
 #executables
 minishell
+
+#testers
+command+argument.sh
+single_command.sh
+valgrind

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:43:39 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/16 13:17:09 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:17:53 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ void	msh_exit(t_shell *shell, t_command *command)
 	shell->exit_code = 0;
 	if (command->cmd_args[1])
 	{
-		if (command->cmd_args[2])
+		count = msh_count(command->cmd_args[1]);
+		if (count == 0)
+			msh_print_error(shell, command, "numeric argument required", 255);
+		else if (command->cmd_args[2])
 		{
 			msh_print_error(shell, command, "too many arguments", 1);
 			return ;
 		}
-		count = msh_count(command->cmd_args[1]);
-		if (count == 0)
-			msh_print_error(shell, command, "numeric argument required", 255);
 		else
 			shell->exit_code = ft_atoi(command->cmd_args[1]);
 	}

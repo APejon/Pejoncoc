@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 13:23:14 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/17 15:40:56 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/31 19:36:49 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char **av)
 	{
 		redir[k] = malloc(sizeof(t_direct));
 		if (k == 0)
-			redir[k]->direct = RE_INPUT;
+			redir[k]->direct = RE_OUTPUT;
 		else if (k == 1)
 			redir[k]->direct = HERE_DOC;
 		if (redir[k]->direct == HERE_DOC)
@@ -80,7 +80,6 @@ void	shell_init(t_shell *shell)
 {
 	shell->exit_code = 0;
 	shell->nohd = 0;
-	shell->current_line = NULL;
 	shell->line = NULL;
 	shell->oldpwd = NULL;
 }
@@ -88,23 +87,23 @@ void	shell_init(t_shell *shell)
 int	main(int ac, char **av, char **env)
 {
 	int		no_of_commands;
-	int		no_of_cmd_args[2];
-	int		no_of_redir[2];
+	int		no_of_cmd_args[1];
+	int		no_of_redir[1];
 	int		avi;
 	int		i;
 	int		exit;
 	t_shell	*shell;
-	// t_env		*first;
-	// char		*oldpwd;
+	t_env		*first;
+	char		*oldpwd;
 
 	(void)ac;
 	shell = malloc(sizeof(t_shell));
-	no_of_commands = 2;
-	no_of_cmd_args[0] = 2;
-	no_of_cmd_args[1] = 3;
+	no_of_commands = 1;
+	no_of_cmd_args[0] = 3;
+	// no_of_cmd_args[1] = 2;
 	// no_of_cmd_args[2] = 2;
 	no_of_redir[0] = 0;
-	no_of_redir[1] = 0;
+	// no_of_redir[1] = 0;
 	// no_of_redir[2] = 0;
 	shell_init(shell);
 	commands_init(shell, no_of_commands);
@@ -122,46 +121,46 @@ int	main(int ac, char **av, char **env)
 		shell->command[i]->redir = redir_init(no_of_redir[i], &avi, av);
 		avi++;
 	}
-	// oldpwd = getcwd(NULL, 0);
-	// printf("%s\n", oldpwd);
-	// free (oldpwd);
+	oldpwd = getcwd(NULL, 0);
+	printf("o_pwd %s\n", oldpwd);
+	msh_free(&oldpwd);
 	msh_create_env(&shell, env);
 	msh_create_denv(&shell, env);
-	// printf("BEFORE===========\n");
-	// first = shell->env;
-	// while (shell->env)
-	// {
-	// 	printf("%s%s\n", shell->env->variable, shell->env->value);
-	// 	shell->env = shell->env->next;
-	// }
-	// shell->env = first;
-	// first = shell->dec_env;
-	// while (shell->dec_env)
-	// {
-	// 	printf("declare -x %s%s\n", shell->dec_env->variable, shell->dec_env->value);
-	// 	shell->dec_env = shell->dec_env->next;
-	// }
-	// shell->dec_env = first;
+	printf("BEFORE===========\n");
+	first = shell->env;
+	while (shell->env)
+	{
+		printf("ENV %s%s\n", shell->env->variable, shell->env->value);
+		shell->env = shell->env->next;
+	}
+	shell->env = first;
+	first = shell->dec_env;
+	while (shell->dec_env)
+	{
+		printf("D_E %s%s\n", shell->dec_env->variable, shell->dec_env->value);
+		shell->dec_env = shell->dec_env->next;
+	}
+	shell->dec_env = first;
 	msh_command_dispenser(shell);
-	// printf("AFTER===========\n");
-	// first = shell->env;
-	// while (shell->env)
-	// {
-	// 	printf("%s%s\n", shell->env->variable, shell->env->value);
-	// 	shell->env = shell->env->next;
-	// }
-	// shell->env = first;
-	// first = shell->dec_env;
-	// while (shell->dec_env)
-	// {
-	// 	printf("declare -x %s%s\n", shell->dec_env->variable, shell->dec_env->value);
-	// 	shell->dec_env = shell->dec_env->next;
-	// }
-	// shell->dec_env = first;
+	oldpwd = getcwd(NULL, 0);
+	printf("o_pwd %s\n", oldpwd);
+	printf("AFTER===========\n");
+	first = shell->env;
+	while (shell->env)
+	{
+		printf("ENV %s%s\n", shell->env->variable, shell->env->value);
+		shell->env = shell->env->next;
+	}
+	shell->env = first;
+	first = shell->dec_env;
+	while (shell->dec_env)
+	{
+		printf("D_E %s%s\n", shell->dec_env->variable, shell->dec_env->value);
+		shell->dec_env = shell->dec_env->next;
+	}
+	shell->dec_env = first;
 	exit = shell->exit_code;
 	msh_complete_free(shell);
-	// oldpwd = getcwd(NULL, 0);
-	// printf("%s\n", oldpwd);
-	// msh_free(&oldpwd);
+	msh_free(&oldpwd);
 	return (exit);
 }

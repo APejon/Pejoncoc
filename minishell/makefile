@@ -6,7 +6,7 @@
 #    By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 14:11:12 by amalbrei          #+#    #+#              #
-#    Updated: 2023/03/08 13:49:41 by amalbrei         ###   ########.fr        #
+#    Updated: 2023/03/31 19:17:33 by amalbrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,13 +27,13 @@ EXECUTION_DIR	=	execution
 PARSING_DIR		=	parsing
 SIGNALS_DIR		=	signals
 MAIN_DIR		=	source_files
-INC_DIR 		=	-Iincludes -Ilibft/includes
+INC_DIR 		=	-I/usr/local/include -I/usr/local/opt/readline/include -Iincludes -Ilibft/includes
 LIB				=	ar	-rcs
 LIBFT			=	-Llibft -lft
 
 CC				=	gcc
 CFLAGS			=	-Wall -Wextra -Werror -g
-MINI_FLAGS 		=	-I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline 
+MINI_FLAGS 		=	-L/usr/local/lib -L/usr/local/opt/readline/lib -lreadline 
 RM				=	rm	-rf
 
 BUILTINS_SRC 	=	msh_a_allocate.c msh_cd.c	msh_echo.c	msh_env.c	msh_exit.c	\
@@ -44,11 +44,12 @@ ENVIRONMENT_SRC	=	msh_change.c	msh_create.c	msh_find.c
 EXECUTION_SRC	=	msh_a_check.c	msh_execute.c	msh_here_doc.c	msh_locate.c	\
 					msh_pipes.c		msh_pipex_split.c	msh_redirect.c
 
-PARSING_SRC		=
+PARSING_SRC		=	constructor.c	env_handler1.c	env_handler2.c	final_command_builder1.c\
+					parser1.c		parsing2.c
 
-SIGNALS_SRC		=
+SIGNALS_SRC		=	signals.c
 
-MAIN_SRC 		=	main.c	msh_error.c	msh_free.c
+MAIN_SRC 		=	minishell.c	msh_error.c	msh_free.c
 
 SRC				=	$(BUILTINS_SRC) $(EXECUTION_SRC) $(PARSING_SRC) $(SIGNALS_SRC) $(ENVIRONMENT_SRC) $(MAIN_SRC)
 
@@ -58,6 +59,7 @@ all: $(SUB_LIB) $(NAME)
 
 $(SUB_LIB):
 	@make libft.a -C libft
+	@make bonus -C libft
 	@make printf -C libft
 	@make gnl -C libft
 
@@ -92,10 +94,10 @@ $(OBJ_DIR)/%.o: $(MAIN_DIR)/%.c
 	$(CC) $(CFLAGS) $(INC_DIR) $(MINI_FLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(INC_DIR) $(MINI_FLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(INC_DIR) $(OBJ) $(LIBFT) $(MINI_FLAGS) -o $(NAME)
 	@printf "$(CYAN)\n==========================\n"
 	@printf "$(CYAN) MINISHELL COMPILED\n"
-	@printf "$(CYAN)==========================\n"
+	@printf "$(CYAN)==========================\n$(DEFAULT)"
 
 norm:
 	@norminette | grep Error

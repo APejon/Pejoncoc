@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:41:52 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/02/03 18:11:12 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/03/31 19:36:32 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ typedef struct s_shell
 {
 	int					exit_code;
 	int					nohd;
-	char				*current_line;
 	char				*line;
 	char				*oldpwd;
 	struct s_env		*env;
 	struct s_env		*dec_env;
 	struct s_command	**command;
+	struct s_list		*lexar;
+	struct s_parser		*par;
+	struct s_env		*to_env_list;
 }	t_shell;
 
 typedef struct s_env
@@ -57,5 +59,18 @@ typedef struct s_command
 	char				**cmd_args;
 	t_direct			**redir;
 }	t_command;
+
+typedef struct s_parser
+{
+	t_list	**sections;
+	// int		input_fd;
+	// int		output_fd;
+	// int		store_stdin;
+	// int		store_stdout;
+	// int		pipe_fd[2];
+	char	**paths;
+	char	**command;
+	t_list	*pipe;
+}			t_parser;
 
 #endif
