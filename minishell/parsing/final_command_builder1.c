@@ -6,11 +6,33 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/03/30 17:02:19 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/07 22:42:39 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	commands_init(t_shell *data, int p_count)
+{
+	int	j;
+
+	data->command = malloc(sizeof(t_command *) * (p_count + 1));
+	j = -1;
+	while (++j < p_count)
+		data->command[j] = malloc(sizeof(t_command));
+	data->command[j] = NULL;
+}
+
+/* Return 1 if String is Redirected */
+int	is_str_redir(char *str)
+{
+	if (!ft_strncmp(str, ">", 2)
+		|| !ft_strncmp(str, ">>", 3)
+		|| !ft_strncmp(str, "<", 2)
+		|| !ft_strncmp(str, "<<", 3))
+		return (1);
+	return (0);
+}
 
 int	count_pipes_in_lexar(t_list *lexar)
 {
@@ -38,14 +60,11 @@ int	count_pipes_in_lexar(t_list *lexar)
 int	split_into_commands(t_shell *data, t_list *lexar)
 {
 	int		i;
-	int		pipe_counter;
-	t_list	*head;
+	int		p_count;
 
 	i = 0;
-	head = lexar;
-	pipe_counter = count_pipes_in_lexar(head);
-	data->par->sections = ft_calloc(pipe_counter + 1, \
-	sizeof(t_list *));
+	p_count = count_pipes_in_lexar(lexar);
+	data->par->sections = ft_calloc(p_count + 1, sizeof(t_list *));
 	while (lexar)
 	{
 		if (is_str_redir(lexar->content))
@@ -59,29 +78,9 @@ int	split_into_commands(t_shell *data, t_list *lexar)
 			ft_laddb(&data->par->sections[i], ft_ln(lexar->content));
 		lexar = lexar->next;
 	}
-	if (data->par->pipe)
-		ft_lstclear(&data->par->pipe, free);
+	commands_init(data, p_count);
+	i = -1;
+	while (data->par->sections[++i])
+		transfer_structs(data, data->par->sections[i], i);
 	return (1);
-}
-
-/* Get Length of 2D Char Array */
-int	char_array_len(char **arr)
-{
-	int	length;
-
-	length = 0;
-	while (arr[length])
-		length++;
-	return (length);
-}
-
-/* Return 1 if String is Redirected */
-int	is_str_redir(char *str)
-{
-	if (!ft_strncmp(str, ">", 2)
-		|| !ft_strncmp(str, ">>", 3)
-		|| !ft_strncmp(str, "<", 2)
-		|| !ft_strncmp(str, "<<", 3))
-		return (1);
-	return (0);
 }

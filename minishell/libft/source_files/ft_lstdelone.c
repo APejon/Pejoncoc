@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 16:52:37 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/10/03 17:50:55 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/07 21:16:20 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ void	ft_lstdelone(t_list *lst, void (*del) (void *))
 {
 	if (!lst || !del)
 		return ;
-	del(lst -> content);
+	del(lst->content);
 	free(lst);
 }
