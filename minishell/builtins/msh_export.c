@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:54 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/24 15:41:38 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/08 19:13:47 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	msh_list_dec(t_env *dec_env)
 	t_env	*start;
 
 	start = dec_env;
-	while (dec_env->next != NULL)
+	while (dec_env)
 	{
 		pt_printf("declare -x ");
 		pt_printf("%s", dec_env->variable);

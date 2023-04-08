@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/03/30 16:58:24 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/08 19:37:43 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 /* Find PWD from the ENV, if not there it Get's it from Memory, /
    Return NULL if Error */
-static char	*get_pwd(t_env **to_env_list)
+static char	*get_pwd(t_env **env)
 {
 	char	*pwd;
 
-	pwd = get_env_value(to_env_list, "PWD");
+	pwd = get_env_value(env, "PWD");
 	if (!pwd)
 		return (NULL);
 	return (pwd);
 }
 
 /* Find PWD and Returns it's Value in ENV List, PWD is Taken out of Memory */
-static char	*resolving_env(t_env **to_env_list, char *env_name)
+static char	*resolving_env(t_env **env, char *env_name)
 {
 	if (!ft_strncmp(env_name, "PWD", 4))
-		return (get_pwd(to_env_list));
+		return (get_pwd(env));
 	else
-		return (get_env_value(to_env_list, env_name));
+		return (get_env_value(env, env_name));
 }
 
 /* Allocating a New String from a Value that will Replace
@@ -53,7 +53,7 @@ static char	*replace_str_env(t_shell *data, char *input, int idx)
 	new_str = ft_substr(input, idx - length, length);
 	if (!new_str)
 		return (NULL);
-	env_value = resolving_env(&data->to_env_list, new_str);
+	env_value = resolving_env(&data->env, new_str);
 	if (new_str)
 		free(new_str);
 	if (!env_value)

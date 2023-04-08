@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/03/30 17:00:41 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/08 19:41:57 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,18 @@ char	*str_replace_str_at(char *str, int idx, int length, char *replacement)
 }
 
 /* Returns New Allocated ENV Variable Value String from Name  */
-char	*get_env_value(t_env **to_env_list, char *env)
+char	*get_env_value(t_env **env, char *variable)
 {
-	t_env	*temp;
 	int		variable_length;
+	char	*env_var;
+	t_env	*temp;
 
-	temp = *to_env_list;
-	variable_length = ft_strlen(env);
+	temp = *env;
+	env_var = ft_strjoin(variable, "=");
+	variable_length = ft_strlen(env_var);
 	while (temp)
 	{
-		if (!ft_strncmp(temp->variable, env, variable_length))
+		if (!ft_strncmp(temp->variable, env_var, variable_length))
 			return (temp->value);
 		temp = temp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:41:52 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/07 22:26:42 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/08 19:37:26 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct s_shell
 	struct s_env		*env;
 	struct s_env		*dec_env;
 	struct s_parser		*par;
-	struct s_env		*to_env_list;
 	struct s_command	**command;
 }	t_shell;
 
