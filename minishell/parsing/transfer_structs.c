@@ -6,14 +6,14 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 22:34:43 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/07 23:22:32 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/08 19:09:02 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 t_direct	*redir_content_init(t_shell *data, t_direct *redir,
-				t_list *search, int no_of_redirs)
+				t_list *search)
 {
 	redir = malloc(sizeof(t_direct));
 	if (!ft_strncmp(search->content, ">", 2))
@@ -43,9 +43,9 @@ t_direct	*redir_content_init(t_shell *data, t_direct *redir,
 
 t_direct	**redirs_transfer(t_shell *data, t_list *section, int no_of_redirs)
 {
-	int		i;
-	char	**redirs;
-	t_list	*search;
+	int			i;
+	t_list		*search;
+	t_direct	**redirs;
 
 	if (no_of_redirs == 0)
 		return (NULL);
@@ -56,8 +56,7 @@ t_direct	**redirs_transfer(t_shell *data, t_list *section, int no_of_redirs)
 	{
 		if (is_str_redir(search->content))
 		{
-			redirs[i] = redir_content_init(data, redirs[i], search,
-					no_of_redirs);
+			redirs[i] = redir_content_init(data, redirs[i], search);
 			i++;
 		}
 		search = search->next;
@@ -100,6 +99,7 @@ void	count_inputs(t_shell *data, t_list *section)
 
 	search = section;
 	count_args = 0;
+	count_redirs = 0;
 	while (search)
 	{
 		if (is_str_redir(search->content))

@@ -6,7 +6,7 @@
 #    By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 14:11:12 by amalbrei          #+#    #+#              #
-#    Updated: 2023/04/07 22:35:13 by amalbrei         ###   ########.fr        #
+#    Updated: 2023/04/08 19:09:57 by amalbrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,33 +65,33 @@ $(SUB_LIB):
 
 $(OBJ_DIR)/%.o: $(BUILTINS_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	@printf "\033[A\033[2K\r\033[A\033[2K\r$(GREEN)Compiling:"
-	$(CC) $(CFLAGS) $(INC_DIR) $(MINI_FLAGS) -c $< -o $@
+	@printf "\033[A\033[2K\r$(GREEN)Compiling:"
+	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
 
 $(OBJ_DIR)/%.o: $(ENVIRONMENT_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	@printf "\033[A\033[2K\r\033[A\033[2K\r$(GREEN)Compiling:"
-	$(CC) $(CFLAGS) $(INC_DIR) $(MINI_FLAGS) -c $< -o $@
+	@printf "\033[A\033[2K\r$(GREEN)Compiling:"
+	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
 
 $(OBJ_DIR)/%.o: $(EXECUTION_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	@printf "\033[A\033[2K\r\033[A\033[2K\r$(GREEN)Compiling:"
-	$(CC) $(CFLAGS) $(INC_DIR) $(MINI_FLAGS) -c $< -o $@
+	@printf "\033[A\033[2K\r$(GREEN)Compiling:"
+	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
 
 $(OBJ_DIR)/%.o: $(PARSING_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	@printf "\033[A\033[2K\r\033[A\033[2K\r$(GREEN)Compiling:"
-	$(CC) $(CFLAGS) $(INC_DIR) $(MINI_FLAGS) -c $< -o $@
+	@printf "\033[A\033[2K\r$(GREEN)Compiling:"
+	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
 
 $(OBJ_DIR)/%.o: $(SIGNALS_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	@printf "\033[A\033[2K\r\033[A\033[2K\r$(GREEN)Compiling:"
-	$(CC) $(CFLAGS) $(INC_DIR) $(MINI_FLAGS) -c $< -o $@
+	@printf "\033[A\033[2K\r$(GREEN)Compiling:"
+	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
 
 $(OBJ_DIR)/%.o: $(MAIN_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	@printf "\033[A\033[2K\r\033[A\033[2K\r$(GREEN)Compiling:"
-	$(CC) $(CFLAGS) $(INC_DIR) $(MINI_FLAGS) -c $< -o $@
+	@printf "\033[A\033[2K\r$(GREEN)Compiling:"
+	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
 
 $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(INC_DIR) $(OBJ) $(LIBFT) $(MINI_FLAGS) -o $(NAME)
