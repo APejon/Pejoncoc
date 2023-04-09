@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 13:38:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/02 18:20:43 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/09 13:21:54 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	msh_remove_node(t_env *env, t_env *target)
 		point = point->next;
 		anchor->next = anchor->next->next;
 		ft_bzero(point->variable, ft_strlen(point->variable));
-		ft_bzero(point->value, ft_strlen(point->value));
+		if (point->value)
+			ft_bzero(point->value, ft_strlen(point->value));
 		msh_free_node(point);
 	}
 }
@@ -117,7 +118,8 @@ void	msh_update_env(t_env *env, char *variable, char *value)
 	{
 		if (!ft_strncmp(env->variable, variable, ft_strlen(variable)))
 		{
-			msh_remove_value(env);
+			if (env->value)
+				msh_remove_value(env);
 			env->value = ft_strdup(value);
 			break ;
 		}

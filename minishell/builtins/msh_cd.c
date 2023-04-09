@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:29 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/02 17:36:16 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/09 12:06:24 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	msh_cd_parent(t_shell *shell, t_command *command)
 
 	if (!(shell->oldpwd))
 		shell->oldpwd = msh_find_env(shell->env, "PWD=");
-	parent = shell->oldpwd;
+	parent = ft_strdup(shell->oldpwd);
 	end = ft_strrchr(parent, '/');
 	ft_bzero(end, ft_strlen(end));
 	if (chdir(parent) == -1)
@@ -70,6 +70,7 @@ void	msh_cd_parent(t_shell *shell, t_command *command)
 		msh_update_dec_env(shell->dec_env, "PWD=", parent);
 		shell->exit_code = 0;
 	}
+	msh_free(&parent);
 }
 
 /**

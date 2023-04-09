@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:54 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/08 19:13:47 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/09 13:22:43 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	msh_export_node(t_shell *shell, char *target, char *value)
 		dec_value = ft_strdup("\"\"");
 	else
 		dec_value = msh_quotes(value);
-	dec_node = msh_find_node(shell->dec_env, target);
+	dec_node = msh_find_node_ex(shell->dec_env, target);
 	if (dec_node)
 		msh_update_env(dec_node, target, dec_value);
 	else
@@ -132,6 +132,8 @@ void	msh_list_dec(t_env *dec_env)
 		pt_printf("%s", dec_env->variable);
 		if (dec_env->value)
 			pt_printf("%s\n", dec_env->value);
+		else
+			pt_printf("\n");
 		dec_env = dec_env->next;
 	}
 	dec_env = start;
@@ -156,7 +158,7 @@ void	msh_export(t_shell *shell, t_command *cmd)
 		{
 			if (!ft_strchr(cmd->cmd_args[i], '='))
 			{
-				if (msh_find_env(shell->dec_env, cmd->cmd_args[i]))
+				if (msh_find_env_ex(shell->dec_env, cmd->cmd_args[i]))
 					continue ;
 				msh_update_env(msh_find_last_node(shell->dec_env),
 					cmd->cmd_args[i], NULL);
