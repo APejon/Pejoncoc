@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:28:47 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/22 18:56:26 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/10 13:55:42 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ bool	msh_is_parent(t_command *command)
 {
 	if (!ft_strncmp(command->cmd_args[0], "cd", 3)
 		|| !ft_strncmp(command->cmd_args[0], "exit", 5)
-		|| !ft_strncmp(command->cmd_args[0], "export", 7)
+		|| (!ft_strncmp(command->cmd_args[0], "export", 7)
+			&& command->cmd_args[1])
 		|| !ft_strncmp(command->cmd_args[0], "unset", 6))
 		return (true);
 	else
@@ -34,7 +35,8 @@ bool	msh_is_child(t_command *command)
 {
 	if (!ft_strncmp(command->cmd_args[0], "echo", 5)
 		|| !ft_strncmp(command->cmd_args[0], "pwd", 4)
-		|| !ft_strncmp(command->cmd_args[0], "env", 4))
+		|| !ft_strncmp(command->cmd_args[0], "env", 4)
+		|| !ft_strncmp(command->cmd_args[0], "export", 7))
 		return (true);
 	else
 		return (false);

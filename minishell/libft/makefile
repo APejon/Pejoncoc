@@ -6,7 +6,7 @@
 #    By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/21 19:43:26 by amalbrei          #+#    #+#              #
-#    Updated: 2023/03/30 17:30:39 by amalbrei         ###   ########.fr        #
+#    Updated: 2023/04/09 18:09:05 by amalbrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,28 +73,28 @@ $(NAME): $(OBJ)
 	@printf "$(CYAN)\n==========================\n"
 	@printf "LIBFT COMPILED\n"
 	@printf "$(CYAN)==========================\n"
-	@printf "$(CYAN)==========================\n"
+	@printf "$(CYAN)==========================\n$(DEFAULT)"
 	
 bonus: $(B_OBJ)
 	@$(LIB) $(NAME) $(B_OBJ)
 	@printf "$(CYAN)\n==========================\n"
 	@printf "LIBFT BONUS COMPILED\n"
 	@printf "$(CYAN)==========================\n"
-	@printf "$(CYAN)==========================\n"
+	@printf "$(CYAN)==========================\n$(DEFAULT)"
 
 printf: $(F_OBJ)
 	@$(LIB) $(NAME) $(F_OBJ)
 	@printf "$(CYAN)\n==========================\n"
 	@printf "PRINTF COMPILED\n"
 	@printf "$(CYAN)==========================\n"
-	@printf "$(CYAN)==========================\n"
+	@printf "$(CYAN)==========================\n$(DEFAULT)"
 
 gnl: $(G_OBJ)
 	@$(LIB) $(NAME) $(G_OBJ)
 	@printf "$(CYAN)\n==========================\n"
 	@printf "GET_NEXT_LINE COMPILED\n"
 	@printf "$(CYAN)==========================\n"
-	@printf "$(CYAN)==========================\n"
+	@printf "$(CYAN)==========================\n$(DEFAULT)"
 
 list:
 	@ar -t $(NAME)

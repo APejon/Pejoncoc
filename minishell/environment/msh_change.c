@@ -6,21 +6,27 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 13:38:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/09 13:21:54 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/10 16:41:21 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 /**
- * @brief Deletes the value from the environmental variable
+ * @brief Updates the SHLVL within the environment variables, incrementing it
+ * by one each time by converting it to an integer then back into a string
  * 
- * @param env The struct containing the variables and values
+ * @param env The environment variable linked list containing the SHLVL variable
  */
-void	msh_remove_value(t_env *env)
+void	msh_update_shlvl(t_env *env)
 {
-	ft_bzero(env->value, ft_strlen(env->value));
-	msh_free(&(env->value));
+	int		previous_lvl;
+	char	*updated_lvl;
+
+	previous_lvl = ft_atoi(msh_find_env(env, "SHLVL="));
+	updated_lvl = ft_itoa(previous_lvl + 1);
+	msh_update_env(env, "SHLVL=", updated_lvl);
+	msh_free(&updated_lvl);
 }
 
 /**
@@ -87,7 +93,8 @@ void	msh_update_dec_env(t_env *env, char *variable, char *value)
 	{
 		if (!ft_strncmp(env->variable, variable, ft_strlen(variable)))
 		{
-			msh_remove_value(env);
+			ft_bzero(env->value, ft_strlen(env->value));
+			msh_free(&(env->value));
 			env->value = ft_free_strjoin(value, "\0", 1);
 			break ;
 		}
@@ -119,7 +126,10 @@ void	msh_update_env(t_env *env, char *variable, char *value)
 		if (!ft_strncmp(env->variable, variable, ft_strlen(variable)))
 		{
 			if (env->value)
-				msh_remove_value(env);
+			{
+				ft_bzero(env->value, ft_strlen(env->value));
+				msh_free(&(env->value));
+			}
 			env->value = ft_strdup(value);
 			break ;
 		}

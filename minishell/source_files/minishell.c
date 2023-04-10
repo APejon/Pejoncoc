@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 02:22:39 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/08 20:00:43 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/09 16:33:22 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	msh_eof(t_shell *data)
 {
+	printf("exit\n");
 	msh_free(&data->oldpwd);
 	msh_free(&data->par);
 	msh_free(&data);
-	printf("exit\n");
 }
 
 void	msh_reset(t_shell *data)
@@ -27,10 +27,12 @@ void	msh_reset(t_shell *data)
 	i = -1;
 	ft_bzero(data->line, ft_strlen(data->line));
 	msh_free(&data->line);
-	data->nohd = 0;
-	// while (data->command[++i])
-	// 	msh_array_free(data, i);
-	// msh_free(&data->command);
+	while (data->command[++i])
+	{
+		msh_complete_close(data, data->command[i]);
+		msh_array_free(data, i);
+	}
+	msh_free(&data->command);
 }
 
 /* Initialises All Data */
