@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 22:39:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/09 15:35:42 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/11 15:54:05 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ void	msh_array_free(t_shell *shell, int i)
 	int	j;
 
 	j = -1;
-	while (shell->command[i]->cmd_args[++j])
-		msh_free(&shell->command[i]->cmd_args[j]);
+	if (shell->command[i]->cmd_args)
+	{
+		while (shell->command[i]->cmd_args[++j])
+			msh_free(&shell->command[i]->cmd_args[j]);
+	}
 	msh_free(&shell->command[i]->cmd_args);
 	j = -1;
 	if (shell->command[i]->redir)

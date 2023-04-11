@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:28:47 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/10 13:55:42 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/11 14:33:34 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	msh_allocate_child_piped(t_shell *shell, t_command *command)
 		msh_export(shell, command);
 	else if (!ft_strncmp(command->cmd_args[0], "unset", 6))
 		msh_unset(shell, command);
+	msh_free_to_exit(shell);
 }
 
 /**

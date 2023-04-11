@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/10 17:01:56 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/11 15:54:59 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,18 @@ void	msh_check_command_piped(t_shell *shell, t_command *command, int tmp_fd)
 {
 	char	**cmd_paths;
 
-	(void)tmp_fd;
-	if (command->cmd_args[0])
+	if (command->cmd_args)
 	{
 		command->pid = fork();
 		if (command->pid == 0)
 		{
 			msh_update_fds(command);
-			close(command->p_fd[0]);
-			close(command->fd_out);
+			if (command->p_fd[0] != STDIN_FILENO)
+				close(command->p_fd[0]);
 			close(tmp_fd);
-			if ((msh_is_child(command) || msh_is_parent(command))
-				&& command->pid == 0)
+			if (msh_is_child(command) || msh_is_parent(command))
 				msh_allocate_child_piped(shell, command);
-			else if (command->pid == 0)
+			else
 			{
 				cmd_paths = msh_locate(shell, command);
 				if (cmd_paths == NULL)
@@ -71,7 +69,7 @@ void	msh_check_command(t_shell *shell, t_command *command)
 {
 	char	**cmd_paths;
 
-	if (command->cmd_args[0])
+	if (command->cmd_args)
 	{
 		if (msh_is_parent(command))
 			msh_allocate_parent(shell, command);
@@ -151,10 +149,7 @@ void	msh_command_dispenser(t_shell *shell)
 	msh_check_link(shell);
 	i = -1;
 	while (shell->command[++i] && shell->command[i]->pid != 0)
-	{
-		printf("I AWAIT THY CALL\n");
 		waitpid(shell->command[i]->pid, &status, 0);
-	}
 	if (shell->command[0]->pid != 0)
 		shell->exit_code = WEXITSTATUS(status);
 }
