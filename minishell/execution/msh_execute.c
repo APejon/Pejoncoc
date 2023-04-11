@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:19:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/10 16:31:38 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/11 22:03:30 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*msh_retrieve_command(char **paths, char *cmd)
 	char	*temp;
 	char	*bash_command;
 
-	if (access(cmd, X_OK) == 0)
+	if (access(cmd, X_OK) == 0 && ft_strncmp(cmd, "minishell", 10))
 		return (cmd);
 	while (*paths)
 	{
@@ -95,8 +95,6 @@ void	msh_execute(t_shell *shell, t_command *command, char **cmd_paths)
 		msh_print_error(shell, command, "command not found", 127);
 		exit (shell->exit_code);
 	}
-	if (!ft_strncmp(cmd, "./minishell", 12))
-		msh_update_shlvl(shell->env);
 	envp = msh_convert(shell->env);
 	execve(cmd, command->cmd_args, envp);
 }
