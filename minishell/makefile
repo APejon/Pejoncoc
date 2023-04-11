@@ -6,7 +6,7 @@
 #    By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 14:11:12 by amalbrei          #+#    #+#              #
-#    Updated: 2023/04/11 15:47:28 by amalbrei         ###   ########.fr        #
+#    Updated: 2023/04/11 17:35:04 by amalbrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,7 +92,7 @@ LIB				=	ar	-rcs
 LIBFT			=	-Llibft -lft
 
 CC				=	gcc
-CFLAGS			=	-Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS			=	-Wall -Wextra -Werror -g
 MINI_FLAGS 		=	-L/usr/local/lib -L/usr/local/opt/readline/lib -lreadline 
 RM				=	rm	-rf
 
@@ -165,6 +165,14 @@ chirp:
 
 norm:
 	@norminette | grep Error
+
+valgrind:
+	@printf "$(P)Checking with valgrind...\n$(D)"
+	@valgrind --suppressions=valgrind_readline_leaks_ignore.txt \
+	--leak-check=full --trace-children=yes --show-leak-kinds=all \
+	--track-origins=yes \
+	--track-fds=yes \
+	./minishell
 
 list:
 	@make list -C libft
