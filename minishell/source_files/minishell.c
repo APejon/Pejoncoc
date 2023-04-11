@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 02:22:39 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/09 16:33:22 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/11 17:29:40 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	msh_reset(t_shell *data)
 	int	i;
 
 	i = -1;
-	ft_bzero(data->line, ft_strlen(data->line));
-	msh_free(&data->line);
 	while (data->command[++i])
 	{
 		msh_complete_close(data, data->command[i]);
@@ -45,7 +43,6 @@ t_shell	*initialiser(char **env)
 	data->exit_code = 0;
 	data->nohd = 0;
 	data->line = NULL;
-	data->oldpwd = getcwd(NULL, 0);
 	msh_create_env(&data, env);
 	msh_create_denv(&data, env);
 	return (data);
