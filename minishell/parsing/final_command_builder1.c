@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/11 17:44:33 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/11 18:04:56 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	split_into_commands(t_shell *data, t_list *lexar)
 			ft_laddb(&data->par->sections[i], ft_ln(lexar->content));
 		lexar = lexar->next;
 	}
-	data->par->sections[i] = NULL;
 	commands_init(data, p_count);
 	i = -1;
 	while (data->par->sections[++i])

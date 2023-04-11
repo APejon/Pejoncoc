@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/11 17:27:13 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/11 18:05:03 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int	parser(t_shell *data, char **line)
 	i = -1;
 	while (data->par->sections[++i])
 		free_sections(data->par->sections[i]);
-	msh_free(data->par->sections);
 	if (data->par->pipe)
 		ft_lstclear(&data->par->pipe, free);
 	ft_bzero(data->line, ft_strlen(data->line));
