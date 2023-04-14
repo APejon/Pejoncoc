@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:19:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/12 16:09:03 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/14 14:33:00 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*msh_retrieve_command(char **paths, char *cmd)
 	char	*temp;
 	char	*bash_command;
 
-	if (access(cmd, X_OK) == 0)
+	if (access(cmd, X_OK) == 0 && ft_strncmp(cmd, "minishell", 10))
 		return (cmd);
 	while (*paths)
 	{
