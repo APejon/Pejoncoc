@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 13:38:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/14 14:34:09 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/14 17:04:50 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,19 @@ void	msh_update_shlvl(t_env *env)
  * 
  * @param env The struct containing the environment variables
  */
-void	msh_remove_node(t_env *env, t_env *target)
+void	msh_remove_node(t_env **env, t_env *target)
 {
 	t_env	*point;
 	t_env	*anchor;
 
-	point = env;
-	if (env == target)
+	point = (*env);
+	if ((*env) == target)
 	{
-		env = env->next;
+		(*env) = (*env)->next;
 		ft_bzero(point->variable, ft_strlen(point->variable));
 		ft_bzero(point->value, ft_strlen(point->value));
 		msh_free_node(point);
+		return ;
 	}
 	while (point->next != target && point->next)
 		point = point->next;

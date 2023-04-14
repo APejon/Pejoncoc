@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:43:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/12 16:00:46 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/14 17:04:16 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	msh_pluck(t_shell *shell, t_command *command, int i)
 	check = msh_find_node(shell->env, command->cmd_args[i]);
 	dec_check = msh_find_node(shell->dec_env, command->cmd_args[i]);
 	if (check)
-		msh_remove_node(shell->env,
+		msh_remove_node(&shell->env,
 			msh_find_node(shell->env, command->cmd_args[i]));
 	if (dec_check)
-		msh_remove_node(shell->dec_env,
+		msh_remove_node(&shell->dec_env,
 			msh_find_node(shell->dec_env, command->cmd_args[i]));
 }
 

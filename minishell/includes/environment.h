@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 18:49:50 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/12 15:00:42 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/14 17:05:48 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 /*-------- msh_change_env.c --------*/
 void	msh_update_shlvl(t_env *env);
-void	msh_remove_node(t_env *env, t_env *target);
+void	msh_remove_node(t_env **env, t_env *target);
 void	msh_create_node(t_env *env, char *variable, char *value);
 void	msh_update_dec_env(t_env *env, char *variable, char *value);
 void	msh_update_env(t_env *env, char *variable, char *value);

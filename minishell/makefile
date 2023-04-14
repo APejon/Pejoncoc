@@ -6,7 +6,7 @@
 #    By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 14:11:12 by amalbrei          #+#    #+#              #
-#    Updated: 2023/04/12 15:09:28 by amalbrei         ###   ########.fr        #
+#    Updated: 2023/04/14 17:08:22 by amalbrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,7 +92,7 @@ LIB				=	ar	-rcs
 LIBFT			=	-Llibft -lft
 
 CC				=	gcc
-CFLAGS			=	-Wall -Wextra -Werror -g
+CFLAGS			=	-Wall -Wextra -Werror -g -fsanitize=address
 MINI_FLAGS 		=	-L/usr/local/lib -L/usr/local/opt/readline/lib -lreadline 
 RM				=	rm	-rf
 

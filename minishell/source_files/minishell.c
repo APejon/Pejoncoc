@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 02:22:39 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/14 14:45:07 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/14 17:10:33 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,12 @@ t_shell	*initialiser(char **env)
 	data->nohd = 0;
 	data->oldpwd = NULL;
 	data->line = NULL;
-	msh_create_env(&data, env);
-	msh_create_denv(&data, env);
-	msh_update_shlvl(data->env);
+	if (env[0])
+	{
+		msh_create_env(&data, env);
+		msh_create_denv(&data, env);
+		msh_update_shlvl(data->env);
+	}
 	return (data);
 }
 
@@ -60,6 +63,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
+	printf("%s\n", env[0]);
 	data = initialiser(env);
 	signal(SIGINT, signal_handler_parent);
 	signal(SIGQUIT, SIG_IGN);
