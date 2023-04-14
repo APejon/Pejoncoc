@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/11 17:58:39 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/14 14:00:38 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ void	msh_update_fds(t_command *command)
 		dup2(command->fd_out, STDOUT_FILENO);
 	if (command->fd_in != STDIN_FILENO)
 		dup2(command->fd_in, STDIN_FILENO);
+	if (command->fd_out != STDOUT_FILENO)
+		close(command->fd_out);
+	if (command->fd_in != STDIN_FILENO)
+		close(command->fd_in);
 }
 
 /**
@@ -46,6 +50,8 @@ void	msh_check_command_piped(t_shell *shell, t_command *command, int tmp_fd)
 			if (command->p_fd[0] != STDIN_FILENO)
 				close(command->p_fd[0]);
 			close(tmp_fd);
+			if (command->p_fd[1] != STDOUT_FILENO)
+				close(command->p_fd[1]);
 			if (msh_is_child(command) || msh_is_parent(command))
 				msh_allocate_child_piped(shell, command);
 			else
@@ -110,6 +116,8 @@ void	msh_check_link(t_shell *shell)
 	{
 		if (shell->command[0]->redir)
 			msh_redirect(shell, shell->command[0], shell->command[0]->redir);
+		if (shell->command[0]->fd_in == -1 || shell->command[0]->fd_out == -1)
+			return ;
 		msh_check_command(shell, shell->command[0]);
 	}
 	else
@@ -141,6 +149,7 @@ void	msh_command_dispenser(t_shell *shell)
 	cwd = getcwd(NULL, 0);
 	if (cwd)
 	{
+		msh_free(&shell->oldpwd);
 		shell->oldpwd = getcwd(NULL, 0);
 		msh_free(&cwd);
 	}

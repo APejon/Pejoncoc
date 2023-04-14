@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 22:34:43 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/08 19:09:02 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:56:35 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void	transfer_structs(t_shell *data, t_list *section, int i)
 	data->command[i]->p_fd[0] = STDIN_FILENO;
 	data->command[i]->p_fd[1] = STDOUT_FILENO;
 	data->command[i]->pid = 0;
+	data->exit_code = 0;
 	count_inputs(data, section);
 	data->command[i]->cmd_args = cmd_args_transfer(section,
 			data->par->no_of_cmd_args);

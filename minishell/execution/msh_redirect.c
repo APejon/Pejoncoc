@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 20:31:59 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/07 14:25:16 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/14 13:33:32 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,4 @@ void	msh_redirect(t_shell *shell, t_command *command, t_direct **redir)
 			command->fd_out = msh_out_direct(shell, redir[i],
 					command->fd_out);
 	}
-	if (command->fd_in == -1 || command->fd_out == -1)
-		msh_free_to_exit(shell);
 }

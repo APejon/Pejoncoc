@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:53:07 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/10 12:48:05 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:47:35 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ void	msh_env(t_shell *shell, t_env *env);
 void	msh_exit(t_shell *shell, t_command *command);
 
 /*-------- export --------*/
+void	msh_export_node(t_shell *shell, char *target, char *value);
 char	*msh_separate(char *target, char sep);
-void	msh_print_dec(t_env *env);
+void	msh_prep_export(t_shell *shell, t_command *command, char *target);
 void	msh_list_dec(t_env *dec_env);
 void	msh_export(t_shell *shell, t_command *command);
 
@@ -47,6 +48,7 @@ void	msh_print_pwd(char *pwd);
 void	msh_pwd(t_shell *shell);
 
 /*-------- unset --------*/
+void	msh_pluck(t_shell *shell, t_command *command, int i);
 void	msh_unset(t_shell *shell, t_command *command);
 
 #endif

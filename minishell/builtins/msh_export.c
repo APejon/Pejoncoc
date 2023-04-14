@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:54 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/09 13:22:43 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:57:55 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,33 +86,32 @@ char	*msh_separate(char *target, char sep)
  * @param cmd The struct containing the command's arguments
  * @param target The argument selected
  */
-void	msh_prep_export(t_shell *shell, t_command *cmd, char *target)
+void	msh_prep_export(t_shell *shell, t_command *command, char *target)
 {
 	char	*value;
-	char	*ntarget;
 	t_env	*check;
 
-	(void)cmd;
 	if (target[0] == '=')
 	{
-		write(2, "minishell: export: ", 19);
+		write(2, "minishell: ", 11);
+		write(2, command->cmd_args[0], ft_strlen(command->cmd_args[0]));
+		write(2, ": ", 2);
 		write(2, target, ft_strlen(target));
-		write(2, ": not a valid identifier\n", 25);
+		write(2, ": ", 2);
+		write(2, "not a valid identifier\n", 23);
+		shell->exit_code = 1;
 		return ;
 	}
 	value = msh_separate(target, '=');
-	ntarget = target;
 	check = msh_find_node(shell->env, target);
 	if (check)
 	{
 		if (!ft_strncmp(check->value, value, ft_strlen(value) + 1))
-		{
-			msh_free(&value);
-			return ;
-		}
+			return (msh_free(&value));
 	}
-	msh_export_node(shell, ntarget, value);
-	shell->exit_code = 0;
+	msh_export_node(shell, target, value);
+	if (shell->exit_code != 1)
+		shell->exit_code = 0;
 }
 
 /**
