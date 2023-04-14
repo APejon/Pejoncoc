@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 22:34:43 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/12 15:56:35 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/14 18:11:18 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_direct	*redir_content_init(t_shell *data, t_direct *redir,
 				t_list *search)
 {
-	redir = malloc(sizeof(t_direct));
+	redir = ft_calloc(1, sizeof(t_direct));
 	if (!ft_strncmp(search->content, ">", 2))
 		redir->direct = RE_OUTPUT;
 	else if (!ft_strncmp(search->content, ">>", 3))
@@ -49,7 +49,7 @@ t_direct	**redirs_transfer(t_shell *data, t_list *section, int no_of_redirs)
 
 	if (no_of_redirs == 0)
 		return (NULL);
-	redirs = malloc(sizeof(t_direct *) * (no_of_redirs + 1));
+	redirs = ft_calloc((no_of_redirs + 1), (sizeof(t_direct *)));
 	i = 0;
 	search = section;
 	while (i < no_of_redirs)
@@ -73,7 +73,7 @@ char	**cmd_args_transfer(t_list *section, int no_of_cmd_args)
 
 	if (no_of_cmd_args == 0)
 		return (NULL);
-	args = malloc(sizeof(char *) * (no_of_cmd_args + 1));
+	args = ft_calloc((no_of_cmd_args + 1), (sizeof(char *)));
 	i = 0;
 	search = section;
 	while (i < no_of_cmd_args)

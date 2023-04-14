@@ -6,26 +6,31 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 18:49:50 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/14 17:05:48 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/14 19:43:12 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENVIRONMENT_H
 # define ENVIRONMENT_H
 
-/*-------- msh_change_env.c --------*/
+/*-------- msh_change.c --------*/
 void	msh_update_shlvl(t_env *env);
 void	msh_remove_node(t_env **env, t_env *target);
 void	msh_create_node(t_env *env, char *variable, char *value);
 void	msh_update_dec_env(t_env *env, char *variable, char *value);
 void	msh_update_env(t_env *env, char *variable, char *value);
 
-/*-------- msh_create_env.c --------*/
+/*-------- msh_create.c --------*/
 char	*msh_quotes(char *value);
 t_env	*msh_create_first(char **env, int *i);
 void	msh_create_rest(t_env **head, char **env, int *i);
 void	msh_create_denv(t_shell **shell, char **env);
 void	msh_create_env(t_shell **shell, char **env);
+
+/*-------- msh_empty.c --------*/
+void	msh_create_new_env(t_shell **shell, char *mixed);
+void	msh_create_new_d_env(t_shell **shell, char *mixed);
+void	msh_empty(t_shell **shell, char *mixed);
 
 /*-------- msh_ex.c --------*/
 void	msh_update_secluded(t_env *env, char *variable);

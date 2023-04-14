@@ -6,7 +6,7 @@
 #    By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 14:11:12 by amalbrei          #+#    #+#              #
-#    Updated: 2023/04/14 17:08:22 by amalbrei         ###   ########.fr        #
+#    Updated: 2023/04/14 19:05:09 by amalbrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,7 +99,8 @@ RM				=	rm	-rf
 BUILTINS_SRC 	=	msh_a_allocate.c msh_cd.c	msh_echo.c	msh_env.c	msh_exit.c	\
 					msh_export.c	msh_pwd.c	msh_unset.c
 
-ENVIRONMENT_SRC	=	msh_change.c	msh_create.c	msh_find.c	msh_ex.c
+ENVIRONMENT_SRC	=	msh_change.c	msh_create.c	msh_find.c	msh_ex.c			\
+					msh_empty.c
 
 EXECUTION_SRC	=	msh_a_check.c	msh_execute.c	msh_here_doc.c	msh_locate.c	\
 					msh_pipes.c		msh_pipex_split.c	msh_redirect.c

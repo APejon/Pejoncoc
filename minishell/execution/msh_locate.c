@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 14:44:52 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/29 16:37:26 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/14 18:38:06 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,21 @@ char	*msh_find_path(t_env *enviro)
 {
 	t_env	*pointer;
 
-	pointer = enviro;
-	while (pointer)
+	if (enviro)
 	{
-		if (!ft_strncmp(pointer->variable, "PATH=", 5) || pointer->next == NULL)
-			break ;
-		pointer = pointer->next;
+		pointer = enviro;
+		while (pointer)
+		{
+			if (!ft_strncmp(pointer->variable, "PATH=", 5)
+				|| pointer->next == NULL)
+				break ;
+			pointer = pointer->next;
+		}
+		if (pointer->next == NULL && ft_strncmp(pointer->variable, "PATH=", 5))
+			return (NULL);
+		return (pointer->value);
 	}
-	if (pointer->next == NULL && ft_strncmp(pointer->variable, "PATH=", 5))
-		return (NULL);
-	return (pointer->value);
+	return (NULL);
 }
 
 /**

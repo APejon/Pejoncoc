@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:54 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/12 15:57:55 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/14 20:03:31 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void	msh_list_dec(t_env *dec_env)
  */
 void	msh_export(t_shell *shell, t_command *cmd)
 {
-	int	i;
+	int		i;
 
 	if (cmd->cmd_args[1] == NULL)
 		msh_list_dec(shell->dec_env);
@@ -155,13 +155,9 @@ void	msh_export(t_shell *shell, t_command *cmd)
 		i = 0;
 		while (cmd->cmd_args[++i])
 		{
-			if (!ft_strchr(cmd->cmd_args[i], '='))
-			{
-				if (msh_find_env_ex(shell->dec_env, cmd->cmd_args[i]))
-					continue ;
-				msh_update_env(msh_find_last_node(shell->dec_env),
-					cmd->cmd_args[i], NULL);
-			}
+			if (shell->env == NULL || shell->dec_env == NULL
+				|| !ft_strchr(cmd->cmd_args[i], '='))
+				msh_empty(&shell, cmd->cmd_args[i]);
 			else
 				msh_prep_export(shell, cmd, cmd->cmd_args[i]);
 		}
