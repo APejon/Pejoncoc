@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 18:49:50 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/14 19:43:12 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/14 21:18:29 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	msh_create_denv(t_shell **shell, char **env);
 void	msh_create_env(t_shell **shell, char **env);
 
 /*-------- msh_empty.c --------*/
+void	msh_update_dec(t_shell **shell, char *mixed);
 void	msh_create_new_env(t_shell **shell, char *mixed);
 void	msh_create_new_d_env(t_shell **shell, char *mixed);
 void	msh_empty(t_shell **shell, char *mixed);

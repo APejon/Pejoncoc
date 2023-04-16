@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 12:56:49 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/14 19:39:37 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/14 21:02:08 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*msh_find_env_ex(t_env *env, char *line)
 	len = ft_strlen(line) + 1;
 	while (ft_strncmp(line, point->variable, len) && point->next != NULL)
 		point = point->next;
-	if (point->next == NULL && !ft_strncmp(line, point->variable, len))
+	if (!ft_strncmp(line, point->variable, len))
 		return (point->variable);
 	point = env;
 	line_j = ft_strjoin(line, "=");

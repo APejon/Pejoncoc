@@ -6,23 +6,46 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 18:41:37 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/14 20:09:11 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/16 12:24:33 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+void	msh_update_dec(t_shell **shell, char *mixed)
+{
+	char	*value;
+	t_env	*check;
+
+	value = msh_separate(mixed, '=');
+	check = msh_find_node((*shell)->dec_env, mixed);
+	if (check)
+	{
+		if (!ft_strncmp(check->value, value, ft_strlen(value) + 1))
+			return (msh_free(&value));
+	}
+	msh_export_node(*shell, mixed, value);
+	if ((*shell)->exit_code != 1)
+		(*shell)->exit_code = 0;
+}
+
 void	msh_create_new_env(t_shell **shell, char *mixed)
 {
 	char	*value;
+	char	*mixed_var;
 	t_env	*envn;
 
-	value = ft_strchr(mixed, '=');
+	mixed_var = ft_strdup(mixed);
+	value = msh_separate(mixed_var, '=');
 	envn = ft_calloc(1, sizeof(t_env));
-	envn->variable = ft_strdup(mixed);
+	envn->variable = ft_strdup(mixed_var);
 	envn->value = ft_strdup(value);
 	envn->next = NULL;
 	(*shell)->env = envn;
+	msh_free(&value);
+	msh_free(&mixed_var);
+	if ((*shell)->dec_env)
+		msh_update_dec(shell, mixed);
 }
 
 void	msh_create_new_d_env(t_shell **shell, char *mixed)
@@ -54,7 +77,6 @@ void	msh_create_new_d_env(t_shell **shell, char *mixed)
 
 void	msh_empty(t_shell **shell, char *mixed)
 {
-	printf("CREATION\n");
 	if (ft_strchr(mixed, '=') && !(*shell)->env)
 		msh_create_new_env(shell, mixed);
 	if (!(*shell)->dec_env)

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:54 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/14 20:03:31 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/16 12:06:30 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,12 @@
 void	msh_export_node(t_shell *shell, char *target, char *value)
 {
 	char	*dec_value;
-	t_env	*node;
 	t_env	*dec_node;
 
-	node = msh_find_node(shell->env, target);
-	if (node)
-		msh_update_env(node, target, value);
+	if (msh_find_node(shell->env, target))
+		msh_update_env(msh_find_node(shell->env, target), target, value);
 	else
-		msh_update_env(msh_find_last_node(shell->env), target,
-			value);
+		msh_update_env(msh_find_last_node(shell->env), target, value);
 	if (*value == '\0')
 		dec_value = ft_strdup("\"\"");
 	else
