@@ -6,25 +6,70 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:43:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/14 17:04:16 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/16 13:53:08 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Checks if the identifier for unset or export is invalid
+ * 
+ * @param identi The string containing the identifier
+ * @param flag Checks whether its from "export" or "unset"
+ * @return int Whether its invalid or not to reflect in an if condition
+ */
+int	msh_invalid(char *identi, char flag)
+{
+	int	i;
+
+	i = -1;
+	while (identi[++i])
+	{
+		if (identi[i] == '_' || identi[i] == '=')
+			continue ;
+		else if (!ft_isalnum(identi[i]))
+			return (1);
+	}
+	if (flag == 'u')
+	{
+		if (ft_strchr(identi, '=') || ft_isdigit(identi[0]))
+			return (1);
+	}
+	else if (flag == 'e')
+	{
+		if (identi[0] == '=' || ft_isdigit(identi[0]))
+			return (1);
+	}
+	return (0);
+}
+
+/**
+ * @brief Removes a node from the environment list using "unset"
+ * 
+ * @param shell The struct containing variables of used within the shell
+ * @param command The struct containing the command's components
+ * @param i The index of the command arguments
+ */
 void	msh_pluck(t_shell *shell, t_command *command, int i)
 {
 	t_env	*check;
 	t_env	*dec_check;
 
-	check = msh_find_node(shell->env, command->cmd_args[i]);
-	dec_check = msh_find_node(shell->dec_env, command->cmd_args[i]);
-	if (check)
-		msh_remove_node(&shell->env,
-			msh_find_node(shell->env, command->cmd_args[i]));
-	if (dec_check)
-		msh_remove_node(&shell->dec_env,
-			msh_find_node(shell->dec_env, command->cmd_args[i]));
+	if (shell->env)
+	{
+		check = msh_find_node(shell->env, command->cmd_args[i]);
+		if (check)
+			msh_remove_node(&shell->env,
+				msh_find_node(shell->env, command->cmd_args[i]));
+	}
+	if (shell->dec_env)
+	{
+		dec_check = msh_find_node(shell->dec_env, command->cmd_args[i]);
+		if (dec_check)
+			msh_remove_node(&shell->dec_env,
+				msh_find_node(shell->dec_env, command->cmd_args[i]));
+	}
 }
 
 /**
@@ -43,7 +88,7 @@ void	msh_unset(t_shell *shell, t_command *command)
 		i = 0;
 		while (command->cmd_args[++i])
 		{
-			if (command->cmd_args[i][0] == '=')
+			if (msh_invalid(command->cmd_args[i], 'u'))
 			{
 				write(2, "minishell: ", 11);
 				write(2, command->cmd_args[0], ft_strlen(command->cmd_args[0]));
@@ -54,7 +99,7 @@ void	msh_unset(t_shell *shell, t_command *command)
 				shell->exit_code = 1;
 				continue ;
 			}
-			else
+			else if (shell->dec_env)
 				msh_pluck(shell, command, i);
 		}
 	}

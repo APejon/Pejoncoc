@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:53:07 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/16 12:05:53 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/16 13:53:27 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	msh_print_pwd(char *pwd);
 void	msh_pwd(t_shell *shell);
 
 /*-------- unset --------*/
+int		msh_invalid(char *identi, char flag);
 void	msh_pluck(t_shell *shell, t_command *command, int i);
 void	msh_unset(t_shell *shell, t_command *command);
 

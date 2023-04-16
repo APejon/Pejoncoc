@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 18:41:37 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/16 12:24:33 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/16 13:44:07 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,19 @@ void	msh_create_new_d_env(t_shell **shell, char *mixed)
 	msh_free(&mixed_dup);
 }
 
-void	msh_empty(t_shell **shell, char *mixed)
+void	msh_empty(t_shell **shell, t_command *command, char *mixed)
 {
+	if (msh_invalid(mixed, 'e'))
+	{
+		write(2, "minishell: ", 11);
+		write(2, command->cmd_args[0], ft_strlen(command->cmd_args[0]));
+		write(2, ": ", 2);
+		write(2, mixed, ft_strlen(mixed));
+		write(2, ": ", 2);
+		write(2, "not a valid identifier\n", 23);
+		(*shell)->exit_code = 1;
+		return ;
+	}
 	if (ft_strchr(mixed, '=') && !(*shell)->env)
 		msh_create_new_env(shell, mixed);
 	if (!(*shell)->dec_env)
