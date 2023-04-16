@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_strjoin.c                                  :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/13 13:42:36 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/13 13:43:03 by amalbrei         ###   ########.fr       */
+/*   Created: 2022/02/14 17:10:33 by amalbrei          #+#    #+#             */
+/*   Updated: 2022/12/24 16:18:57 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_free_strjoin(char *s1, char *s2, char flag)
+/**
+ * @brief Clears the entire linked list from the program
+ * 
+ * @param lst The 2D array of a linked list
+ * @param del The function pointer to a delete function
+ */
+void	ft_lstclear(t_list **lst, void (*del) (void *))
 {
-	char	*combine;
+	t_list	*temp;
 
-	combine = ft_strjoin(s1, s2);
-	if (flag == '1')
-		free (s1);
-	if (flag == '2')
+	if (lst)
 	{
-		free(s1);
-		free(s2);
+		while (*lst)
+		{
+			temp = (*lst)->next;
+			ft_lstdelone(*lst, del);
+			(*lst) = temp;
+		}
 	}
-	if (flag == '3')
-		free (s2);
-	return (combine);
 }

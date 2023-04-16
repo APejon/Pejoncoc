@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/21 19:45:42 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/10/03 19:06:33 by amalbrei         ###   ########.fr       */
+/*   Created: 2023/02/02 18:57:21 by amalbrei          #+#    #+#             */
+/*   Updated: 2023/04/11 17:32:22 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief Measures the size of a string
+ * @brief Frees memory, makes sure it exists first
  * 
- * @param c The string to be measured
- * @return size_t The size of the string
+ * @param memory Pointer to memory that will be freed
  */
-size_t	ft_strlen(const char *c)
+void	ft_free(void *memory)
 {
-	size_t	i;
-
-	i = 0;
-	while (c[i])
-		i++;
-	return (i);
+	if (*(void **)memory != NULL)
+		free(*(void **)memory);
+	*(void **)memory = NULL;
 }

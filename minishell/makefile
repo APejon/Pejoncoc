@@ -6,71 +6,176 @@
 #    By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 14:11:12 by amalbrei          #+#    #+#              #
-#    Updated: 2022/12/14 14:42:26 by amalbrei         ###   ########.fr        #
+#    Updated: 2023/04/16 13:06:33 by amalbrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-DEFAULT			=	\033[0m
-RED				=	\033[1;31m
-GREEN			=	\033[1;32m
-YELLOW			=	\033[1;33m
-PURPLE			=	\033[0;35m
-CYAN			=	\033[1;36m
+D			=	\033[0m
+R			=	\033[1;31m
+G			=	\033[1;32m
+Y			=	\033[1;33m
+P			=	\033[0;35m
+C			=	\033[1;36m
+
+PEJON			:=	\
+              
+PEJON +=\t$(D)                                                                        ░░░░░░░░░░░░░░░░░░                          \n
+PEJON +=\t                                                            ░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒░░▒▒                        \n
+PEJON +=\t                                            ░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒░░▒▒░░░░░░░░░░▒▒                        \n
+PEJON +=\t                          ░░░░░░░░░░░░░░░░░░░░░█░░░█░░▒█▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒░░▓▓                        \n
+PEJON +=\t          ░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒░░░░▒▒▒▒░██░███░██▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓▓                        \n
+PEJON +=\t░░▒▒▒▒▒▒░░▒▒░░░░▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░░░▒██▒███░██░░░░░░░░░░░░░░░░░░░░░▒▒░░▒▒░░▒▒░░▓▓                        \n
+PEJON +=\t░░▒▒▒▒▒▒░░░░░░░░░░░░▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░██████████▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░                          \n
+PEJON +=\t░░▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░▒▒░░░░░░░░░░░░$(Y)████████$(D)░░░░░░░░░░░░░░░░░░▒▒░░▒▒░░░░░░░░░░                          \n
+PEJON +=\t  ▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒░░▒▒▒▒▒▒$(Y)████▓▓▒▒▓▓$(D)░░░░░░░░░░░░░░░░░░░░▒▒░░▒▒░░▒▒░░                          \n
+PEJON +=\t▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░$(Y)██$(D)░░▒▒▒▒░░$(Y)██$(D)▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░                          \n
+PEJON +=\t  ▒▒▒▒▒▒▒▒▒▒▒▒░░▒▒░░▒▒░░░░░░░░░░░░░░░░░░░░░░$(Y)██$(D)░░░░$(C)▓▓▓▓$(D)░░░░$(Y)██▓▓$(D)░░░░░░░░░░░░▒▒░░▒▒░░▒▒░░░░░░                          \n
+PEJON +=\t  ░░░░░░▒▒░░▒▒▒▒░░▒▒░░░░░░▒▒░░░░░░▒▒░░░░░░░░$(Y)██$(D)░░░░$(C)██$(D)  ░░$(Y)██████▓▓$(D)░░░░░░░░░░░░░░░░░░░░░░░░░░░░                        \n
+PEJON +=\t░░▒▒▒▒░░░░░░░░░░░░░░░░░░░░▒▒▒▒░░░░▒▒▒▒▒▒░░▒▒$(Y)██$(D)▒▒▒▒$(C)████$(D)▒▒$(Y)██████▓▓$(D)▒▒░░░░░░░░░░░░░░░░░░░░░░░░                          \n
+PEJON +=\t  ░░▒▒░░░░░░░░░░░░▒▒░░░░░░░░░░░░░░░░░░░░▒▒$(Y)██$(D)░░░░░░░░▒▒░░$(Y)██$(D)░░░░$(Y)▓▓██▓▓$(D)░░░░░░▒▒░░▒▒░░▒▒░░░░░░                          \n
+PEJON +=\t  ▒▒▒▒▒▒░░▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░$(Y)▓▓▓▓▓▓$(D)░░░░░░░░░░$(Y)██$(D)░░░░░░░░$(Y)▓▓▓▓$(D)░░░░░░░░░░░░░░░░░░░░                          \n
+PEJON +=\t  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒$(Y)██▓▓▓▓$(D)▒▒▒▒▒▒▒▒▒▒$(Y)██$(D)░░░░░░░░$(Y)▓▓██$(D)░░░░▒▒░░▒▒░░▒▒░░░░░░                          \n
+PEJON +=\t  ▒▒░░▒▒▒▒▒▒░░▒▒░░▒▒▒▒░░▒▒░░░░▒▒░░░░░░$(Y)██▓▓██▓▓▓▓▓▓$(D)░░░░░░$(Y)██████████▓▓$(D)░░░░░░░░░░░░░░░░░░░░░░                          \n
+PEJON +=\t  ▒▒▒▒▒▒▒▒▒▒░░▒▒░░░░░░░░░░░░░░▒▒$(Y)██████▓▓▓▓▓▓████▓▓▓▓$(D)░░░░░░▒▒$(Y)▓▓▓▓██$(D)▒▒░░░░░░░░░░░░░░░░░░░░░░                          \n
+PEJON +=\t  ░░░░▒▒░░░░░░░░░░░░░░░░░░▒▒$(Y)▓▓$(D)▒▒$(Y)▓▓▓▓▓▓▓▓▓▓▓▓████▓▓▓▓$(D)▒▒▒▒▒▒░░$(Y)▓▓▓▓$(D)░░░░░░░░░░▒▒░░▒▒░░░░░░░░░░                          \n
+PEJON +=\t  ░░░░░░░░▒▒▒▒▒▒▒▒▒▒░░░░▒▒▒▒$(Y)██▓▓$(D)▒▒░░▒▒$(Y)▓▓▓▓▓▓▓▓▓▓██▓▓▓▓▓▓$(D)░░░░$(Y)▓▓▓▓$(D)░░░░░░░░░░░░░░░░░░░░░░░░░░                          \n
+PEJON +=\t  ░░░░░░▒▒▒▒▒▒▒▒░░▒▒▒▒▒▒▒▒$(Y)██$(D)▒▒░░▒▒░░░░░░░░$(Y)▓▓▓▓▓▓▓▓██$(D)▒▒$(Y)▓▓$(D)▒▒▒▒$(Y)██▓▓$(D)░░░░░░░░░░▒▒░░▒▒░░▒▒░░░░░░                          \n
+PEJON +=\t  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░▒▒▒▒$(Y)██$(D)▒▒$(Y)██$(D)░░░░░░░░▒▒▒▒$(Y)▓▓▓▓▓▓▓▓██$(D)░░$(Y)▓▓▓▓▓▓██$(D)▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░                          \n
+PEJON +=\t  ▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░▒▒$(Y)▓▓▓▓▓▓██$(D)▒▒▒▒▒▒▒▒▒▒▒▒$(Y)▓▓▓▓▓▓▓▓██$(D)░░░░░░$(Y)██▓▓$(D)▒▒░░░░░░░░░░▒▒░░░░▒▒▒▒░░░░░░                          \n
+PEJON +=\t  ▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░$(Y)▓▓▒▒▓▓▓▓██$(D)▒▒▒▒▒▒░░░░░░░░░░$(Y)▓▓▓▓██$(D)▒▒▒▒░░$(Y)██$(D)▒▒░░░░░░░░░░░░▒▒░░░░░░░░░░░░░░                          \n
+PEJON +=\t  ▒▒▒▒░░░░▒▒░░▒▒▒▒▒▒$(Y)▓▓$(D)▒▒$(Y)▓▓$(D)▒▒▒▒$(Y)██$(D)░░░░░░░░▒▒░░▒▒$(Y)▓▓▓▓██$(D)▒▒▒▒░░$(Y)██$(D)▒▒░░░░░░░░░░░░░░░░░░▒▒░░▒▒░░░░                          \n
+PEJON +=\t  ▒▒░░▒▒▒▒▒▒▒▒▒▒▒▒$(Y)██$(D)░░░░▒▒▒▒$(Y)▓▓▓▓▓▓$(D)▒▒▒▒▒▒▒▒░░░░░░$(Y)██$(D)░░░░░░░░$(Y)██$(D)▒▒░░░░░░░░░░░░▒▒░░░░░░░░░░░░▒▒                          \n
+PEJON +=\t  ▒▒▒▒▒▒▒▒▒▒▒▒░░▒▒$(Y)██$(D)░░▒▒▒▒$(Y)▓▓▒▒▓▓██$(D)░░░░░░░░░░▒▒░░$(Y)██$(D)▒▒░░▒▒▒▒$(Y)██$(D)▒▒░░░░░░░░░░░░░░░░░░▒▒░░▒▒░░▒▒                          \n
+PEJON +=\t  ▒▒▒▒▒▒▒▒▒▒▒▒$(G)██$(Y)▓▓▓▓$(D)▒▒▒▒▒▒$(Y)▓▓$(D)▒▒▒▒▒▒$(Y)██$(D)░░░░▒▒▒▒▒▒▒▒$(Y)██$(D)░░░░░░$(Y)██$(D)▒▒░░░░░░░░░░░░░░▒▒░░░░░░░░░░░░▒▒                          \n
+PEJON +=\t  ▒▒▒▒▒▒▒▒$(G)████░░$(Y)▓▓▓▓▓▓▒▒▒▒$(D)░░░░░░▒▒▒▒░░▒▒▒▒▒▒▒▒$(Y)██$(D)░░░░░░$(Y)████$(D)▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒                          \n
+PEJON +=\t  ▒▒▒▒▒▒$(G)▓▓░░░░░░▒▒▓▓▓▓$(Y)████$(D)░░░░░░░░░░▒▒▒▒▒▒▒▒░░$(Y)██$(D)░░░░$(Y)██▓▓██$(D)▒▒░░░░░░░░░░░░░░░░░░░░▒▒░░▒▒░░▒▒                          \n
+PEJON +=\t  ▒▒▒▒▒▒$(G)▓▓░░▓▓░░░░▓▓▓▓▓▓$(Y)██$(D)░░░░$(Y)██▒▒▒▒▒▒$(D)░░░░░░░░░░░░$(Y)▓▓██$(D)▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░                          \n
+PEJON +=\t  ░░▒▒▒▒$(G)▓▓██░░░░▓▓▒▒░░░░░░$(Y)██▓▓▓▓$(D)▒▒▒▒░░░░░░░░░░░░▒▒$(Y)██$(D)▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒                          \n
+PEJON +=\t  ▒▒▒▒▒▒▒▒░░▒▒$(G)▓▓██████████▓▓$(Y)██$(D)▒▒░░░░░░░░░░░░▒▒▒▒$(Y)██$(D)░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒░░▒▒░░▒▒░░▒▒                          \n
+PEJON +=\t  ▒▒▒▒▒▒$(G)██░░██▓▓$(D)▒▒░░░░▒▒$(G)▓▓$(D)▒▒$(Y)██$(D)░░░░░░░░░░▒▒▒▒░░$(Y)██$(D)░░░░░░░░▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒                          \n
+PEJON +=\t  ▒▒▒▒$(G)▓▓░░▓▓▓▓$(D)░░▒▒░░░░░░▒▒▒▒░░$(Y)████████$(D)▒▒▒▒$(Y)████$(D)░░░░░░░░▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒░░▒▒                          \n
+PEJON +=\t  ░░▒▒$(G)▓▓██▓▓▒▒$(D)░░▒▒░░░░▒▒▒▒░░░░░░▒▒$(Y)▓▓████$(D)░░$(Y)██$(D)▒▒░░░░░░▒▒▒▒░░░░░░░░░░░░░░░░░░░░▒▒░░▒▒░░░░░░▒▒░░                        \n
+PEJON +=\t  ░░▒▒▒▒░░▒▒▒▒░░░░░░▒▒▒▒░░░░░░░░░░░░▒▒$(R)██$(D)░░$(R)██▓▓$(D)▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒░░░░░░░░░░░░░░            \n
+PEJON +=\t  ░░░░░░░░▒▒▒▒░░░░░░░░▒▒░░░░░░░░▒▒░░░░$(R)██$(D)▒▒▒▒$(R)▓▓██████$(D)░░░░▒▒░░░░░░░░░░░░░░░░░░░░░░▒▒░░▒▒░░▒▒░░░░░░░░░░░░░░░░░░░░░░░░  \n
+PEJON +=\t    ░░░░░░░░▒▒░░░░░░▒▒░░░░░░░░░░░░$(R)████$(D)▒▒▒▒▒▒▒▒░░░░▒$(R)▒▒$(D)▒▒▒░░░░░░░░░░░░░░░░░░░░▒▒░░▒▒░░▒▒░░▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░\n
+PEJON +=\t      ░░▒▒▒▒░░░░░░░░░░░░░░░░▒▒░░░░$(R)██$(D)░░▒▒▒▒░░▒▒░░░░▒▒$(R)██$(D)░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░\n
+PEJON +=\t            ░░░░▒▒░░░░░░░░░░░░░░░░░░$(R)▓▓$(D)▒▒$(R)██$(D)░░$(R)██$(D)▒▒▒▒$(R)██$(D)░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒░░▒▒░░▒▒██▓▓▒▒░░░░░░░░░░░░░░░░░░  \n
+PEJON +=\t                  ░░▒▒░░░░░░░░░░░░░░$(R)██████▓▓██$(D)▒▒$(R)██$(D)▒▒░░░░░░░░░░░░░░░░░░░░░░░░▒▒░░░░░░░░░░▒▒██▒▒░░▒▒▒▒▒▒░░░░░░░░░░    \n
+PEJON +=\t                        ░░░░▒▒▒▒░░░░░░░░$(R)▓▓████████$(D)░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░      \n
+PEJON +=\t                                ░░░░▒▒░░░░░░░░▒▒$(R)▓▓$(D)░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒░░▒▒░░▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░        \n
+PEJON +=\t                                        ░░░░▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒░░░░░░░░░░▒▒▒▒▒▒▒▒░░░░▒▒░░            \n
+PEJON +=\t                                                ░░▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒░░▒▒▒▒▒▒░░░░▓▓░░              \n
+PEJON +=\t                                                    ░░▒▒░░░░░░░░░░░░░░░░░░░░▒▒░░▒▒░░▒▒░░▒▒▒▒░░░░▓▓▒▒                \n
+PEJON +=\t                                                        ░░░░▒▒░░░░░░░░░░░░░░░░░░░░░░▒▒░░▒▒░░░░▓▓▒▒                  \n
+PEJON +=\t                                                              ░░░░░░░░░░░░░░░░░░▒▒░░▒▒░░▒▒░░▓▓▒▒░░                  \n
+PEJON +=\t                                                                    ░░░░░░░░░░░░░░░░░░░░▒▒░░░░                      \n
+PEJON +=\t                                                                          ░░░░▒▒▒▒▒▒░░░░▒▒░░                        \n
+PEJON +=\t$(Y)   ____  _      _                 ____                                    _____       _          _      _  _       _                _ \n
+PEJON +=\t  / ___|| |__  (_) _ __  _ __    / ___| ___   _ __ ___   _ __ ___   ___  | ____| ___ | |_  __ _ | |__  | |(_) ___ | |__    ___   __| |\n
+PEJON +=\t | |    | '_ \ | || '__|| '_ \  | |    / _ \ |  _   _ \ |  _   _ \ / __| |  _|  / __|| __|/ _  ||  _ \ | || |/ __||  _ \  / _ \ / _  |\n
+PEJON +=\t | |___ | | | || || |   | |_) | | |___| (_) || | | | | || | | | | |\__ \ | |___ \__ \| |_| (_| || |_) || || |\__ \| | | ||  __/| (_| |\n
+PEJON +=\t  \____||_| |_||_||_|   | .__/   \____|\___/ |_| |_| |_||_| |_| |_||___/ |_____||___/ \__|\__,_||_.__/ |_||_||___/|_| |_| \___| \__,_|\n
+PEJON +=\t                        |_|                                                                                                           $(D)
 
 NAME			=	minishell
-SRC_DIR			=	source_files
-BLD_DIR			=	builtins
-PAR_DIR			=	parsing
-EXE_DIR			=	execution
+SUB_NAME		=	mini.a
+SUB_LIB			=	libft/libft.a
 OBJ_DIR			=	object_files
-INC_DIR 		=	-Iincludes -Ilibft
-LIBFT			=	libft/libft.a
+BUILTINS_DIR	=	builtins
+ENVIRONMENT_DIR	=	environment
+EXECUTION_DIR	=	execution
+PARSING_DIR		=	parsing
+SIGNALS_DIR		=	signals
+MAIN_DIR		=	source_files
+INC_DIR 		=	-I/usr/local/include -I/usr/local/opt/readline/include -Iincludes -Ilibft/includes
+LIB				=	ar	-rcs
+LIBFT			=	-Llibft -lft
 
 CC				=	gcc
-CFLAGS			=	-Wall -Wextra -Werror 
-MINI_FLAGS 		=	-I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline 
+CFLAGS			=	-Wall -Wextra -Werror -g
+MINI_FLAGS 		=	-L/usr/local/lib -L/usr/local/opt/readline/lib -lreadline 
 RM				=	rm	-rf
 
-BUILTINS_SRC 	=
-BUILTINS_SRC 	:=	$(addprefix builtins/, $(BUILTINS_SRC))
+BUILTINS_SRC 	=	msh_a_allocate.c msh_cd.c	msh_echo.c	msh_env.c	msh_exit.c	\
+					msh_export.c	msh_pwd.c	msh_unset.c
 
-ENVIRONMENT_SRC	=
-ENVIRONMENT_SRC	:=	$(addprefix environment/, $(ENVIRONMENT_SRC))
+ENVIRONMENT_SRC	=	msh_change.c	msh_create.c	msh_find.c	msh_ex.c			\
+					msh_empty.c
 
-EXECUTION_SRC	=
-EXECUTION_SRC	:=	$(addprefix execution/, $(EXECUTION_SRC))
+EXECUTION_SRC	=	msh_a_check.c	msh_execute.c	msh_here_doc.c	msh_locate.c	\
+					msh_pipes.c		msh_pipex_split.c	msh_redirect.c
 
-PARSING_SRC		=
-PARSING_SRC		:=	$(addprefix parsing/, $(PARSING_SRC))
+PARSING_SRC		=	constructor.c	env_handler1.c	env_handler2.c	final_command_builder1.c\
+					parser1.c		parsing2.c		transfer_structs.c
 
-SIGNALS_SRC		=
-SIGNALS_SRC		:=	$(addprefix signals/, $(SIGNALS_SRC))
+SIGNALS_SRC		=	signals.c
 
-MAIN_SRC 		=
-MAIN_SRC 		:=	$(addprefix source_files/, $(MAIN_SRC))
+MAIN_SRC 		=	minishell.c	msh_error.c	msh_free.c
 
 SRC				=	$(BUILTINS_SRC) $(EXECUTION_SRC) $(PARSING_SRC) $(SIGNALS_SRC) $(ENVIRONMENT_SRC) $(MAIN_SRC)
-OBJ				= 	$(addprefix $(OBJ_DIR)/, $(SRC:%c=%o))
 
-all: $(LIBFT) $(NAME)
+OBJ				= 	$(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+all: $(SUB_LIB) $(NAME)  
+
+$(SUB_LIB):
+	@make libft.a -C libft
+	@make bonus -C libft
+	@make printf -C libft
+	@make gnl -C libft
+
+$(OBJ_DIR)/%.o: $(BUILTINS_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	@printf "\033[A\033[2K\r$(GREEN)Compiling:"
-	$(CC) $(CFLAGS) $(INC_DIR) $(MINI_FLAGS) $(LIBFT) -c $< -o $@
+	@printf "\033[A\033[2K\r$(G)Compiling:"
+	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(ENVIRONMENT_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	@printf "\033[A\033[2K\r$(G)Compiling:"
+	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(EXECUTION_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	@printf "\033[A\033[2K\r$(G)Compiling:"
+	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(PARSING_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	@printf "\033[A\033[2K\r$(G)Compiling:"
+	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(SIGNALS_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	@printf "\033[A\033[2K\r$(G)Compiling:"
+	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(MAIN_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	@printf "\033[A\033[2K\r$(G)Compiling:"
+	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(INC_DIR) $(MINI_FLAGS) $(LIBFT) $(OBJ) -o $(NAME)
-	@printf "$(CYAN)\n==========================\n"
-	@printf "$(CYAN) SIMULATION READY\n"
-	@printf "$(CYAN)==========================\n"
+	@$(CC) $(CFLAGS) $(INC_DIR) $(OBJ) $(LIBFT) $(MINI_FLAGS) -o $(NAME)
+	@echo "$(PEJON)"
+	@printf "$(C)\n==========================\n"
+	@printf "$(C) MINISHELL COMPILED\n"
+	@printf "$(C)==========================\n$(D)"
 
-$(LIBFT):
-	@make libft.a -C libft
-	@make printf -C libft
+chirp:
+	@echo "$(PEJON)"
 
 norm:
 	@norminette | grep Error
+
+valgrind: all
+	@printf "$(P)Checking with valgrind...\n$(D)"
+	@valgrind --suppressions=valgrind_readline_leaks_ignore.txt \
+	--leak-check=full \
+	--trace-children=yes \
+	--show-leak-kinds=all \
+	--track-origins=yes \
+	--track-fds=yes \
+	./minishell
 
 list:
 	@make list -C libft
@@ -78,13 +183,13 @@ list:
 clean:
 	@make clean -C libft
 	@$(RM) $(OBJ_DIR)
-	@printf "$(RED)CLEANING MSH.O FILES\n"
+	@printf "$(R)CLEANING MSH.O FILES\n"
 
 fclean: clean
 	@make fclean -C libft
 	@$(RM) $(NAME)
-	@printf "$(RED)CLEANING MINISHELL PROGRAM\n"
+	@printf "$(R)CLEANING MINISHELL PROGRAM\n"
 
 re: fclean all
 
-.PHONY = all $(NAME) $(LIBFT) norm list clean fclean re
+.PHONY = all $(NAME) $(LIBFT) norm valgrind list clean fclean re 

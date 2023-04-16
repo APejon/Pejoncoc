@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cafriem <cafriem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:54:10 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/14 14:07:25 by cafriem          ###   ########.fr       */
+/*   Updated: 2023/04/08 19:38:01 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,42 @@
 # define PARSING_H
 
 //modules
-void	mini_cpyarr(int argc, char *argv[], char **string);
-//freeing
 
+typedef struct s_shell	t_shell;
+typedef struct s_env	t_env;
+typedef struct s_list	t_list;
+
+/* Constructor */
+void		free_sections(t_list *section);
+void		null_making(t_list *lexar);
+void		free_array(char **arr);
+int			parser(t_shell *data, char **line);
+
+/* Env Handler 1 and 2 */
+int			env_resolver(t_shell *data, char **input);
+char		*str_replace_str_at(char *str, int idx, int length,
+				char *replacement);
+char		*get_env_value(t_env **env, char *variable);
+
+/* Final Command Builder */
+void		commands_init(t_shell *data, int p_count);
+int			is_str_redir(char *str);
+int			count_pipes_in_lexar(t_list *lexar);
+int			split_into_commands(t_shell *data, t_list *lexar);
+
+/* Parser 1 and 2 */
+int			lexer(char *line, t_list **lexar_list);
+char		*str_remove_char_at1(char *str, int idx);
+int			ft_isspace(int c);
+int			is_meta_char(int c);
+
+/* tansferstructs.c */
+
+t_direct	*redir_content_init(t_shell *data, t_direct *redir,
+				t_list *search);
+t_direct	**redirs_transfer(t_shell *data, t_list *section, int no_of_redirs);
+char		**cmd_args_transfer(t_list *section, int no_of_cmd_args);
+void		count_inputs(t_shell *data, t_list *section);
+void		transfer_structs(t_shell *data, t_list *section, int i);
 
 #endif

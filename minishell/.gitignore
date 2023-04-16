@@ -1,0 +1,18 @@
+.vscode
+
+#dynamic libraries
+*.dSYM
+
+#Libraries
+*.a
+
+#object files folder
+object_files
+
+#executables
+minishell
+
+#testers
+command+argument.sh
+single_command.sh
+valgrind

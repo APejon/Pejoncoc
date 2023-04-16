@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   par.c                                              :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cafriem <cafriem@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 13:18:57 by cafriem           #+#    #+#             */
-/*   Updated: 2022/12/14 14:29:59 by cafriem          ###   ########.fr       */
+/*   Created: 2023/03/21 16:54:37 by yhaidar           #+#    #+#             */
+/*   Updated: 2023/04/09 15:21:55 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
-int	parse(char *string)
+void	signal_handler_parent(int signum)
 {
-	int	counter;
-
-	if (string == NULL)
-		return ();
+	if (signum == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }

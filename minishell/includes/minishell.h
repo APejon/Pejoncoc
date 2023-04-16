@@ -6,11 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/12/14 13:48:12 by cafriem          ###   ########.fr       */
-=======
-/*   Updated: 2022/12/14 13:59:51 by amalbrei         ###   ########.fr       */
->>>>>>> 9dad47c19bf5fc9ba9d2f759bc8f06098f5e18c7
+/*   Updated: 2023/03/30 16:49:41 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,45 +21,68 @@
 # define RED		"\033[1;31m"
 # define PURPLE		"\033[0;35m"
 
+/*-------- libft --------*/
+# include "../libft/includes/libft.h"
+
+/*-------- printf --------*/
+# include "../libft/includes/pt_printf.h"
+
+/*-------- get_next_line --------*/
+# include "../libft/includes/get_next_line.h"
+
+/*write, read, close, access, pipe, dup, dup2, execve and fork */
+# include <unistd.h>
+
+/*-------- boolean --------*/
+# include <stdbool.h>
+
+/*-------- perror --------*/
+# include <stdio.h>
+
+/*-------- malloc, free and exit --------*/
+# include <stdlib.h>
+
+/*-------- strerror --------*/
+# include <string.h>
+
+/*-------- readline --------*/
+# include <readline/readline.h>
+# include <readline/history.h>
+
+/*-------- errno --------*/
+# include <sys/errno.h>
+
+/*-------- open and unlink --------*/
+# include <fcntl.h>
+
+/*-------- waitpid --------*/
+# include <sys/wait.h>
+
+/*-------- signal --------*/
+# include <signal.h>
+
 /*-------- Header files made --------*/
+# include "structs.h"
 # include "builtins.h"
+# include "environment.h"
 # include "execution.h"
 # include "parsing.h"
 # include "signals.h"
-# include "tokens.h"
 
-/*-------- libft --------*/
-# include "libft.h"
+// # include <sys/stat.h>
 
-typedef enum e_philo_state
-{
-	DEFAULT,
-	RE_INPUT,
-	RE_OUTPUT,
-	HERE_DOC,
-	APPEND
-}	t_state;
+/*-------- msh_error.c --------*/
+void	msh_free_to_exit(t_shell *shell);
+void	msh_complete_close(t_shell *shell, t_command *command);
+void	msh_file_error(t_shell *shell, t_direct *redir, char *err_message,
+			int exit);
+void	msh_print_error(t_shell *shell, t_command *command, char *err_message,
+			int exit);
 
-typedef struct s_shell
-{
-	char				*current_line;
-	char				*line;
-	char				**o_env;
-	char				**u_env;
-	int					exit_code;
-	struct s_command	*command;
-}	t_shell;
-
-typedef struct s_command
-{
-	char	*command;
-	char	*flag;
-	char	*target;
-	t_state	direct;
-}	t_command;
-
-/*-------- utils.c --------*/
+/*-------- msh_free.c --------*/
+void	msh_array_free(t_shell *shell, int i);
+void	msh_complete_free(t_shell *shell);
+void	msh_free_node(t_env *node);
+void	msh_free_list(t_env **list);
 void	msh_free(void *memory);
-char	*msh_find_env(char **envp, char *line);
-
 #endif

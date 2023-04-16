@@ -6,7 +6,7 @@
 #    By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/21 19:43:26 by amalbrei          #+#    #+#              #
-#    Updated: 2022/12/13 13:52:55 by amalbrei         ###   ########.fr        #
+#    Updated: 2023/04/09 18:09:05 by amalbrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,11 @@ PURPLE	=	\033[0;35m
 CYAN	=	\033[1;36m
 
 NAME	=	libft.a
-SRC_DIR	=	Source_Files
-OBJ_DIR	=	Object_Files
-INC_DIR =	-IIncludes
+SRC_DIR	=	source_files
+OBJ_DIR	=	object_files
+INC_DIR =	-Iincludes
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS	=	-g3 -Wall -Wextra -Werror
 LIB		=	ar	-rcs
 RM		=	rm	-rf
 
@@ -36,6 +36,7 @@ SRCS 	= 	ft_isalpha.c	ft_isdigit.c	ft_isalnum.c	ft_isascii.c	\
 			ft_putchar_fd.c	ft_putstr_fd.c	ft_putendl_fd.c	ft_putnbr_fd.c	\
 			ft_itoa.c		ft_split.c		ft_check_doublequotes.c			\
 			ft_check_arguments.c	ft_error_msg.c	ft_free_strjoin.c		\
+			ft_free.c		ft_laddb.c		ft_ln.c
 			
 B_SRCS 	=	ft_lstnew.c		ft_lstadd_front.c	ft_lstsize.c	ft_lstlast.c\
 			ft_lstdelone.c	ft_lstadd_back.c	ft_lstclear.c	ft_lstiter.c\
@@ -72,32 +73,32 @@ $(NAME): $(OBJ)
 	@printf "$(CYAN)\n==========================\n"
 	@printf "LIBFT COMPILED\n"
 	@printf "$(CYAN)==========================\n"
-	@printf "$(CYAN)==========================\n"
+	@printf "$(CYAN)==========================\n$(DEFAULT)"
 	
 bonus: $(B_OBJ)
 	@$(LIB) $(NAME) $(B_OBJ)
 	@printf "$(CYAN)\n==========================\n"
 	@printf "LIBFT BONUS COMPILED\n"
 	@printf "$(CYAN)==========================\n"
-	@printf "$(CYAN)==========================\n"
+	@printf "$(CYAN)==========================\n$(DEFAULT)"
 
 printf: $(F_OBJ)
 	@$(LIB) $(NAME) $(F_OBJ)
 	@printf "$(CYAN)\n==========================\n"
 	@printf "PRINTF COMPILED\n"
 	@printf "$(CYAN)==========================\n"
-	@printf "$(CYAN)==========================\n"
+	@printf "$(CYAN)==========================\n$(DEFAULT)"
 
 gnl: $(G_OBJ)
 	@$(LIB) $(NAME) $(G_OBJ)
 	@printf "$(CYAN)\n==========================\n"
 	@printf "GET_NEXT_LINE COMPILED\n"
 	@printf "$(CYAN)==========================\n"
-	@printf "$(CYAN)==========================\n"
+	@printf "$(CYAN)==========================\n$(DEFAULT)"
 
 list:
 	@ar -t $(NAME)
-	@echo Object files above are within your library.
+	@echo Object files above are within your Libft library.
 
 clean:
 	@printf "$(RED)CLEANING LIB.O FILES\n"

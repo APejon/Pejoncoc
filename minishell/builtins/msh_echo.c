@@ -6,24 +6,41 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:02 by amalbrei          #+#    #+#             */
-/*   Updated: 2022/12/12 16:19:39 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/11 14:25:17 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 /**
  * @brief Uses the echo command to print out a message onto the shell terminal
  * 
  * @param shell The struct containing variables of used within the shell
+ * @param command The struct containing the command's components
  */
-void	msh_echo(t_shell *shell)
+void	msh_echo(t_shell *shell, t_command *command)
 {
-	if (shell->command->flag == NULL)
-		pt_printf("%s\n", shell->command->target);
-	else if (!ft_strncmp(shell->command->flag, "-n", 2))
-		pt_printf("%s", shell->command->target);
+	int	i;
+
+	if (!command->cmd_args[1])
+		pt_printf("\n");
+	else if (!ft_strncmp(command->cmd_args[1], "-n", 3))
+	{
+		i = 1;
+		while (command->cmd_args[++i])
+		{
+			if (command->cmd_args[i + 1])
+				pt_printf("%s ", command->cmd_args[i]);
+			else
+				pt_printf("%s", command->cmd_args[i]);
+		}
+	}
 	else
-		pt_printf("%s\n", shell->command->target);
+	{
+		i = 0;
+		while (command->cmd_args[++i])
+			pt_printf("%s ", command->cmd_args[i]);
+		pt_printf("\n");
+	}
 	shell->exit_code = 0;
 }
