@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 18:49:50 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/16 13:05:25 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/16 14:42:19 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	msh_create_new_d_env(t_shell **shell, char *mixed);
 void	msh_empty(t_shell **shell, t_command *command, char *mixed);
 
 /*-------- msh_ex.c --------*/
+void	msh_update_env_ex(t_env *env, char *variable, char *value);
 void	msh_update_secluded(t_env *env, char *variable);
 t_env	*msh_find_node_ex(t_env *env, char *line);
 char	*msh_find_env_ex(t_env *env, char *line);

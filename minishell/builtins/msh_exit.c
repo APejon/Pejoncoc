@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:43:39 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/24 15:17:53 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/16 14:27:26 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static	int	msh_count(char *target)
 	count[1] = 0;
 	while (target[count[0]] >= '0' && target[count[0]] <= '9')
 		count[0]++;
-	if (target[count[0]] == '\0')
+	if (target[count[0]] == '\0' && count[0] != 0)
 		count[1]++;
 	return (count[1]);
 }

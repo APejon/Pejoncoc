@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 18:41:37 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/16 13:44:07 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/16 14:41:44 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	msh_empty(t_shell **shell, t_command *command, char *mixed)
 	{
 		if (msh_find_env_ex((*shell)->dec_env, mixed))
 			return ;
-		msh_update_env(msh_find_last_node((*shell)->dec_env),
+		msh_update_env_ex(msh_find_last_node((*shell)->dec_env),
 			mixed, NULL);
 	}
 }
