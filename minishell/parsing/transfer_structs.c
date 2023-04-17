@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 22:34:43 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/14 18:11:18 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/17 17:03:32 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_direct	*redir_content_init(t_shell *data, t_direct *redir,
 		redir->file = ft_strdup(search->content);
 	}
 	redir->hd_content = NULL;
+	redir->fd = 0;
 	return (redir);
 }
 

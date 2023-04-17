@@ -6,11 +6,28 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 22:38:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/14 14:08:23 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/17 16:45:59 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/**
+ * @brief Closes fd_in and fd_outs should they contain an fd
+ * 
+ * @param command Struct containing the fds
+ */
+void	msh_conditional_close(t_command *command)
+{
+	if (command->fd_in != STDIN_FILENO && command->fd_in != -1)
+		close(command->fd_in);
+	if (command->fd_out != STDOUT_FILENO && command->fd_out != -1)
+		close(command->fd_out);
+	if (command->p_fd[0] != STDIN_FILENO && command->p_fd[0] != -1)
+		close(command->p_fd[0]);
+	if (command->p_fd[1] != STDOUT_FILENO && command->p_fd[1] != -1)
+		close(command->p_fd[1]);
+}
 
 /**
  * @brief Makes sure to exit the program with the right exit number then frees
@@ -38,14 +55,7 @@ void	msh_complete_close(t_shell *shell, t_command *command)
 	int	i;
 
 	i = -1;
-	if (command->fd_in != STDIN_FILENO && command->fd_in != -1)
-		close(command->fd_in);
-	if (command->fd_out != STDOUT_FILENO && command->fd_out != -1)
-		close(command->fd_out);
-	if (command->p_fd[0] != STDIN_FILENO && command->p_fd[0] != -1)
-		close(command->p_fd[0]);
-	if (command->p_fd[1] != STDOUT_FILENO && command->p_fd[1] != -1)
-		close(command->p_fd[1]);
+	msh_conditional_close(command);
 	if (command->redir)
 	{
 		while (command->redir[++i])
@@ -56,7 +66,8 @@ void	msh_complete_close(t_shell *shell, t_command *command)
 				if (shell->nohd == 0)
 					unlink("here_doc_tmp");
 			}
-			if (command->redir[i] && command->redir[i]->fd != -1)
+			if (command->redir[i] && command->redir[i]->fd != -1
+				&& command->redir[i]->fd != STDIN_FILENO)
 				close(command->redir[i]->fd);
 		}
 	}

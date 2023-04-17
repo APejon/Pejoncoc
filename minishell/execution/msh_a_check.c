@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/17 13:55:42 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/17 17:15:27 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,17 +109,15 @@ void	msh_check_command(t_shell *shell, t_command *command)
  */
 void	msh_check_link(t_shell *shell)
 {
-	int		tmp_fd;
 	int		i;
+	int		check_failed;
+	int		tmp_fd;
 
+	check_failed = msh_check_redir(shell);
+	if (check_failed)
+		return ;
 	if (!(shell->command[1]))
-	{
-		if (shell->command[0]->redir)
-			msh_redirect(shell, shell->command[0], shell->command[0]->redir);
-		if (shell->command[0]->fd_in == -1 || shell->command[0]->fd_out == -1)
-			return ;
 		msh_check_command(shell, shell->command[0]);
-	}
 	else
 	{
 		tmp_fd = dup(STDIN_FILENO);

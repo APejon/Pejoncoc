@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:53:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/16 14:39:45 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/17 17:28:17 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	*msh_find_path(t_env *enviro);
 char	**msh_locate(t_shell *shell, t_command *command);
 
 /*-------- msh_pipes.c --------*/
+int		msh_check_redir(t_shell *shell);
 void	msh_create_pipe(t_shell *shell, t_command *command, int tmp_fd);
 void	msh_pipe_command(t_shell *shell, t_command *command, int *tmp_fd);
 void	msh_last_command(t_shell *shell, t_command *command, int tmp_fd);
@@ -46,6 +47,6 @@ char	**pipex_split(const char *s, char c);
 /*-------- msh_redirect.c --------*/
 int		msh_in_direct(t_shell *shell, t_direct *redir, int fd);
 int		msh_out_direct(t_shell *shell, t_direct *redir, int fd);
-void	msh_redirect(t_shell *shell, t_command *command, t_direct **redir);
+int		msh_redirect(t_shell *shell, t_command *command, t_direct **redir);
 
 #endif

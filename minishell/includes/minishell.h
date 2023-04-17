@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/30 16:49:41 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/17 16:48:01 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@
 // # include <sys/stat.h>
 
 /*-------- msh_error.c --------*/
+void	msh_conditional_close(t_command *command);
 void	msh_free_to_exit(t_shell *shell);
 void	msh_complete_close(t_shell *shell, t_command *command);
 void	msh_file_error(t_shell *shell, t_direct *redir, char *err_message,

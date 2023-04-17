@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 20:31:59 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/14 13:33:32 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/17 17:51:34 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	msh_out_direct(t_shell *shell, t_direct *redir, int fd)
 		redir->fd = open(redir->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (redir->fd == -1)
 	{
+		printf("why?\n");
 		msh_file_error(shell, redir, strerror(errno), 1);
 		fd = redir->fd;
 		return (fd);
@@ -59,12 +60,12 @@ int	msh_out_direct(t_shell *shell, t_direct *redir, int fd)
 	return (fd);
 }
 
-void	msh_redirect(t_shell *shell, t_command *command, t_direct **redir)
+int	msh_redirect(t_shell *shell, t_command *command, t_direct **redir)
 {
 	int	i;
 
 	i = -1;
-	while (redir[++i] && command->fd_in != -1 && command->fd_out != -1)
+	while (redir[++i])
 	{
 		if (redir[i]->direct == RE_INPUT || redir[i]->direct == HERE_DOC)
 			command->fd_in = msh_in_direct(shell, redir[i],
@@ -72,5 +73,8 @@ void	msh_redirect(t_shell *shell, t_command *command, t_direct **redir)
 		else if (redir[i]->direct == RE_OUTPUT || redir[i]->direct == APPEND)
 			command->fd_out = msh_out_direct(shell, redir[i],
 					command->fd_out);
+		if (shell->command[i]->fd_in == -1 || shell->command[i]->fd_out == -1)
+			return (1);
 	}
+	return (0);
 }

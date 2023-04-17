@@ -6,11 +6,35 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 13:23:05 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/12 14:39:05 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/17 17:36:17 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	msh_check_redir(t_shell *shell)
+{
+	int	i;
+	int	found;
+	int	check_failed;
+
+	i = -1;
+	found = 0;
+	check_failed = 0;
+	while (shell->command[++i])
+	{
+		if (shell->command[i]->redir)
+		{
+			check_failed = msh_redirect(shell, shell->command[i],
+					shell->command[i]->redir);
+			if (check_failed == 1)
+				found = 1;
+		}
+	}
+	if (found)
+		return (1);
+	return (0);
+}
 
 void	msh_create_pipe(t_shell *shell, t_command *command, int tmp_fd)
 {
