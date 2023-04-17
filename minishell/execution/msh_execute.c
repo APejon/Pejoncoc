@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:19:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/17 21:31:50 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/17 21:39:37 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,14 @@ static char	*msh_retrieve_command(char **paths, char *cmd)
 	char	*bash_command;
 
 	if (access(cmd, F_OK) == 0 && ft_strchr(cmd, '/'))
-	{
-		printf("HHHHH\n");
 		return (cmd);
-	}
 	while (*paths)
 	{
 		if (!cmd)
 			break ;
 		temp = ft_strjoin(*paths, "/");
 		bash_command = ft_strjoin(temp, cmd);
-		if (access(bash_command, X_OK) == 0)
+		if (access(bash_command, X_OK) == 0 && cmd[0] != '\0')
 		{
 			free (temp);
 			return (bash_command);
