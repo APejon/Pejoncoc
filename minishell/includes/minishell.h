@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/17 16:48:01 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/17 20:13:54 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@
 /*-------- signal --------*/
 # include <signal.h>
 
+/*-------- stat --------*/
+# include <sys/stat.h>
+
 /*-------- Header files made --------*/
 # include "structs.h"
 # include "builtins.h"
@@ -68,8 +71,6 @@
 # include "execution.h"
 # include "parsing.h"
 # include "signals.h"
-
-// # include <sys/stat.h>
 
 /*-------- msh_error.c --------*/
 void	msh_conditional_close(t_command *command);

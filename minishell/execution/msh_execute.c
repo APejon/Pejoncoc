@@ -6,11 +6,24 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:19:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/17 14:00:34 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/17 21:31:50 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	msh_check_dir(t_shell *shell, t_command *command, char *cmd)
+{
+	struct stat	info;
+
+	info.st_mode = 0;
+	stat(cmd, &info);
+	if (S_ISDIR(info.st_mode))
+	{
+		msh_print_error(shell, command, "is a directory", 126);
+		msh_free_to_exit(shell);
+	}
+}
 
 /**
  * @brief Converts a linked list environment variable into a 2D array for execve
@@ -56,8 +69,11 @@ static char	*msh_retrieve_command(char **paths, char *cmd)
 	char	*temp;
 	char	*bash_command;
 
-	if (access(cmd, X_OK) == 0 && ft_strncmp(cmd, "minishell", 10))
+	if (access(cmd, F_OK) == 0 && ft_strchr(cmd, '/'))
+	{
+		printf("HHHHH\n");
 		return (cmd);
+	}
 	while (*paths)
 	{
 		if (!cmd)
