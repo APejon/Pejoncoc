@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/14 14:46:06 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/17 13:55:42 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	msh_check_command_piped(t_shell *shell, t_command *command, int tmp_fd)
 			{
 				cmd_paths = msh_locate(shell, command);
 				if (cmd_paths == NULL)
-					exit(shell->exit_code);
+					msh_free_to_exit(shell);
 				msh_execute(shell, command, cmd_paths);
 			}
 		}

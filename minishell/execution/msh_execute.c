@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:19:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/14 15:45:48 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:00:34 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,19 @@ static char	*msh_retrieve_command(char **paths, char *cmd)
  */
 void	msh_execute(t_shell *shell, t_command *command, char **cmd_paths)
 {
+	int		i;
 	char	**envp;
 	char	*cmd;
 
+	i = -1;
 	cmd = msh_retrieve_command(cmd_paths, command->cmd_args[0]);
 	if (!cmd)
 	{
 		msh_print_error(shell, command, "command not found", 127);
-		exit (shell->exit_code);
+		while (cmd_paths[++i])
+			msh_free(&cmd_paths[i]);
+		msh_free(&cmd_paths);
+		msh_free_to_exit(shell);
 	}
 	envp = msh_convert(shell->env);
 	msh_complete_close(shell, command);
