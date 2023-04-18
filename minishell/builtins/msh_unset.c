@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:43:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/17 22:00:51 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/17 22:11:19 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,10 @@ int	msh_invalid(char *identi, char flag)
 {
 	int		i;
 	char	*dup;
-	char	*value;
 
 	i = -1;
 	dup = ft_strdup(identi);
-	value = msh_separate(dup, '=');
+	ft_bzero(ft_strchr(dup, '='), ft_strlen(ft_strchr(dup, '=')));
 	while (dup[++i])
 	{
 		if (dup[i] == '_' || dup[i] == '=')
@@ -35,12 +34,10 @@ int	msh_invalid(char *identi, char flag)
 		else if (!ft_isalnum(dup[i]))
 		{
 			msh_free(&dup);
-			msh_free(&value);
 			return (1);
 		}
 	}
 	msh_free(&dup);
-	msh_free(&value);
 	if (flag == 'u')
 		return (ft_strchr(identi, '=') || ft_isdigit(identi[0]));
 	else if (flag == 'e')

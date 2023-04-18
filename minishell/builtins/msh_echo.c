@@ -6,11 +6,36 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:02 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/17 12:37:39 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:58:31 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	msh_no_newline(t_command *command)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 2;
+	while (!ft_strncmp(command->cmd_args[++i], "-n", 2))
+	{
+		while (command->cmd_args[i][j] == 'n' && command->cmd_args[i][j])
+			j++;
+		if (command->cmd_args[i][j])
+			break ;
+		j = 2;
+	}
+	while (command->cmd_args[i])
+	{
+		if (command->cmd_args[i + 1])
+			pt_printf("%s ", command->cmd_args[i]);
+		else
+			pt_printf("%s", command->cmd_args[i]);
+		i++;
+	}
+}
 
 /**
  * @brief Uses the echo command to print out a message onto the shell terminal
@@ -24,20 +49,8 @@ void	msh_echo(t_shell *shell, t_command *command)
 
 	if (!command->cmd_args[1])
 		pt_printf("\n");
-	else if (!ft_strncmp(command->cmd_args[1], "-n", 3))
-	{
-		i = 1;
-		while (!ft_strncmp(command->cmd_args[++i], "-n", 3))
-		{
-			while (command->cmd_args[++i])
-			{
-				if (command->cmd_args[i + 1])
-					pt_printf("%s ", command->cmd_args[i]);
-				else
-					pt_printf("%s", command->cmd_args[i]);
-			}
-		}
-	}
+	else if (!ft_strncmp(command->cmd_args[1], "-n", 2))
+		msh_no_newline(command);
 	else
 	{
 		i = 0;

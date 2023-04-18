@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:53:07 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/16 13:53:27 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:57:18 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	msh_cd_home(t_shell *shell, t_command *command);
 void	msh_cd(t_shell *shell, t_command *command);
 
 /*-------- echo --------*/
+void	msh_no_newline(t_command *command);
 void	msh_echo(t_shell *shell, t_command *command);
 
 /*-------- env --------*/
