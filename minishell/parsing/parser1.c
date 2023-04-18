@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:47:35 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/18 12:44:09 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/18 15:14:27 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,27 @@ static void	get_metachar_end(char *line, int *end)
 }
 
 /*	Finding the Last Quote	*/
-static void	get_quote_end(char *line, int *end)
+static int	get_end(char *line, int *end)
 {
 	char	quote;
 
-	quote = line[*end];
-	(*end)++;
-	while (line[*end] && quote != line[*end])
+	if (line[*end] == '"' || line[*end] == '\'')
+	{
+		quote = line[*end];
 		(*end)++;
-	if (line[*end])
+		while (line[*end] && quote != line[*end])
+			(*end)++;
+		if (line[*end])
+			(*end)++;
+		else
+			return (0);
+		return (1);
+	}
+	else if (is_meta_char(line[*end]))
+		get_metachar_end(line, end);
+	else
 		(*end)++;
+	return (1);
 }
 
 /*	Checking for Quotes, Sending the Line
@@ -98,12 +109,8 @@ int	lexer(char *line, t_list **lexar_list)
 	{
 		if (line[end] == '#')
 			ft_bzero(&line[end], ft_strlen(&line[end]));
-		if (line[end] == '"' || line[end] == '\'')
-			get_quote_end(line, &end);
-		else if (is_meta_char(line[end]))
-			get_metachar_end(line, &end);
-		else
-			end++;
+		if (!get_end(line, &end))
+			return (0);
 		if (line[start] && (ft_isspace(line[end]) || is_meta_char(line[end])
 				|| is_meta_char(line[end - 1])))
 		{

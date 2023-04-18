@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/11 17:11:57 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/18 15:06:31 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,32 @@ void	free_sections(t_list *section)
 	msh_free(&section);
 }
 
-void	null_making(t_list *lexar)
+static int	check_syntax(t_list **lexar)
 {
-	while (lexar)
+	char	*string;
+	t_list	*search;
+
+	search = *lexar;
+	while (search)
 	{
-		lexar->content = NULL;
-		lexar = lexar->next;
+		if (!ft_strncmp(search->content, "<", 2)
+			|| !ft_strncmp(search->content, ">", 2)
+			|| !ft_strncmp(search->content, "<<", 3)
+			|| !ft_strncmp(search->content, ">>", 3)
+			|| !ft_strncmp(search->content, "|", 2))
+		{
+			string = (char *)search->next->content;
+			if (!ft_strncmp(search->next->content, "<", 2)
+				|| !ft_strncmp(search->next->content, ">", 2)
+				|| !ft_strncmp(search->next->content, "<<", 3)
+				|| !ft_strncmp(search->next->content, ">>", 3)
+				|| !ft_strncmp(search->next->content, "|", 2)
+				|| string[0] == '\0')
+				return (0);
+		}
+		search = search->next;
 	}
+	return (1);
 }
 
 /* Cleans the Command List, If All Clean then Cleans Commands as well */
@@ -61,13 +80,14 @@ int	parser(t_shell *data, char **line)
 {
 	int		i;
 
-	if (!*line || !env_resolver(data, line))
-		return (parser_error(data, &data->par->lexar, line, NULL));
+	env_resolver(data, line);
 	if (!lexer(*line, &data->par->lexar))
-		return (parser_error(data, &data->par->lexar, line, NULL));
-	if (!split_into_commands(data, data->par->lexar))
-		return (free_parser(data, &data->par->lexar, line, 1));
-	null_making(data->par->lexar);
+		return (parser_error(data, &data->par->lexar, line,
+				"minishell: syntax error near unexpected token"));
+	if (!check_syntax(&data->par->lexar))
+		return (parser_error(data, &data->par->lexar, line,
+				"minishell: syntax error near unexpected token"));
+	split_into_commands(data, data->par->lexar);
 	ft_lstclear(&data->par->lexar, free);
 	msh_free(&data->par->lexar);
 	i = -1;

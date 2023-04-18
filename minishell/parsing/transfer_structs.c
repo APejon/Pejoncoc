@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 22:34:43 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/17 17:03:32 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/18 13:22:20 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,8 @@ void	count_inputs(t_shell *data, t_list *section)
 		}
 		else
 			count_args++;
-		search = search->next;
+		if (search)
+			search = search->next;
 	}
 	data->par->no_of_cmd_args = count_args;
 	data->par->no_of_redirs = count_redirs;

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 02:22:39 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/17 16:39:31 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/18 13:08:28 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,15 @@ void	msh_reset(t_shell *data)
 	int	i;
 
 	i = -1;
-	while (data->command[++i])
+	if (data->command)
 	{
-		msh_complete_close(data, data->command[i]);
-		msh_array_free(data, i);
+		while (data->command[++i])
+		{
+			msh_complete_close(data, data->command[i]);
+			msh_array_free(data, i);
+		}
+		msh_free(&data->command);
 	}
-	msh_free(&data->command);
 	data->nohd = 0;
 }
 

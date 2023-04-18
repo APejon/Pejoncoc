@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/18 12:44:12 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/18 14:24:00 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,10 @@ int	count_pipes_in_lexar(t_list *lexar)
 		head = head->next;
 	}
 	if (head)
-		null_making(head);
-	if (head)
+	{
 		ft_lstclear(&head, free);
-	if (head)
 		free(head);
+	}
 	return (pipe_counter);
 }
 
@@ -68,14 +67,14 @@ int	split_into_commands(t_shell *data, t_list *lexar)
 	while (lexar)
 	{
 		if (is_str_redir(lexar->content))
-			ft_laddb(&data->par->sections[i], ft_ln(lexar->content));
+			ft_laddb(&data->par->sections[i], ft_ln(ft_strdup(lexar->content)));
 		else if (!ft_strncmp(lexar->content, "|", 2))
 		{
-			ft_laddb(&data->par->pipe, ft_ln(lexar->content));
+			ft_laddb(&data->par->pipe, ft_ln(ft_strdup(lexar->content)));
 			i++;
 		}
 		else if (!is_str_redir(lexar->content))
-			ft_laddb(&data->par->sections[i], ft_ln(lexar->content));
+			ft_laddb(&data->par->sections[i], ft_ln(ft_strdup(lexar->content)));
 		lexar = lexar->next;
 	}
 	commands_init(data, p_count);
