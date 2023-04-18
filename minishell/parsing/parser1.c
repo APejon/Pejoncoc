@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:47:35 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/07 21:11:04 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/18 12:44:09 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ static int	get_clean_input(char *line, t_list **lexar_list,
 {
 	char	*content;
 
-	content = ft_substr(line, *start, *end - *start);
+	if (line[0] == '\0')
+		content = ft_strdup(line);
+	else
+		content = ft_substr(line, *start, *end - *start);
 	if (!content || !clean_quote(&content))
 		return (0);
 	ft_laddb(lexar_list, ft_ln(content));
@@ -108,7 +111,7 @@ int	lexer(char *line, t_list **lexar_list)
 				return (0);
 		}
 	}
-	if (line[start] && !get_clean_input(line, lexar_list, &start, &end))
+	if (!get_clean_input(line, lexar_list, &start, &end) && line[start])
 		return (0);
 	return (1);
 }
