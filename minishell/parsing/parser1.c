@@ -6,14 +6,14 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:47:35 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/18 15:14:27 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/19 20:21:32 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 /*	Removing the Quotes */
-static int	clean_quote(char **str)
+int	clean_quote(char **str)
 {
 	int		i;
 	char	quote;
@@ -47,15 +47,23 @@ static int	clean_quote(char **str)
 static int	get_clean_input(char *line, t_list **lexar_list,
 	int *start, int *end)
 {
-	char	*content;
+	char	*con;
 
 	if (line[0] == '\0')
-		content = ft_strdup(line);
+		con = ft_strdup(line);
 	else
-		content = ft_substr(line, *start, *end - *start);
-	if (!content || !clean_quote(&content))
+		con = ft_substr(line, *start, *end - *start);
+	if (!con)
 		return (0);
-	ft_laddb(lexar_list, ft_ln(content));
+	if ((con[0] == '"' || con[0] == '\'') && is_meta_char(con[1])
+		&& (con[2] == '"' || con[2] == '\'' || is_meta_char(con[2])))
+		ft_laddb(lexar_list, ft_ln(con));
+	else
+	{
+		if (!clean_quote(&con))
+			return (0);
+		ft_laddb(lexar_list, ft_ln(con));
+	}
 	while (line[*end] && ft_isspace(line[*end]))
 		(*end)++;
 	*start = *end;

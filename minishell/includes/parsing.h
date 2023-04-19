@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:54:10 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/08 19:38:01 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/19 20:46:15 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ char		*str_replace_str_at(char *str, int idx, int length,
 char		*get_env_value(t_env **env, char *variable);
 
 /* Final Command Builder */
+void		edge_case(t_list *search);
 void		commands_init(t_shell *data, int p_count);
 int			is_str_redir(char *str);
 int			count_pipes_in_lexar(t_list *lexar);
 int			split_into_commands(t_shell *data, t_list *lexar);
 
 /* Parser 1 and 2 */
+int			clean_quote(char **str);
 int			lexer(char *line, t_list **lexar_list);
 char		*str_remove_char_at1(char *str, int idx);
 int			ft_isspace(int c);

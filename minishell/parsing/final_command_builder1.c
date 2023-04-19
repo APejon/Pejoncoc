@@ -6,11 +6,21 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/18 14:24:00 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/19 20:45:50 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	edge_case(t_list *search)
+{
+	char	*line;
+
+	line = (char *)search->content;
+	if ((line[0] == '"' || line[0] == '\'') && is_meta_char(line[1])
+		&& (line[2] == '"' || line[2] == '\'' || is_meta_char(line[2])))
+		clean_quote((char **)&search->content);
+}
 
 void	commands_init(t_shell *data, int p_count)
 {

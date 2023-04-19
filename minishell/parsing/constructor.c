@@ -6,16 +6,22 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/18 15:06:31 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/19 20:23:02 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	free_sections(t_list *section)
+static int	is_meta_syntax(t_list *search)
 {
-	ft_lstclear(&section, free);
-	msh_free(&section);
+	if (!ft_strncmp(search->content, "<", 2)
+		|| !ft_strncmp(search->content, ">", 2)
+		|| !ft_strncmp(search->content, "<<", 3)
+		|| !ft_strncmp(search->content, ">>", 3)
+		|| !ft_strncmp(search->content, "|", 2))
+		return (1);
+	else
+		return (0);
 }
 
 static int	check_syntax(t_list **lexar)
@@ -26,20 +32,15 @@ static int	check_syntax(t_list **lexar)
 	search = *lexar;
 	while (search)
 	{
-		if (!ft_strncmp(search->content, "<", 2)
-			|| !ft_strncmp(search->content, ">", 2)
-			|| !ft_strncmp(search->content, "<<", 3)
-			|| !ft_strncmp(search->content, ">>", 3)
-			|| !ft_strncmp(search->content, "|", 2))
+		if (is_meta_syntax(search))
 		{
-			string = (char *)search->next->content;
-			if (!ft_strncmp(search->next->content, "<", 2)
-				|| !ft_strncmp(search->next->content, ">", 2)
-				|| !ft_strncmp(search->next->content, "<<", 3)
-				|| !ft_strncmp(search->next->content, ">>", 3)
-				|| !ft_strncmp(search->next->content, "|", 2)
-				|| string[0] == '\0')
-				return (0);
+			if (search->next)
+			{
+				search = search->next;
+				string = (char *)search->content;
+				if (is_meta_syntax(search) || string[0] == '\0')
+					return (0);
+			}
 		}
 		search = search->next;
 	}
@@ -71,6 +72,7 @@ static int	parser_error(t_shell *data, t_list **lexar, char **line,
 		ft_putendl_fd(err, 2);
 	else
 		perror(err);
+	data->exit_code = 258;
 	return (0);
 }
 
@@ -92,7 +94,10 @@ int	parser(t_shell *data, char **line)
 	msh_free(&data->par->lexar);
 	i = -1;
 	while (data->par->sections[++i])
-		free_sections(data->par->sections[i]);
+	{
+		ft_lstclear(&data->par->sections[i], free);
+		msh_free(&data->par->sections[i]);
+	}
 	msh_free(&data->par->sections);
 	if (data->par->pipe)
 		ft_lstclear(&data->par->pipe, free);

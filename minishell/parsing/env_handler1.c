@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/18 12:13:04 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/19 20:46:45 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ static char	*check_and_get_env(t_shell *data, char *input, int idx)
 			free(exit_status);
 		return (ret);
 	}
+	else if (input[idx] == '"')
+		return (ft_strdup(input));
 	else
 		return (replace_str_env(data, input, idx));
 }
@@ -92,8 +94,8 @@ int	env_resolver(t_shell *data, char **input)
 	char	*tmp;
 
 	quote = 0;
-	i = 0;
-	while ((*input)[i])
+	i = -1;
+	while ((*input)[++i])
 	{
 		if ((!quote || quote == '"' ) && (*input)[i] == '$')
 		{
@@ -109,7 +111,6 @@ int	env_resolver(t_shell *data, char **input)
 			quote = (*input)[i];
 		else if (quote && (*input)[i] == quote)
 			quote = 0;
-		i++;
 	}
 	return (1);
 }

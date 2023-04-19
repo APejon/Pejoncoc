@@ -6,7 +6,7 @@
 #    By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 14:11:12 by amalbrei          #+#    #+#              #
-#    Updated: 2023/04/18 14:25:17 by amalbrei         ###   ########.fr        #
+#    Updated: 2023/04/19 20:51:04 by amalbrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,6 @@ PEJON +=\t  \____||_| |_||_||_|   | .__/   \____|\___/ |_| |_| |_||_| |_| |_||__
 PEJON +=\t                        |_|                                                                                                           $(D)
 
 NAME			=	minishell
-SUB_NAME		=	mini.a
 SUB_LIB			=	libft/libft.a
 OBJ_DIR			=	object_files
 BUILTINS_DIR	=	builtins
