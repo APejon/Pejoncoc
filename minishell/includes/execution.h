@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:53:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/17 20:32:10 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/20 14:08:46 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ char	**msh_convert(t_env *enviro);
 void	msh_execute(t_shell *shell, t_command *command, char **cmd_paths);
 
 /*-------- msh_here_doc.c --------*/
+bool	msh_hd_prompt(char	**limiter, char *file, int *len, int *nohd_c);
 int		msh_compare_len(char *s1, char *s2);
-void	msh_input_hd(t_direct *redir);
+void	msh_input_hd(t_direct *redir, int *nohd_c);
 void	msh_create_here_doc(t_shell *shell, int nohd);
 
 /*-------- msh_locate.c --------*/

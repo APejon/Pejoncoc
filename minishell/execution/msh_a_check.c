@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/18 12:12:11 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/20 13:49:29 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,10 +154,14 @@ void	msh_command_dispenser(t_shell *shell)
 	}
 	if (shell->nohd != 0)
 		msh_create_here_doc(shell, shell->nohd);
-	msh_check_link(shell);
-	i = -1;
-	while (shell->command[++i] && shell->command[i]->pid != 0)
-		waitpid(shell->command[i]->pid, &status, 0);
-	if (shell->command[0]->pid != 0)
-		shell->exit_code = WEXITSTATUS(status);
+	if (g_stdin != -3)
+	{
+		msh_check_link(shell);
+		g_stdin = -2;
+		i = -1;
+		while (shell->command[++i] && shell->command[i]->pid != 0)
+			waitpid(shell->command[i]->pid, &status, 0);
+		if (shell->command[0]->pid != 0)
+			shell->exit_code = WEXITSTATUS(status);
+	}
 }

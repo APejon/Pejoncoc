@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 02:22:39 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/18 13:08:28 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/20 13:34:22 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	msh_reset(t_shell *data)
 {
 	int	i;
 
+	g_stdin = -1;
 	i = -1;
 	if (data->command)
 	{
@@ -45,6 +46,7 @@ t_shell	*initialiser(char **env)
 {
 	t_shell	*data;
 
+	g_stdin = -1;
 	data = ft_calloc(1, sizeof(t_shell));
 	data->par = ft_calloc(1, sizeof(t_parser));
 	data->exit_code = 0;

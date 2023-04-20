@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:59:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/17 20:13:54 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/20 13:15:12 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@
 # include "parsing.h"
 # include "signals.h"
 
+/*-------- Global variable --------*/
+int		g_stdin;
+
 /*-------- msh_error.c --------*/
 void	msh_conditional_close(t_command *command);
 void	msh_free_to_exit(t_shell *shell);
@@ -87,4 +90,5 @@ void	msh_complete_free(t_shell *shell);
 void	msh_free_node(t_env *node);
 void	msh_free_list(t_env **list);
 void	msh_free(void *memory);
+
 #endif
