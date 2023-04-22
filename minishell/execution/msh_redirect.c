@@ -6,14 +6,21 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 20:31:59 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/21 15:40:13 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/22 17:12:50 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+void	msh_protected_close(int fd, int fail, int def)
+{
+	if (fd != STDIN_FILENO && fd != STDOUT_FILENO && fd != fail && fd != def)
+		close(fd);
+}
+
 int	msh_in_direct(t_shell *shell, t_direct *redir, int fd)
 {
+	msh_protected_close(fd, -1, -2);
 	if (redir->direct == RE_INPUT)
 	{
 		redir->fd = open(redir->file, O_RDONLY);
@@ -24,7 +31,6 @@ int	msh_in_direct(t_shell *shell, t_direct *redir, int fd)
 			return (fd);
 		}
 		fd = redir->fd;
-		return (fd);
 	}
 	else if (redir->direct == HERE_DOC)
 	{
@@ -36,15 +42,13 @@ int	msh_in_direct(t_shell *shell, t_direct *redir, int fd)
 		fd = redir->fd;
 		close(redir->fd);
 		redir->fd = open("here_doc_tmp", O_RDONLY);
-		return (fd);
 	}
 	return (fd);
 }
 
 int	msh_out_direct(t_shell *shell, t_direct *redir, int fd)
 {
-	if (fd != 1 && fd != -2)
-		close(fd);
+	msh_protected_close(fd, -1, -2);
 	if (redir->direct == RE_OUTPUT)
 		redir->fd = open(redir->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else if (redir->direct == APPEND)
@@ -64,16 +68,24 @@ int	msh_redirect(t_shell *shell, t_command *command, t_direct **redir)
 	int	i;
 
 	i = -1;
-	while (redir[++i])
+	if (redir)
 	{
-		if (redir[i]->direct == RE_INPUT || redir[i]->direct == HERE_DOC)
-			command->fd_in = msh_in_direct(shell, redir[i],
-					command->fd_in);
-		else if (redir[i]->direct == RE_OUTPUT || redir[i]->direct == APPEND)
-			command->fd_out = msh_out_direct(shell, redir[i],
-					command->fd_out);
-		if (command->fd_in == -1 || command->fd_out == -1)
-			return (1);
+		while (redir[++i])
+		{
+			if (redir[i]->direct == RE_INPUT || redir[i]->direct == HERE_DOC)
+				command->fd_in = msh_in_direct(shell, redir[i],
+						command->fd_in);
+			if (redir[i]->direct == RE_OUTPUT || redir[i]->direct == APPEND)
+				command->fd_out = msh_out_direct(shell, redir[i],
+						command->fd_out);
+			if (command->fd_in == -1 || command->fd_out == -1)
+			{
+				msh_protected_close(command->fd_in, -1, -2);
+				msh_protected_close(command->fd_out, -1, -2);
+				return (1);
+			}
+		}
+		return (0);
 	}
-	return (0);
+	return (1);
 }

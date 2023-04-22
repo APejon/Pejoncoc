@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:53:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/21 14:52:50 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/22 14:32:48 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	pipex_assigns(const char *s, char **str, char c, int count);
 char	**pipex_split(const char *s, char c);
 
 /*-------- msh_redirect.c --------*/
+void	msh_protected_close(int fd, int fail, int def);
 int		msh_in_direct(t_shell *shell, t_direct *redir, int fd);
 int		msh_out_direct(t_shell *shell, t_direct *redir, int fd);
 int		msh_redirect(t_shell *shell, t_command *command, t_direct **redir);

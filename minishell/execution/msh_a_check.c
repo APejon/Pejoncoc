@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/21 16:17:06 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/22 17:24:09 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	msh_check_command_piped(t_shell *shell, t_command *command, int tmp_fd)
 			if (command->p_fd[0] != STDIN_FILENO && command->p_fd[0] != -2)
 				close(command->p_fd[0]);
 			close(tmp_fd);
-			if (command->p_fd[1] != STDOUT_FILENO && command->p_fd[0] != -2)
+			if (command->p_fd[1] != STDOUT_FILENO && command->p_fd[1] != -2)
 				close(command->p_fd[1]);
 			if (msh_is_child(command) || msh_is_parent(command))
 				msh_allocate_child_piped(shell, command);
@@ -116,7 +116,7 @@ void	msh_check_link(t_shell *shell)
 	g_stdin = -2;
 	if (!(shell->command[1]))
 	{
-		if (msh_check_redir(shell, 0))
+		if (msh_redirect(shell, shell->command[0], shell->command[0]->redir))
 			return ;
 		msh_check_command(shell, shell->command[0]);
 	}
@@ -126,8 +126,6 @@ void	msh_check_link(t_shell *shell)
 		i = -1;
 		while (shell->command[++i])
 		{
-			if (msh_check_redir(shell, i))
-				return ;
 			if (shell->command[i + 1])
 				msh_pipe_command(shell, shell->command[i], &tmp_fd);
 			else if (!shell->command[i + 1])

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:29 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/09 12:06:24 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/22 13:27:06 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	msh_cd_target(t_shell *shell, t_command *command)
 	else
 	{
 		dest = ft_strjoin(shell->oldpwd, "/");
-		dest = ft_free_strjoin(dest, command->cmd_args[1], '1');
+		dest = ft_free_strjoin(dest, command->cmd_args[1], 1);
 	}
 	if (chdir(dest) == -1)
 		msh_print_error(shell, command, strerror(errno), 1);
