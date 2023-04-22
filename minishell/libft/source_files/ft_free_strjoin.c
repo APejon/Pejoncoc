@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 13:42:36 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/02/02 19:00:21 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/22 13:01:32 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@
  * @param flag Flag to identify what to free, 1 for s1, 2 for both, 3 for s2
  * @return char* Joined string
  */
-char	*ft_free_strjoin(char *s1, char *s2, char flag)
+char	*ft_free_strjoin(char *s1, char *s2, int flag)
 {
 	char	*combine;
 
 	combine = ft_strjoin(s1, s2);
-	if (flag == '1')
+	if (flag == 1)
 		ft_free(&s1);
-	if (flag == '2')
+	if (flag == 2)
 	{
 		ft_free(&s1);
 		ft_free(&s2);
 	}
-	if (flag == '3')
+	if (flag == 3)
 		ft_free(&s2);
 	return (combine);
 }

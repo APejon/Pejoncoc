@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 14:14:39 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/01/29 14:57:11 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/22 13:03:24 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
  */
 char	*msh_quotes(char *value)
 {
-	value = ft_free_strjoin("\"", value, '3');
-	value = ft_free_strjoin(value, "\"", '1');
+	value = ft_free_strjoin("\"", value, 3);
+	value = ft_free_strjoin(value, "\"", 1);
 	return (value);
 }
 

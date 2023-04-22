@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/21 16:06:37 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/22 13:00:25 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static char	*replace_str_env(t_shell *data, char *input, int idx)
 		return (NULL);
 	new_str = str_replace_str_at(input, idx - length - 1, length + 1,
 			env_value);
+	msh_free(&env_value);
 	return (new_str);
 }
 

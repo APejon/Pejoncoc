@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 19:45:57 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/30 17:33:13 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/22 13:02:24 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int			ft_atoi(const char *str);
 void		*ft_calloc(size_t count, size_t size);
 char		*ft_strdup(const char *s1);
 char		*ft_substr(const char *s, unsigned int start, size_t len);
-char		*ft_free_strjoin(char *s1, char *s2, char flag);
+char		*ft_free_strjoin(char *s1, char *s2, int flag);
 char		*ft_strjoin(const char *s1, const char *s2);
 char		*ft_strtrim(const char *s1, const char *set);
 char		*ft_strmapi(const char *s, char (*f)(unsigned int, char));

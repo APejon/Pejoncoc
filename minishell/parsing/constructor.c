@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/22 12:29:10 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/22 12:32:34 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static int	check_syntax(t_list **lexar)
 	search = *lexar;
 	while (search)
 	{
-		printf("%s IS CHECKED\n", (char *)search->content);
 		if (is_meta_syntax(search))
 		{
 			if (search->next)
@@ -95,7 +94,6 @@ int	parser(t_shell *data, char **line)
 	if (!lexer(*line, &data->par->lexar))
 		return (parser_error(data, &data->par->lexar, line,
 				"minishell: syntax error near unexpected token"));
-	printf("%s NEW LINE\n", *line);
 	if (!check_syntax(&data->par->lexar))
 		return (parser_error(data, &data->par->lexar, line,
 				"minishell: syntax error near unexpected token"));

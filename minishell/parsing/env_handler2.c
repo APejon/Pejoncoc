@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/22 12:30:17 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/22 13:01:41 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,12 @@ char	*get_env_value(t_env **env, char *variable)
 		if (!ft_strncmp(temp->variable, env_var, variable_length))
 		{
 			msh_free(&env_var);
-			return (temp->value);
+			env_var = ft_strjoin("\"", temp->value);
+			env_var = ft_free_strjoin(env_var, "\"", 1);
+			return (env_var);
 		}
 		temp = temp->next;
 	}
 	msh_free(&env_var);
-	return ("\"\"");
+	return (ft_strdup("\"\""));
 }
