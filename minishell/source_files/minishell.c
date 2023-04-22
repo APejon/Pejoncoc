@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 02:22:39 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/21 12:52:01 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/22 19:14:43 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	msh_reset(t_shell *data)
 		data->exit_code = 1;
 	if (g_stdin == 2)
 		data->exit_code = 130;
+	if (g_stdin == 4)
+		data->exit_code = 131;
 	g_stdin = -1;
 	i = -1;
 	if (data->command)
@@ -84,7 +86,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	data = initialiser(env);
 	signal(SIGINT, signal_handler_parent);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, signal_handler_parent);
 	while (1)
 	{
 		data->line = ft_strtrim(readline("\033[1;33mminishell:B> \033[0m"),

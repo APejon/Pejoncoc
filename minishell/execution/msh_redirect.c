@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 20:31:59 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/22 17:12:50 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/22 17:54:14 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ int	msh_redirect(t_shell *shell, t_command *command, t_direct **redir)
 			{
 				msh_protected_close(command->fd_in, -1, -2);
 				msh_protected_close(command->fd_out, -1, -2);
-				return (1);
+				return (0);
 			}
 		}
-		return (0);
+		return (1);
 	}
 	return (1);
 }

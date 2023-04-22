@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 13:38:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/22 13:27:11 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/22 18:39:32 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,12 @@ void	msh_update_dec_env(t_env *env, char *variable, char *value)
 		else if (env->next == NULL)
 		{
 			msh_create_node(env, variable, value);
+			msh_free(&value);
 			break ;
 		}
 		env = env->next;
 	}
 	env = start;
-	msh_free(&value);
 }
 
 /**

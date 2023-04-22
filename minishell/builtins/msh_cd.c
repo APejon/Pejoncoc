@@ -6,11 +6,32 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:29 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/22 13:27:06 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/22 19:08:30 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+char	*msh_cd_special(t_shell *shell, t_command *command)
+{
+	char	*dest;
+
+	dest = NULL;
+	if (command->cmd_args[1][0] == '~')
+	{
+		if (ft_strchr(command->cmd_args[1], '/'))
+			dest = ft_strjoin(msh_find_env(shell->env, "HOME="),
+					ft_strchr(command->cmd_args[1], '/'));
+		else
+			dest = ft_strdup(msh_find_env(shell->env, "HOME="));
+	}
+	else if (command->cmd_args[1][0] == '-')
+	{
+		dest = ft_strdup(msh_find_env(shell->env, "OLDPWD="));
+		pt_printf("%s\n", dest);
+	}
+	return (dest);
+}
 
 /**
  * @brief Uses cd command to move to a target directory
@@ -26,6 +47,8 @@ void	msh_cd_target(t_shell *shell, t_command *command)
 		shell->oldpwd = msh_find_env(shell->env, "PWD=");
 	if ((command->cmd_args[1][0]) == '/')
 		dest = ft_strdup(command->cmd_args[1]);
+	else if (command->cmd_args[1][0] == '~')
+		dest = msh_cd_special(shell, command);
 	else
 	{
 		dest = ft_strjoin(shell->oldpwd, "/");
@@ -57,9 +80,14 @@ void	msh_cd_parent(t_shell *shell, t_command *command)
 
 	if (!(shell->oldpwd))
 		shell->oldpwd = msh_find_env(shell->env, "PWD=");
-	parent = ft_strdup(shell->oldpwd);
-	end = ft_strrchr(parent, '/');
-	ft_bzero(end, ft_strlen(end));
+	if (!ft_strncmp(command->cmd_args[1], "..", 3))
+	{
+		parent = ft_strdup(shell->oldpwd);
+		end = ft_strrchr(parent, '/');
+		ft_bzero(end, ft_strlen(end));
+	}
+	else if (!ft_strncmp(command->cmd_args[1], "-", 2))
+		parent = msh_cd_special(shell, command);
 	if (chdir(parent) == -1)
 		msh_print_error(shell, command, strerror(errno), 1);
 	else
@@ -118,7 +146,8 @@ void	msh_cd(t_shell *shell, t_command *command)
 		shell->exit_code = 0;
 		return ;
 	}
-	else if (!ft_strncmp(command->cmd_args[1], "..", 3))
+	else if (!ft_strncmp(command->cmd_args[1], "..", 3)
+		|| !ft_strncmp(command->cmd_args[1], "-", 2))
 		msh_cd_parent(shell, command);
 	else
 		msh_cd_target(shell, command);

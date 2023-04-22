@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 13:23:05 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/22 17:26:20 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/22 18:04:11 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,19 @@ void	msh_create_pipe(t_shell *shell, t_command *command, int tmp_fd)
 
 void	msh_pipe_command(t_shell *shell, t_command *command, int *tmp_fd)
 {
+	msh_create_pipe(shell, command, *tmp_fd);
 	if (msh_redirect(shell, command, command->redir))
 	{
-		msh_create_pipe(shell, command, *tmp_fd);
 		msh_check_command_piped(shell, command, *tmp_fd);
 		close(command->p_fd[1]);
 		close(*tmp_fd);
 		*tmp_fd = dup(command->p_fd[0]);
 		close(command->p_fd[0]);
+	}
+	else
+	{
+		close(command->p_fd[0]);
+		close(command->p_fd[1]);
 	}
 }
 

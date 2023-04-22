@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/22 17:24:09 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/22 17:47:24 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,7 @@ void	msh_check_link(t_shell *shell)
 	if (!(shell->command[1]))
 	{
 		if (msh_redirect(shell, shell->command[0], shell->command[0]->redir))
-			return ;
-		msh_check_command(shell, shell->command[0]);
+			msh_check_command(shell, shell->command[0]);
 	}
 	else
 	{
