@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/19 20:46:45 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/21 16:06:37 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ static char	*check_and_get_env(t_shell *data, char *input, int idx)
 	char	*ret;
 
 	idx++;
+	if (g_stdin == 1)
+	{
+		data->exit_code = 1;
+		g_stdin = -1;
+	}
 	if (input[idx] && input[idx] == '?')
 	{
 		exit_status = ft_itoa(data->exit_code);
@@ -99,13 +104,14 @@ int	env_resolver(t_shell *data, char **input)
 	{
 		if ((!quote || quote == '"' ) && (*input)[i] == '$')
 		{
+			if (!(*input)[i + 1] || (*input)[i + 1] == '<'
+				|| (*input)[i + 1] == '>' || (*input)[i + 1] == '|')
+				continue ;
 			tmp = check_and_get_env(data, *input, i);
 			if (!tmp)
 				return (0);
 			free(*input);
 			*input = tmp;
-			if (!(*input)[i])
-				break ;
 		}
 		else if (!quote && ((*input)[i] == '\'' || (*input)[i] == '"'))
 			quote = (*input)[i];

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:43:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/17 22:11:19 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/21 12:58:47 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	msh_invalid(char *identi, char flag)
 
 	i = -1;
 	dup = ft_strdup(identi);
-	ft_bzero(ft_strchr(dup, '='), ft_strlen(ft_strchr(dup, '=')));
+	if (ft_strchr(dup, '='))
+		ft_bzero(ft_strchr(dup, '='), ft_strlen(ft_strchr(dup, '=')));
 	while (dup[++i])
 	{
 		if (dup[i] == '_' || dup[i] == '=')
@@ -84,6 +85,7 @@ void	msh_unset(t_shell *shell, t_command *command)
 {
 	int		i;
 
+	shell->exit_code = 0;
 	if (command->cmd_args[1])
 	{
 		i = 0;
@@ -104,6 +106,4 @@ void	msh_unset(t_shell *shell, t_command *command)
 				msh_pluck(shell, command, i);
 		}
 	}
-	if (shell->exit_code != 1)
-		shell->exit_code = 0;
 }

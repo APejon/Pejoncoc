@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 22:38:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/17 16:45:59 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/21 16:31:57 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,17 @@
  */
 void	msh_conditional_close(t_command *command)
 {
-	if (command->fd_in != STDIN_FILENO && command->fd_in != -1)
+	if (command->fd_in != STDIN_FILENO && command->fd_in != -1
+		&& command->fd_in != -2)
 		close(command->fd_in);
-	if (command->fd_out != STDOUT_FILENO && command->fd_out != -1)
+	if (command->fd_out != STDOUT_FILENO && command->fd_out != -1
+		&& command->fd_out != -2)
 		close(command->fd_out);
-	if (command->p_fd[0] != STDIN_FILENO && command->p_fd[0] != -1)
+	if (command->p_fd[0] != STDIN_FILENO && command->p_fd[0] != -1
+		&& command->p_fd[0] != -2)
 		close(command->p_fd[0]);
-	if (command->p_fd[1] != STDOUT_FILENO && command->p_fd[1] != -1)
+	if (command->p_fd[1] != STDOUT_FILENO && command->p_fd[1] != -1
+		&& command->p_fd[1] != -2)
 		close(command->p_fd[1]);
 }
 
@@ -63,7 +67,7 @@ void	msh_complete_close(t_shell *shell, t_command *command)
 			if (command->redir[i] && command->redir[i]->direct == HERE_DOC)
 			{
 				shell->nohd--;
-				if (shell->nohd == 0)
+				if (shell->nohd <= 0)
 					unlink("here_doc_tmp");
 			}
 			if (command->redir[i] && command->redir[i]->fd != -1

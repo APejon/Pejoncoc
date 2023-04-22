@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:54 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/16 15:33:49 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/21 15:17:44 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	msh_export_node(t_shell *shell, char *target, char *value)
 	else
 		msh_update_env(msh_find_last_node(shell->env), target, value);
 	if (*value == '\0')
+	{
+		msh_free(&value);
 		dec_value = ft_strdup("\"\"");
+	}
 	else
 		dec_value = msh_quotes(value);
 	dec_node = msh_find_node_ex(shell->dec_env, target);
@@ -69,7 +72,7 @@ char	*msh_separate(char *target, char sep)
 		i++;
 	}
 	if (*value == '\0')
-		value = "\0";
+		value = ft_strdup("\0");
 	else
 		value = ft_substr(target, i, len);
 	ft_bzero(&target[i], len);
@@ -107,8 +110,6 @@ void	msh_prep_export(t_shell *shell, t_command *command, char *target)
 			return (msh_free(&value));
 	}
 	msh_export_node(shell, target, value);
-	if (shell->exit_code != 1)
-		shell->exit_code = 0;
 }
 
 /**
@@ -145,6 +146,7 @@ void	msh_export(t_shell *shell, t_command *cmd)
 {
 	int		i;
 
+	shell->exit_code = 0;
 	if (cmd->cmd_args[1] == NULL)
 		msh_list_dec(shell->dec_env);
 	else

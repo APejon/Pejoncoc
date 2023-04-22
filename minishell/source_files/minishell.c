@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 02:22:39 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/20 13:34:22 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/21 12:52:01 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,27 @@
 
 void	msh_eof(t_shell *data)
 {
+	int	exit_code;
+
 	printf("exit\n");
 	msh_free(&data->command);
 	msh_free_list(&data->env);
 	msh_free_list(&data->dec_env);
 	msh_free(&data->oldpwd);
 	msh_free(&data->par);
+	exit_code = data->exit_code;
 	msh_free(&data);
+	exit (exit_code);
 }
 
 void	msh_reset(t_shell *data)
 {
 	int	i;
 
+	if (g_stdin == -3)
+		data->exit_code = 1;
+	if (g_stdin == 2)
+		data->exit_code = 130;
 	g_stdin = -1;
 	i = -1;
 	if (data->command)

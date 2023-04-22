@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/20 13:49:29 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/21 16:17:06 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	msh_update_fds(t_shell *shell, t_command *command)
 		dup2(command->fd_out, STDOUT_FILENO);
 	if (command->fd_in != STDIN_FILENO)
 		dup2(command->fd_in, STDIN_FILENO);
-	if (command->fd_out != STDOUT_FILENO)
+	if (command->fd_out != STDOUT_FILENO && command->fd_out != -2)
 		close(command->fd_out);
-	if (command->fd_in != STDIN_FILENO)
+	if (command->fd_in != STDIN_FILENO && command->fd_in != -2)
 		close(command->fd_in);
 }
 
@@ -48,10 +48,10 @@ void	msh_check_command_piped(t_shell *shell, t_command *command, int tmp_fd)
 		if (command->pid == 0)
 		{
 			msh_update_fds(shell, command);
-			if (command->p_fd[0] != STDIN_FILENO)
+			if (command->p_fd[0] != STDIN_FILENO && command->p_fd[0] != -2)
 				close(command->p_fd[0]);
 			close(tmp_fd);
-			if (command->p_fd[1] != STDOUT_FILENO)
+			if (command->p_fd[1] != STDOUT_FILENO && command->p_fd[0] != -2)
 				close(command->p_fd[1]);
 			if (msh_is_child(command) || msh_is_parent(command))
 				msh_allocate_child_piped(shell, command);
@@ -111,20 +111,23 @@ void	msh_check_command(t_shell *shell, t_command *command)
 void	msh_check_link(t_shell *shell)
 {
 	int		i;
-	int		check_failed;
 	int		tmp_fd;
 
-	check_failed = msh_check_redir(shell);
-	if (check_failed)
-		return ;
+	g_stdin = -2;
 	if (!(shell->command[1]))
+	{
+		if (msh_check_redir(shell, 0))
+			return ;
 		msh_check_command(shell, shell->command[0]);
+	}
 	else
 	{
 		tmp_fd = dup(STDIN_FILENO);
 		i = -1;
 		while (shell->command[++i])
 		{
+			if (msh_check_redir(shell, i))
+				return ;
 			if (shell->command[i + 1])
 				msh_pipe_command(shell, shell->command[i], &tmp_fd);
 			else if (!shell->command[i + 1])
@@ -154,10 +157,11 @@ void	msh_command_dispenser(t_shell *shell)
 	}
 	if (shell->nohd != 0)
 		msh_create_here_doc(shell, shell->nohd);
-	if (g_stdin != -3)
+	if (g_stdin == 3)
+		msh_close_g_stdin();
+	if (g_stdin == 0)
 	{
 		msh_check_link(shell);
-		g_stdin = -2;
 		i = -1;
 		while (shell->command[++i] && shell->command[i]->pid != 0)
 			waitpid(shell->command[i]->pid, &status, 0);

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/18 12:04:15 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/22 12:30:17 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,5 @@ char	*get_env_value(t_env **env, char *variable)
 		temp = temp->next;
 	}
 	msh_free(&env_var);
-	return ("");
+	return ("\"\"");
 }

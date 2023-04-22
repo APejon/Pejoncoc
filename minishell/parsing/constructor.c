@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/19 20:23:02 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/22 12:29:10 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,42 @@
 
 static int	is_meta_syntax(t_list *search)
 {
-	if (!ft_strncmp(search->content, "<", 2)
-		|| !ft_strncmp(search->content, ">", 2)
-		|| !ft_strncmp(search->content, "<<", 3)
-		|| !ft_strncmp(search->content, ">>", 3)
-		|| !ft_strncmp(search->content, "|", 2))
-		return (1);
+	if (search)
+	{
+		if (!ft_strncmp(search->content, "<", 2)
+			|| !ft_strncmp(search->content, ">", 2)
+			|| !ft_strncmp(search->content, "<<", 3)
+			|| !ft_strncmp(search->content, ">>", 3)
+			|| !ft_strncmp(search->content, "|", 2))
+			return (1);
+		else
+			return (0);
+	}
 	else
-		return (0);
+		return (1);
 }
 
 static int	check_syntax(t_list **lexar)
 {
-	char	*string;
 	t_list	*search;
 
 	search = *lexar;
 	while (search)
 	{
+		printf("%s IS CHECKED\n", (char *)search->content);
 		if (is_meta_syntax(search))
 		{
 			if (search->next)
 			{
+				if (!ft_strncmp(search->content, "|", 2)
+					&& is_str_redir(search->next->content))
+					search = search->next;
 				search = search->next;
-				string = (char *)search->content;
-				if (is_meta_syntax(search) || string[0] == '\0')
+				if (is_meta_syntax(search))
 					return (0);
 			}
+			else
+				return (0);
 		}
 		search = search->next;
 	}
@@ -86,6 +95,7 @@ int	parser(t_shell *data, char **line)
 	if (!lexer(*line, &data->par->lexar))
 		return (parser_error(data, &data->par->lexar, line,
 				"minishell: syntax error near unexpected token"));
+	printf("%s NEW LINE\n", *line);
 	if (!check_syntax(&data->par->lexar))
 		return (parser_error(data, &data->par->lexar, line,
 				"minishell: syntax error near unexpected token"));

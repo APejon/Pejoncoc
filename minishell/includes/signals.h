@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:54:59 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/03/30 16:50:08 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/21 16:18:19 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 typedef struct s_shell	t_shell;
 
+/*-------- signals.c ----------*/
+void	msh_close_g_stdin(void);
 void	signal_handler_parent(int signum);
 
 #endif

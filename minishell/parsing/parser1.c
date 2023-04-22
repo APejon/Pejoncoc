@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:47:35 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/19 20:21:32 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/21 15:08:50 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	lexer(char *line, t_list **lexar_list)
 				return (0);
 		}
 	}
-	if (!get_clean_input(line, lexar_list, &start, &end) && line[start])
+	if (line[start] && !get_clean_input(line, lexar_list, &start, &end))
 		return (0);
 	return (1);
 }

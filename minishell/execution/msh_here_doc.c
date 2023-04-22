@@ -6,12 +6,23 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 19:23:22 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/20 14:20:41 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/21 16:15:00 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Function representing the prompt of here_doc using get_next_line
+ * 
+ * @param limiter The output of a here_doc prompt
+ * @param file The limiter given by the command line
+ * @param len The length of how far strncmp should be read (depending on which
+ * of the two variables is smaller)
+ * @param nohd_c The number of here_docs presented by command line
+ * @return true If here_doc prompt is successful and will be read
+ * @return false If here_doc is interrupted by a signal and forced to quit
+ */
 bool	msh_hd_prompt(char	**limiter, char *file, int *len, int *nohd_c)
 {
 	*limiter = get_next_line(g_stdin);
@@ -21,7 +32,7 @@ bool	msh_hd_prompt(char	**limiter, char *file, int *len, int *nohd_c)
 		if (*nohd_c == 0 && g_stdin != -3)
 		{
 			close(g_stdin);
-			g_stdin = -3;
+			g_stdin = 0;
 		}
 		return (false);
 	}
@@ -98,24 +109,27 @@ void	msh_input_hd(t_direct *redir, int *nohd_c)
  */
 void	msh_create_here_doc(t_shell *shell, int nohd)
 {
-	int	i;
-	int	j;
-	int	count;
-	int	nohd_c;
+	int	count[3];
+	int	nohdc;
 
-	i = -1;
-	count = 0;
-	nohd_c = nohd;
+	count[0] = -1;
+	count[2] = 0;
+	nohdc = nohd;
 	g_stdin = dup(STDIN_FILENO);
-	while (shell->command[++i] && count < nohd)
+	while (shell->command[++count[0]] && count[2] < nohd)
 	{
-		j = -1;
-		while (shell->command[i]->redir[++j])
+		count[1] = -1;
+		if (shell->command[count[0]]->redir)
 		{
-			if (shell->command[i]->redir[j]->direct == HERE_DOC)
+			while (shell->command[count[0]]->redir[++count[1]])
 			{
-				msh_input_hd(shell->command[i]->redir[j], &nohd_c);
-				count++;
+				if (shell->command[count[0]]->redir[count[1]]->direct
+					== HERE_DOC)
+				{
+					msh_input_hd(shell->command[count[0]]->redir[count[1]],
+						&nohdc);
+					count[2]++;
+				}
 			}
 		}
 	}

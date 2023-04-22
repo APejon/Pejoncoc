@@ -6,27 +6,19 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:02 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/18 11:58:31 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/21 13:28:52 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	msh_no_newline(t_command *command)
+void	msh_print_no_newline(t_command *command, int i)
 {
-	int	i;
 	int	j;
 
-	i = 0;
-	j = 2;
-	while (!ft_strncmp(command->cmd_args[++i], "-n", 2))
-	{
-		while (command->cmd_args[i][j] == 'n' && command->cmd_args[i][j])
-			j++;
-		if (command->cmd_args[i][j])
-			break ;
-		j = 2;
-	}
+	j = 0;
+	if (i == 1)
+		j = 1;
 	while (command->cmd_args[i])
 	{
 		if (command->cmd_args[i + 1])
@@ -35,6 +27,29 @@ void	msh_no_newline(t_command *command)
 			pt_printf("%s", command->cmd_args[i]);
 		i++;
 	}
+	if (j == 1)
+		printf("\n");
+}
+
+void	msh_no_newline(t_command *command)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 2;
+	while (command->cmd_args[++i])
+	{
+		if (!ft_strncmp(command->cmd_args[i], "-n", 2))
+		{
+			while (command->cmd_args[i][j] == 'n' && command->cmd_args[i][j])
+				j++;
+		}
+		if (command->cmd_args[i][j] != 'n' && command->cmd_args[i][j])
+			break ;
+		j = 2;
+	}
+	msh_print_no_newline(command, i);
 }
 
 /**

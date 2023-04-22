@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:43:39 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/16 14:27:26 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/21 12:50:04 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	msh_exit(t_shell *shell, t_command *command)
 	int	count;
 
 	pt_printf("exit\n");
-	shell->exit_code = 0;
 	if (command->cmd_args[1])
 	{
 		count = msh_count(command->cmd_args[1]);

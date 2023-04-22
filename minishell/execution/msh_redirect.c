@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 20:31:59 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/17 20:58:57 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/21 15:40:13 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	msh_in_direct(t_shell *shell, t_direct *redir, int fd)
 
 int	msh_out_direct(t_shell *shell, t_direct *redir, int fd)
 {
-	if (fd != 1)
+	if (fd != 1 && fd != -2)
 		close(fd);
 	if (redir->direct == RE_OUTPUT)
 		redir->fd = open(redir->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
@@ -72,7 +72,7 @@ int	msh_redirect(t_shell *shell, t_command *command, t_direct **redir)
 		else if (redir[i]->direct == RE_OUTPUT || redir[i]->direct == APPEND)
 			command->fd_out = msh_out_direct(shell, redir[i],
 					command->fd_out);
-		if (shell->command[i]->fd_in == -1 || shell->command[i]->fd_out == -1)
+		if (command->fd_in == -1 || command->fd_out == -1)
 			return (1);
 	}
 	return (0);
