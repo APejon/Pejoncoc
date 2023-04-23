@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:41:52 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/22 13:54:31 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/23 11:14:49 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_parser
 {
 	int		no_of_cmd_args;
 	int		no_of_redirs;
+	char	*error;
 	t_list	*lexar;
 	t_list	**sections;
 	t_list	*pipe;

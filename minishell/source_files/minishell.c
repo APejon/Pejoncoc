@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 02:22:39 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/22 19:14:43 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/23 11:25:31 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_shell	*initialiser(char **env)
 	g_stdin = -1;
 	data = ft_calloc(1, sizeof(t_shell));
 	data->par = ft_calloc(1, sizeof(t_parser));
+	data->par->error = NULL;
 	data->exit_code = 0;
 	data->nohd = 0;
 	data->oldpwd = NULL;
