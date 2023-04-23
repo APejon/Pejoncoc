@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 02:22:39 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/23 11:25:31 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/23 11:37:01 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	msh_reset(t_shell *data)
 		}
 		msh_free(&data->command);
 	}
+	data->par->error = NULL;
 	data->nohd = 0;
 }
 

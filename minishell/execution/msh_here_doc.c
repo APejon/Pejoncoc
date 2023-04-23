@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 19:23:22 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/22 13:26:52 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/23 18:31:38 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
  */
 bool	msh_hd_prompt(char	**limiter, char *file, int *len, int *nohd_c)
 {
+	if (g_stdin == 3)
+		pt_printf("> ");
 	*limiter = get_next_line(g_stdin);
 	if (!*limiter)
 	{
@@ -72,32 +74,31 @@ int	msh_compare_len(char *s1, char *s2)
  * 
  * @param redir The struct containing data related to the redirects
  */
-void	msh_input_hd(t_direct *redir, int *nohd_c)
+void	msh_input_hd(t_shell *shell, t_direct *redir, int *nohd_c)
 {
 	int			len;
-	char		*limiter;
+	char		*limit;
 
-	if (g_stdin == 3)
-		pt_printf("> ");
-	if (!msh_hd_prompt(&limiter, redir->file, &len, nohd_c))
+	if (!msh_hd_prompt(&limit, redir->file, &len, nohd_c))
 		return ;
-	if (!ft_strncmp(limiter, redir->file, len + 1))
+	if (!ft_strncmp(limit, redir->file, len + 1))
 	{
-		msh_free(&limiter);
+		msh_free(&limit);
 		return ;
 	}
-	redir->hd_content = ft_free_strjoin(limiter, "\0", 1);
+	limit = env_replace_hd(shell, limit);
+	redir->hd_content = ft_free_strjoin(limit, "", 1);
 	while (1)
 	{
-		pt_printf("> ");
-		if (!msh_hd_prompt(&limiter, redir->file, &len, nohd_c))
+		if (!msh_hd_prompt(&limit, redir->file, &len, nohd_c))
 			break ;
-		if (!ft_strncmp(limiter, redir->file, len + 1))
+		if (!ft_strncmp(limit, redir->file, len + 1))
 		{
-			msh_free(&limiter);
+			msh_free(&limit);
 			break ;
 		}
-		redir->hd_content = ft_free_strjoin(redir->hd_content, limiter, 2);
+		limit = env_replace_hd(shell, limit);
+		redir->hd_content = ft_free_strjoin(redir->hd_content, limit, 2);
 	}
 }
 
@@ -126,8 +127,8 @@ void	msh_create_here_doc(t_shell *shell, int nohd)
 				if (shell->command[count[0]]->redir[count[1]]->direct
 					== HERE_DOC)
 				{
-					msh_input_hd(shell->command[count[0]]->redir[count[1]],
-						&nohdc);
+					msh_input_hd(shell,
+						shell->command[count[0]]->redir[count[1]], &nohdc);
 					count[2]++;
 				}
 			}

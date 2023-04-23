@@ -6,7 +6,7 @@
 #    By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 14:11:12 by amalbrei          #+#    #+#              #
-#    Updated: 2023/04/19 20:51:04 by amalbrei         ###   ########.fr        #
+#    Updated: 2023/04/23 14:59:55 by amalbrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -191,4 +191,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY = all $(NAME) $(LIBFT) norm valgrind list clean fclean re 
+.PHONY: all norm valgrind list clean fclean re 

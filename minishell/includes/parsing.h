@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:54:10 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/23 11:22:32 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/23 15:50:24 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ void		free_array(char **arr);
 int			parser(t_shell *data, char **line);
 
 /* Env Handler 1 and 2 */
+char		*env_replace_hd(t_shell *shell, char *limiter);
+char		*replace_str_env(t_shell *data, char *input, int idx, int flag);
 int			env_resolver(t_shell *data, char **input);
 char		*str_replace_str_at(char *str, int idx, int length,
 				char *replacement);
-char		*get_env_value(t_env **env, char *variable);
+char		*get_env_value(t_env **env, char *variable, int flag);
 
 /* Final Command Builder */
 void		edge_case(t_list *search);

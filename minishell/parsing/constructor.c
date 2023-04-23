@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/23 11:27:16 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/23 11:36:19 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	is_meta_syntax(t_list *search)
 		return (1);
 }
 
-static char	*check_syntax(t_shell *data, t_list **lexar)
+static int	check_syntax(t_shell *data, t_list **lexar)
 {
 	t_list	*search;
 
@@ -46,14 +46,14 @@ static char	*check_syntax(t_shell *data, t_list **lexar)
 					search = search->next;
 				search = search->next;
 				if (is_meta_syntax(search))
-					return (data->par->error);
+					return (0);
 			}
 			else
-				return (data->par->error);
+				return (0);
 		}
 		search = search->next;
 	}
-	return (NULL);
+	return (1);
 }
 
 /* Cleans the Command List, If All Clean then Cleans Commands as well */
@@ -69,6 +69,7 @@ static int	free_parser(t_shell *data, t_list **lexar, char **line,
 		ft_lstclear(data->par->sections, \
 		(void (*)(void *))free_array);
 	}
+	data->par->error = NULL;
 	return (0);
 }
 
@@ -105,7 +106,7 @@ int	parser(t_shell *data, char **line)
 	if (!lexer(*line, &data->par->lexar))
 		return (parser_error(data, &data->par->lexar, line,
 				"minishell: syntax error: unclosed quotes"));
-	if (check_syntax(data, &data->par->lexar))
+	if (!check_syntax(data, &data->par->lexar))
 		return (parser_error(data, &data->par->lexar, line,
 				"minishell: syntax error: near unexpected token: "));
 	split_into_commands(data, data->par->lexar);

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/22 13:00:25 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/23 18:11:05 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,28 @@
 
 /* Find PWD from the ENV, if not there it Get's it from Memory, /
    Return NULL if Error */
-static char	*get_pwd(t_env **env)
+static char	*get_pwd(t_env **env, int flag)
 {
 	char	*pwd;
 
-	pwd = get_env_value(env, "PWD");
+	pwd = get_env_value(env, "PWD", flag);
 	if (!pwd)
 		return (NULL);
 	return (pwd);
 }
 
 /* Find PWD and Returns it's Value in ENV List, PWD is Taken out of Memory */
-static char	*resolving_env(t_env **env, char *env_name)
+static char	*resolving_env(t_env **env, char *env_name, int flag)
 {
 	if (!ft_strncmp(env_name, "PWD", 4))
-		return (get_pwd(env));
+		return (get_pwd(env, flag));
 	else
-		return (get_env_value(env, env_name));
+		return (get_env_value(env, env_name, flag));
 }
 
 /* Allocating a New String from a Value that will Replace
    the ENV Variable, Returns NULL if Error */
-static char	*replace_str_env(t_shell *data, char *input, int idx)
+char	*replace_str_env(t_shell *data, char *input, int idx, int flag)
 {
 	char	*new_str;
 	char	*env_value;
@@ -53,14 +53,14 @@ static char	*replace_str_env(t_shell *data, char *input, int idx)
 	new_str = ft_substr(input, idx - length, length);
 	if (!new_str)
 		return (NULL);
-	env_value = resolving_env(&data->env, new_str);
-	if (new_str)
-		free(new_str);
+	env_value = resolving_env(&data->env, new_str, flag);
+	msh_free(&new_str);
 	if (!env_value)
 		return (NULL);
 	new_str = str_replace_str_at(input, idx - length - 1, length + 1,
 			env_value);
-	msh_free(&env_value);
+	if (flag == 2)
+		msh_free(&input);
 	return (new_str);
 }
 
@@ -88,7 +88,7 @@ static char	*check_and_get_env(t_shell *data, char *input, int idx)
 	else if (input[idx] == '"')
 		return (ft_strdup(input));
 	else
-		return (replace_str_env(data, input, idx));
+		return (replace_str_env(data, input, idx, 1));
 }
 
 /* Checks All ENV Variables in the String \
