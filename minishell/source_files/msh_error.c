@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 22:38:56 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/21 16:31:57 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/24 19:07:50 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,10 @@
  */
 void	msh_conditional_close(t_command *command)
 {
-	if (command->fd_in != STDIN_FILENO && command->fd_in != -1
-		&& command->fd_in != -2)
-		close(command->fd_in);
-	if (command->fd_out != STDOUT_FILENO && command->fd_out != -1
-		&& command->fd_out != -2)
-		close(command->fd_out);
-	if (command->p_fd[0] != STDIN_FILENO && command->p_fd[0] != -1
-		&& command->p_fd[0] != -2)
-		close(command->p_fd[0]);
-	if (command->p_fd[1] != STDOUT_FILENO && command->p_fd[1] != -1
-		&& command->p_fd[1] != -2)
-		close(command->p_fd[1]);
+	msh_protected_close(command->fd_in, -1, -2);
+	msh_protected_close(command->fd_out, -1, -2);
+	msh_protected_close(command->p_fd[0], -1, -2);
+	msh_protected_close(command->p_fd[1], -1, -2);
 }
 
 /**
@@ -72,7 +64,7 @@ void	msh_complete_close(t_shell *shell, t_command *command)
 			}
 			if (command->redir[i] && command->redir[i]->fd != -1
 				&& command->redir[i]->fd != STDIN_FILENO)
-				close(command->redir[i]->fd);
+				msh_protected_close(command->redir[i]->fd, -1, -2);
 		}
 	}
 }

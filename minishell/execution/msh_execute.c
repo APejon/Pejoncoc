@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:19:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/23 18:47:54 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/24 19:21:36 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,4 +116,5 @@ void	msh_execute(t_shell *shell, t_command *command, char **cmd_paths)
 	envp = msh_convert(shell->env);
 	msh_complete_close(shell, command);
 	execve(cmd, command->cmd_args, envp);
+	msh_free_to_exit(shell);
 }

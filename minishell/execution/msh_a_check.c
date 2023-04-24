@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/23 19:39:22 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/24 19:06:48 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@ void	msh_update_fds(t_shell *shell, t_command *command)
 		dup2(command->fd_out, STDOUT_FILENO);
 	if (command->fd_in != STDIN_FILENO)
 		dup2(command->fd_in, STDIN_FILENO);
-	if (command->fd_out != STDOUT_FILENO && command->fd_out != -2)
-		close(command->fd_out);
-	if (command->fd_in != STDIN_FILENO && command->fd_in != -2)
-		close(command->fd_in);
+	msh_protected_close(command->fd_out, -1, -2);
+	msh_protected_close(command->fd_in, -1, -2);
 }
 
 /**
@@ -49,7 +47,7 @@ void	msh_check_command_piped(t_shell *shell, t_command *command, int tmp_fd)
 		{
 			msh_update_fds(shell, command);
 			msh_protected_close(command->p_fd[0], -1, -2);
-			close(tmp_fd);
+			msh_protected_close(tmp_fd, -1, -2);
 			msh_protected_close(command->p_fd[1], -1, -2);
 			if (msh_is_child(command) || msh_is_parent(command))
 				msh_allocate_child_piped(shell, command);

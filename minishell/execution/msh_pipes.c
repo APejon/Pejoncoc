@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 13:23:05 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/24 16:16:50 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/24 19:13:19 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,18 @@ void	msh_pipe_command(t_shell *shell, t_command *command, int *tmp_fd)
 	if (msh_redirect(shell, command, command->redir))
 	{
 		msh_check_command_piped(shell, command, *tmp_fd);
-		close(command->p_fd[1]);
-		close(*tmp_fd);
+		msh_protected_close(command->p_fd[1], -1, -2);
+		msh_protected_close(*tmp_fd, -1, -2);
 		*tmp_fd = dup(command->p_fd[0]);
-		close(command->p_fd[0]);
+		msh_protected_close(command->p_fd[0], -1, -2);
 	}
 	else
 	{
-		close(command->p_fd[0]);
-		close(command->p_fd[1]);
+		msh_protected_close(command->p_fd[0], -1, -2);
+		msh_protected_close(command->p_fd[1], -1, -2);
+		command->pid = fork();
+		if (command->pid == 0)
+			msh_free_to_exit(shell);
 	}
 }
 
@@ -64,6 +67,6 @@ void	msh_last_command(t_shell *shell, t_command *command, int tmp_fd)
 	if (msh_redirect(shell, command, command->redir))
 	{
 		msh_check_command_piped(shell, command, tmp_fd);
-		close(tmp_fd);
+		msh_protected_close(tmp_fd, -1, -2);
 	}
 }
