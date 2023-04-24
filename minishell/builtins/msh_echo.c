@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:02 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/21 13:28:52 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:27:28 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ void	msh_no_newline(t_command *command)
 		{
 			while (command->cmd_args[i][j] == 'n' && command->cmd_args[i][j])
 				j++;
+			if (command->cmd_args[i][j] != 'n' && command->cmd_args[i][j])
+				break ;
 		}
-		if (command->cmd_args[i][j] != 'n' && command->cmd_args[i][j])
+		else
 			break ;
 		j = 2;
 	}

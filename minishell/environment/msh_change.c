@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 13:38:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/22 18:39:32 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/23 19:16:26 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,13 @@ void	msh_update_shlvl(t_env *env)
 	int		previous_lvl;
 	char	*updated_lvl;
 
-	previous_lvl = ft_atoi(msh_find_env(env, "SHLVL="));
-	updated_lvl = ft_itoa(previous_lvl + 1);
-	msh_update_env(env, "SHLVL=", updated_lvl);
-	msh_free(&updated_lvl);
+	if (msh_find_env(env, "SHLVL="))
+	{
+		previous_lvl = ft_atoi(msh_find_env(env, "SHLVL="));
+		updated_lvl = ft_itoa(previous_lvl + 1);
+		msh_update_env(env, "SHLVL=", updated_lvl);
+		msh_free(&updated_lvl);
+	}
 }
 
 /**

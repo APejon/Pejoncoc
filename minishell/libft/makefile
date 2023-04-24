@@ -6,7 +6,7 @@
 #    By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/21 19:43:26 by amalbrei          #+#    #+#              #
-#    Updated: 2023/04/09 18:09:05 by amalbrei         ###   ########.fr        #
+#    Updated: 2023/04/23 19:10:52 by amalbrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -110,4 +110,4 @@ fclean:
 
 re: fclean all
 
-.PHONY = all bonus printf gnl list clean fclean re
+.PHONY: all bonus printf gnl list clean fclean re

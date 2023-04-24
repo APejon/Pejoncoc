@@ -6,11 +6,44 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/23 18:26:39 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/24 18:52:32 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	remove_from_line(char **input, int i)
+{
+	int	start;
+
+	start = i;
+	while ((*input)[i])
+	{
+		(*input)[i] = (*input)[i + 1];
+		i++;
+	}
+	if ((*input)[start] == '"' || (*input)[start] == '\'')
+		remove_from_line(input, start);
+}
+
+void	assign_meta(char **input, char *quote, int *i)
+{
+	if (!(*quote) && ((*input)[*i] == '\'' || (*input)[*i] == '"'))
+		*quote = (*input)[*i];
+	else if ((*quote) && (*input)[*i] == (*quote))
+		*quote = 0;
+	if ((*input)[*i] == '<' && (*input)[*i + 1] == '<')
+	{
+		(*i) = (*i) + 2;
+		while (((*input)[*i + 1] != '<' && (*input)[*i + 1] != '>'
+			&& (*input)[*i + 1] != '|') && (*input)[*i + 1])
+		{
+			if ((*input)[*i] == '"' || (*input)[*i] == '\'')
+				remove_from_line(input, *i);
+			(*i)++;
+		}
+	}
+}
 
 char	*env_replace_hd(t_shell *shell, char *limiter)
 {
@@ -64,7 +97,7 @@ char	*str_replace_str_at(char *str, int idx, int length, char *replacement)
 }
 
 /* Returns New Allocated ENV Variable Value String from Name  */
-char	*get_env_value(t_env **env, char *variable, int flag)
+char	*get_env_value(t_env **env, char *variable)
 {
 	int		variable_length;
 	char	*env_var;
@@ -78,16 +111,11 @@ char	*get_env_value(t_env **env, char *variable, int flag)
 		if (!ft_strncmp(temp->variable, env_var, variable_length))
 		{
 			msh_free(&env_var);
-			if (flag == 2)
-				return (ft_strdup(temp->value));
-			env_var = ft_strjoin("\"", temp->value);
-			env_var = ft_free_strjoin(env_var, "\"", 1);
+			return (ft_strdup(temp->value));
 			return (env_var);
 		}
 		temp = temp->next;
 	}
 	msh_free(&env_var);
-	if (flag == 2)
-		return (ft_strdup(""));
-	return ("\"\"");
+	return (ft_strdup(""));
 }

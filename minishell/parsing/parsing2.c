@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:47:35 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/19 20:08:50 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/24 17:25:49 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_isspace(int c)
 // Only those that we need to interpret in project
 int	is_meta_char(int c)
 {
-	if (c == '>' || c == '<' || c == '|' || c == '$')
+	if (c == '>' || c == '<' || c == '|')
 		return (1);
 	return (0);
 }

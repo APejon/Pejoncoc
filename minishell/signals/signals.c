@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:54:37 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/22 22:06:39 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/23 18:39:27 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	msh_heredoc_prompt(void)
 
 static void	msh_command_prompt(void)
 {
-	g_stdin = 2;
+	g_stdin = -2;
 }
 
 /**
@@ -57,7 +57,7 @@ void	signal_handler_parent(int signum)
 	{
 		if (g_stdin == -1 || g_stdin == 1)
 			msh_minishell_prompt();
-		if (g_stdin == -2)
+		if (g_stdin == 2)
 			msh_command_prompt();
 		if (g_stdin == 3)
 			msh_heredoc_prompt();
@@ -69,6 +69,6 @@ void	signal_handler_parent(int signum)
 	{
 		pt_printf("Quit:");
 		pt_printf("\n");
-		g_stdin = 4;
+		g_stdin = -4;
 	}
 }

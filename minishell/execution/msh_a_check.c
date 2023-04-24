@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/22 17:47:24 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/23 19:39:22 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,15 @@ void	msh_check_command_piped(t_shell *shell, t_command *command, int tmp_fd)
 {
 	char	**cmd_paths;
 
-	if (command->cmd_args)
+	command->pid = fork();
+	if (command->pid == 0)
 	{
-		command->pid = fork();
-		if (command->pid == 0)
+		if (command->cmd_args)
 		{
 			msh_update_fds(shell, command);
-			if (command->p_fd[0] != STDIN_FILENO && command->p_fd[0] != -2)
-				close(command->p_fd[0]);
+			msh_protected_close(command->p_fd[0], -1, -2);
 			close(tmp_fd);
-			if (command->p_fd[1] != STDOUT_FILENO && command->p_fd[1] != -2)
-				close(command->p_fd[1]);
+			msh_protected_close(command->p_fd[1], -1, -2);
 			if (msh_is_child(command) || msh_is_parent(command))
 				msh_allocate_child_piped(shell, command);
 			else
@@ -63,6 +61,8 @@ void	msh_check_command_piped(t_shell *shell, t_command *command, int tmp_fd)
 				msh_execute(shell, command, cmd_paths);
 			}
 		}
+		else
+			msh_free_to_exit(shell);
 	}
 }
 
@@ -113,7 +113,7 @@ void	msh_check_link(t_shell *shell)
 	int		i;
 	int		tmp_fd;
 
-	g_stdin = -2;
+	g_stdin = 2;
 	if (!(shell->command[1]))
 	{
 		if (msh_redirect(shell, shell->command[0], shell->command[0]->redir))

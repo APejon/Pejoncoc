@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 02:22:39 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/23 11:37:01 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/24 18:35:25 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	msh_reset(t_shell *data)
 {
 	int	i;
 
+	if (g_stdin == -2)
+		data->exit_code = 130;
 	if (g_stdin == -3)
 		data->exit_code = 1;
-	if (g_stdin == 2)
-		data->exit_code = 130;
-	if (g_stdin == 4)
+	if (g_stdin == -4)
 		data->exit_code = 131;
 	g_stdin = -1;
 	i = -1;
@@ -48,7 +48,7 @@ void	msh_reset(t_shell *data)
 		}
 		msh_free(&data->command);
 	}
-	data->par->error = NULL;
+	data->par->error = 0;
 	data->nohd = 0;
 }
 
@@ -60,7 +60,7 @@ t_shell	*initialiser(char **env)
 	g_stdin = -1;
 	data = ft_calloc(1, sizeof(t_shell));
 	data->par = ft_calloc(1, sizeof(t_parser));
-	data->par->error = NULL;
+	data->par->error = 0;
 	data->exit_code = 0;
 	data->nohd = 0;
 	data->oldpwd = NULL;

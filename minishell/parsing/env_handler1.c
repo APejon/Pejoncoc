@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/23 18:11:05 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/24 18:48:56 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 /* Find PWD from the ENV, if not there it Get's it from Memory, /
    Return NULL if Error */
-static char	*get_pwd(t_env **env, int flag)
+static char	*get_pwd(t_env **env)
 {
 	char	*pwd;
 
-	pwd = get_env_value(env, "PWD", flag);
+	pwd = get_env_value(env, "PWD");
 	if (!pwd)
 		return (NULL);
 	return (pwd);
 }
 
 /* Find PWD and Returns it's Value in ENV List, PWD is Taken out of Memory */
-static char	*resolving_env(t_env **env, char *env_name, int flag)
+static char	*resolving_env(t_env **env, char *env_name)
 {
 	if (!ft_strncmp(env_name, "PWD", 4))
-		return (get_pwd(env, flag));
+		return (get_pwd(env));
 	else
-		return (get_env_value(env, env_name, flag));
+		return (get_env_value(env, env_name));
 }
 
 /* Allocating a New String from a Value that will Replace
@@ -53,7 +53,7 @@ char	*replace_str_env(t_shell *data, char *input, int idx, int flag)
 	new_str = ft_substr(input, idx - length, length);
 	if (!new_str)
 		return (NULL);
-	env_value = resolving_env(&data->env, new_str, flag);
+	env_value = resolving_env(&data->env, new_str);
 	msh_free(&new_str);
 	if (!env_value)
 		return (NULL);
@@ -81,8 +81,6 @@ static char	*check_and_get_env(t_shell *data, char *input, int idx)
 	{
 		exit_status = ft_itoa(data->exit_code);
 		ret = str_replace_str_at(input, idx - 1, 2, exit_status);
-		if (exit_status)
-			free(exit_status);
 		return (ret);
 	}
 	else if (input[idx] == '"')
@@ -103,7 +101,7 @@ int	env_resolver(t_shell *data, char **input)
 	i = -1;
 	while ((*input)[++i])
 	{
-		if ((!quote || quote == '"' ) && (*input)[i] == '$')
+		if ((!quote || quote == '"') && (*input)[i] == '$')
 		{
 			if (!(*input)[i + 1] || (*input)[i + 1] == '<'
 				|| (*input)[i + 1] == '>' || (*input)[i + 1] == '|')
@@ -114,10 +112,10 @@ int	env_resolver(t_shell *data, char **input)
 			free(*input);
 			*input = tmp;
 		}
-		else if (!quote && ((*input)[i] == '\'' || (*input)[i] == '"'))
-			quote = (*input)[i];
-		else if (quote && (*input)[i] == quote)
-			quote = 0;
+		else
+			assign_meta(input, &quote, &i);
+		if (*input[0] == '\0')
+			return (0);
 	}
 	return (1);
 }
