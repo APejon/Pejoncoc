@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/25 16:21:33 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/25 19:56:31 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ void	remove_from_line(char **input, int i)
 	int	start;
 
 	start = i;
+	if (((*input)[i] == '"' && (*input)[i + 1] == '"')
+		|| ((*input)[i] == '"' && (*input)[i - 1] == '"'))
+		return ;
 	while ((*input)[i])
 	{
 		(*input)[i] = (*input)[i + 1];
@@ -40,10 +43,12 @@ int	assign_meta(char **input, char *quote, int i)
 		{
 			if ((*input)[i] == '"' || (*input)[i] == '\'')
 				remove_from_line(input, i);
-			i++;
+			else
+				i++;
 		}
-		i--;
-		return (i);
+		if (!(*input)[i])
+			i--;
+		return (--i);
 	}
 	return (i);
 }
@@ -77,6 +82,8 @@ char	*str_replace_str_at(char *str, int idx, int length, char *replacement)
 	char	*new_str;
 	char	*tmp;
 
+	if (ambigious_redir(str, idx, length, replacement))
+		return (NULL);
 	if (!str || idx < 0 || length < 0 || !replacement)
 		return (NULL);
 	if (idx >= (int)ft_strlen(str))
@@ -88,11 +95,8 @@ char	*str_replace_str_at(char *str, int idx, int length, char *replacement)
 	if (!tmp)
 		return (NULL);
 	new_str = ft_strjoin(tmp, &str[idx + length]);
-	if (tmp)
-	{
-		free(tmp);
-		tmp = NULL;
-	}
+	free(tmp);
+	tmp = NULL;
 	if (!new_str)
 		return (NULL);
 	msh_free(&replacement);

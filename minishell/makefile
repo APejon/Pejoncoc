@@ -6,7 +6,7 @@
 #    By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 14:11:12 by amalbrei          #+#    #+#              #
-#    Updated: 2023/04/25 15:52:00 by amalbrei         ###   ########.fr        #
+#    Updated: 2023/04/25 17:45:05 by amalbrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,7 +105,7 @@ EXECUTION_SRC	=	msh_a_check.c	msh_execute.c	msh_here_doc.c	msh_locate.c	\
 					msh_pipes.c		msh_pipex_split.c	msh_redirect.c
 
 PARSING_SRC		=	constructor.c	env_handler1.c	env_handler2.c	final_command_builder1.c\
-					parser1.c		parsing2.c		transfer_structs.c
+					parser1.c		parsing2.c		transfer_structs.c	ambigious.c
 
 SIGNALS_SRC		=	signals.c
 

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/25 16:23:47 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/25 19:35:02 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,14 @@ static int	free_parser(t_shell *data, t_list **lexar, char **line,
 
 	free(*line);
 	if (clean_all == 2)
+		data->exit_code = 1;
+	if (clean_all == 3)
 	{
 		ft_lstclear(lexar, free);
 		ft_lstclear(data->par->sections, \
 		(void (*)(void *))free_array);
 	}
-	if (clean_all == 3)
+	if (clean_all == 4)
 	{
 		ft_lstclear(lexar, free);
 		msh_free(&data->par->lexar);
@@ -97,7 +99,7 @@ static int	parser_error(t_shell *data, t_list **lexar, char **line,
 		else
 		{
 			ft_putendl_fd(err, 2);
-			free_parser(data, lexar, line, 2);
+			free_parser(data, lexar, line, 3);
 		}
 	}
 	data->exit_code = 258;
@@ -108,17 +110,19 @@ static int	parser_error(t_shell *data, t_list **lexar, char **line,
 the Parser, The Command List, and Freeing the Parser */
 int	parser(t_shell *data, char **line)
 {
+	if (!env_resolver(data, line))
+		return (free_parser(data, NULL, line, 2));
+	if (*line[0] == '\0')
+		return (free_parser(data, NULL, line, 1));
 	if (!check_syntax(data, *line))
 		return (parser_error(data, NULL, line,
 				"minishell: syntax error: near unexpected token: "));
 	data->par->error = 0;
-	if (!env_resolver(data, line))
-		return (free_parser(data, NULL, line, 1));
 	if (!lexer(*line, &data->par->lexar))
 		return (parser_error(data, &data->par->lexar, line,
 				"minishell: syntax error: unclosed quotes"));
 	split_into_commands(data, data->par->lexar);
-	free_parser(data, &data->par->lexar, line, 3);
+	free_parser(data, &data->par->lexar, line, 4);
 	if (data->par->pipe)
 		ft_lstclear(&data->par->pipe, free);
 	return (1);

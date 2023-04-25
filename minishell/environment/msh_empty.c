@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 18:41:37 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/16 14:41:44 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/25 19:17:00 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	msh_create_new_d_env(t_shell **shell, char *mixed)
 
 void	msh_empty(t_shell **shell, t_command *command, char *mixed)
 {
-	if (msh_invalid(mixed, 'e'))
+	if (msh_invalid(mixed, 'e') || mixed[0] == '\0')
 	{
 		write(2, "minishell: ", 11);
 		write(2, command->cmd_args[0], ft_strlen(command->cmd_args[0]));

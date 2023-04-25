@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:42:54 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/21 15:17:44 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/25 19:16:38 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	msh_prep_export(t_shell *shell, t_command *command, char *target)
 	char	*value;
 	t_env	*check;
 
-	if (msh_invalid(target, 'e'))
+	if (msh_invalid(target, 'e') || target[0] == '\0')
 	{
 		write(2, "minishell: ", 11);
 		write(2, command->cmd_args[0], ft_strlen(command->cmd_args[0]));

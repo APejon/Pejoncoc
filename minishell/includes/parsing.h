@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:54:10 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/25 15:37:16 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/25 17:29:42 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,8 @@ char		**cmd_args_transfer(t_list *section, int no_of_cmd_args);
 void		count_inputs(t_shell *data, t_list *section);
 void		transfer_structs(t_shell *data, t_list *section, int i,
 				int p_count);
+
+/* ambigious.c */
+int			ambigious_redir(char *str, int idx, int length, char *replacement);
 
 #endif
