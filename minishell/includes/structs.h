@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:41:52 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/24 17:30:03 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:30:43 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_direct
 
 typedef struct s_command
 {
+	int					last_cmd;
 	int					fd_in;
 	int					fd_out;
 	int					p_fd[2];

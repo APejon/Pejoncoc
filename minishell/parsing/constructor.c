@@ -6,11 +6,28 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/24 18:49:24 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/25 14:58:51 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static int	check_meta_syntax(char *line, int i)
+{
+	int	check;
+
+	check = 0;
+	if (line[i] == '|')
+		check = 1;
+	i++;
+	while (ft_isspace(line[i]))
+		i++;
+	if ((is_meta_char(line[i]) || !line[i]) && check == 0)
+		return (0);
+	if (line[i] == '|' && check == 1)
+		return (0);
+	return (1);
+}
 
 static int	check_syntax(t_shell *data, char *line)
 {
@@ -26,10 +43,7 @@ static int	check_syntax(t_shell *data, char *line)
 		{
 			if ((line[i] == '<' || line[i] == '>') && line[i] == line[i + 1])
 				i++;
-			i++;
-			while (ft_isspace(line[i]))
-				i++;
-			if (is_meta_char(line[i]) || !line[i])
+			if (!check_meta_syntax(line, i))
 				return (0);
 		}
 		i++;

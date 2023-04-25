@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/24 18:48:56 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/25 13:29:13 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	env_resolver(t_shell *data, char **input)
 			*input = tmp;
 		}
 		else
-			assign_meta(input, &quote, &i);
+			i = assign_meta(input, &quote, i);
 		if (*input[0] == '\0')
 			return (0);
 	}

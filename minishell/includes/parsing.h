@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:54:10 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/24 18:34:02 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:37:16 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void		free_array(char **arr);
 int			parser(t_shell *data, char **line);
 
 /* Env Handler 1 and 2 */
-void		assign_meta(char **input, char *quote, int *i);
+int			assign_meta(char **input, char *quote, int i);
 char		*env_replace_hd(t_shell *shell, char *limiter);
 char		*replace_str_env(t_shell *data, char *input, int idx, int flag);
 int			env_resolver(t_shell *data, char **input);
@@ -55,6 +55,7 @@ t_direct	*redir_content_init(t_shell *data, t_direct *redir,
 t_direct	**redirs_transfer(t_shell *data, t_list *section, int no_of_redirs);
 char		**cmd_args_transfer(t_list *section, int no_of_cmd_args);
 void		count_inputs(t_shell *data, t_list *section);
-void		transfer_structs(t_shell *data, t_list *section, int i);
+void		transfer_structs(t_shell *data, t_list *section, int i,
+				int p_count);
 
 #endif

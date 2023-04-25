@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/21 14:32:44 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:34:07 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ int	split_into_commands(t_shell *data, t_list *lexar)
 	commands_init(data, p_count);
 	i = -1;
 	while (data->par->sections[++i])
-		transfer_structs(data, data->par->sections[i], i);
+		transfer_structs(data, data->par->sections[i], i, p_count);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 22:34:43 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/23 19:37:32 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:36:17 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	count_inputs(t_shell *data, t_list *section)
 	data->par->no_of_redirs = count_redirs;
 }
 
-void	transfer_structs(t_shell *data, t_list *section, int i)
+void	transfer_structs(t_shell *data, t_list *section, int i, int p_count)
 {
 	data->command[i]->fd_in = -2;
 	data->command[i]->fd_out = -2;
@@ -131,4 +131,8 @@ void	transfer_structs(t_shell *data, t_list *section, int i)
 			data->par->no_of_cmd_args);
 	data->command[i]->redir = redirs_transfer(data, section,
 			data->par->no_of_redirs);
+	if (i + 1 < p_count)
+		data->command[i]->last_cmd = 0;
+	else
+		data->command[i]->last_cmd = 1;
 }

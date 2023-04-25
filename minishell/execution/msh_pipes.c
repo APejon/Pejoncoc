@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 13:23:05 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/24 19:13:19 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:44:40 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ void	msh_create_pipe(t_shell *shell, t_command *command, int tmp_fd)
 	command->fd_out = command->p_fd[1];
 }
 
-void	msh_pipe_command(t_shell *shell, t_command *command, int *tmp_fd)
+void	msh_pipe_command(t_shell *shell, t_command *command, int *tmp_fd, int i)
 {
 	msh_create_pipe(shell, command, *tmp_fd);
 	if (msh_redirect(shell, command, command->redir))
 	{
-		msh_check_command_piped(shell, command, *tmp_fd);
+		msh_check_command_piped(shell, command, *tmp_fd, i);
 		msh_protected_close(command->p_fd[1], -1, -2);
 		msh_protected_close(*tmp_fd, -1, -2);
 		*tmp_fd = dup(command->p_fd[0]);
@@ -60,13 +60,20 @@ void	msh_pipe_command(t_shell *shell, t_command *command, int *tmp_fd)
 	}
 }
 
-void	msh_last_command(t_shell *shell, t_command *command, int tmp_fd)
+void	msh_last_command(t_shell *shell, t_command *command, int tmp_fd, int i)
 {
 	command->fd_in = tmp_fd;
 	command->fd_out = STDOUT_FILENO;
 	if (msh_redirect(shell, command, command->redir))
 	{
-		msh_check_command_piped(shell, command, tmp_fd);
+		msh_check_command_piped(shell, command, tmp_fd, i);
 		msh_protected_close(tmp_fd, -1, -2);
+	}
+	else
+	{
+		msh_protected_close(tmp_fd, -1, -2);
+		command->pid = fork();
+		if (command->pid == 0)
+			msh_free_to_exit(shell);
 	}
 }

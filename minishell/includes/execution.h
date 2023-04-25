@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:53:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/23 14:36:04 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:45:55 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 /*-------- msh_a_check.c --------*/
 void	msh_update_fds(t_shell *shell, t_command *command);
-void	msh_check_command_piped(t_shell *shell, t_command *command, int tmp_fd);
+void	msh_check_command_piped(t_shell *shell, t_command *command, int tmp_fd,
+			int i);
 void	msh_check_command(t_shell *shell, t_command *command);
 void	msh_check_link(t_shell *shell);
 void	msh_command_dispenser(t_shell *shell);
@@ -38,8 +39,9 @@ char	**msh_locate(t_shell *shell, t_command *command);
 /*-------- msh_pipes.c --------*/
 int		msh_check_redir(t_shell *shell, int i);
 void	msh_create_pipe(t_shell *shell, t_command *command, int tmp_fd);
-void	msh_pipe_command(t_shell *shell, t_command *command, int *tmp_fd);
-void	msh_last_command(t_shell *shell, t_command *command, int tmp_fd);
+void	msh_pipe_command(t_shell *shell, t_command *command, int *tmp_fd,
+			int i);
+void	msh_last_command(t_shell *shell, t_command *command, int tmp_fd, int i);
 
 /*-------- msh_pipex_split.c --------*/
 int		pipex_getwordcount(const char *s, char c);

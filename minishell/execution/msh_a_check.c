@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/24 19:06:48 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:46:12 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,27 @@ void	msh_update_fds(t_shell *shell, t_command *command)
  * @param shell The struct containing variables of used within the shell
  * @param command Struct containing the command's details
  */
-void	msh_check_command_piped(t_shell *shell, t_command *command, int tmp_fd)
+void	msh_check_command_piped(t_shell *shell, t_command *cmd, int t_fd, int i)
 {
 	char	**cmd_paths;
 
-	command->pid = fork();
-	if (command->pid == 0)
+	cmd->pid = fork();
+	if (cmd->pid == 0)
 	{
-		if (command->cmd_args)
+		if (cmd->cmd_args)
 		{
-			msh_update_fds(shell, command);
-			msh_protected_close(command->p_fd[0], -1, -2);
-			msh_protected_close(tmp_fd, -1, -2);
-			msh_protected_close(command->p_fd[1], -1, -2);
-			if (msh_is_child(command) || msh_is_parent(command))
-				msh_allocate_child_piped(shell, command);
+			msh_update_fds(shell, cmd);
+			msh_protected_close(cmd->p_fd[0], -1, -2);
+			msh_protected_close(t_fd, -1, -2);
+			msh_protected_close(cmd->p_fd[1], -1, -2);
+			if (msh_is_child(cmd) || msh_is_parent(cmd))
+				msh_allocate_child_piped(shell, cmd, i);
 			else
 			{
-				cmd_paths = msh_locate(shell, command);
+				cmd_paths = msh_locate(shell, cmd);
 				if (cmd_paths == NULL)
 					msh_free_to_exit(shell);
-				msh_execute(shell, command, cmd_paths);
+				msh_execute(shell, cmd, cmd_paths);
 			}
 		}
 		else
@@ -124,9 +124,9 @@ void	msh_check_link(t_shell *shell)
 		while (shell->command[++i])
 		{
 			if (shell->command[i + 1])
-				msh_pipe_command(shell, shell->command[i], &tmp_fd);
+				msh_pipe_command(shell, shell->command[i], &tmp_fd, i);
 			else if (!shell->command[i + 1])
-				msh_last_command(shell, shell->command[i], tmp_fd);
+				msh_last_command(shell, shell->command[i], tmp_fd, i);
 		}
 	}
 }

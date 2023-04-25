@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:28:47 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/11 14:33:34 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/25 16:06:58 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,28 @@ bool	msh_is_child(t_command *command)
 		return (false);
 }
 
-void	msh_allocate_child_piped(t_shell *shell, t_command *command)
+void	msh_allocate_child_piped(t_shell *shell, t_command *command, int i)
 {
-	if (!ft_strncmp(command->cmd_args[0], "cd", 3))
-		msh_cd(shell, command);
-	else if (!ft_strncmp(command->cmd_args[0], "echo", 5))
-		msh_echo(shell, command);
-	else if (!ft_strncmp(command->cmd_args[0], "env", 4))
-		msh_env(shell, shell->env);
-	else if (!ft_strncmp(command->cmd_args[0], "exit", 5))
-		msh_exit(shell, command);
-	else if (!ft_strncmp(command->cmd_args[0], "export", 7))
-		msh_export(shell, command);
-	else if (!ft_strncmp(command->cmd_args[0], "pwd", 4))
-		msh_pwd(shell);
-	else if (!ft_strncmp(command->cmd_args[0], "export", 7))
-		msh_export(shell, command);
-	else if (!ft_strncmp(command->cmd_args[0], "unset", 6))
-		msh_unset(shell, command);
+	if (command->last_cmd || (shell->command[i + 1]->cmd_args
+			&& shell->command[i + 1]->fd_in == command->p_fd[0]))
+	{
+		if (!ft_strncmp(command->cmd_args[0], "cd", 3))
+			msh_cd(shell, command);
+		else if (!ft_strncmp(command->cmd_args[0], "echo", 5))
+			msh_echo(shell, command);
+		else if (!ft_strncmp(command->cmd_args[0], "env", 4))
+			msh_env(shell, shell->env);
+		else if (!ft_strncmp(command->cmd_args[0], "exit", 5))
+			msh_exit(shell, command);
+		else if (!ft_strncmp(command->cmd_args[0], "export", 7))
+			msh_export(shell, command);
+		else if (!ft_strncmp(command->cmd_args[0], "pwd", 4))
+			msh_pwd(shell);
+		else if (!ft_strncmp(command->cmd_args[0], "export", 7))
+			msh_export(shell, command);
+		else if (!ft_strncmp(command->cmd_args[0], "unset", 6))
+			msh_unset(shell, command);
+	}
 	msh_free_to_exit(shell);
 }
 

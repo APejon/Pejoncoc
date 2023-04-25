@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/24 18:52:32 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/25 13:30:08 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,29 @@ void	remove_from_line(char **input, int i)
 	}
 	if ((*input)[start] == '"' || (*input)[start] == '\'')
 		remove_from_line(input, start);
+	printf("%s\n", *input);
 }
 
-void	assign_meta(char **input, char *quote, int *i)
+int	assign_meta(char **input, char *quote, int i)
 {
-	if (!(*quote) && ((*input)[*i] == '\'' || (*input)[*i] == '"'))
-		*quote = (*input)[*i];
-	else if ((*quote) && (*input)[*i] == (*quote))
+	if (!(*quote) && ((*input)[i] == '\'' || (*input)[i] == '"'))
+		*quote = (*input)[i];
+	else if ((*quote) && (*input)[i] == (*quote))
 		*quote = 0;
-	if ((*input)[*i] == '<' && (*input)[*i + 1] == '<')
+	if ((*input)[i] == '<' && (*input)[i + 1] == '<')
 	{
-		(*i) = (*i) + 2;
-		while (((*input)[*i + 1] != '<' && (*input)[*i + 1] != '>'
-			&& (*input)[*i + 1] != '|') && (*input)[*i + 1])
+		i = i + 2;
+		while (((*input)[i] != '<' && (*input)[i] != '>'
+			&& (*input)[i] != '|') && (*input)[i])
 		{
-			if ((*input)[*i] == '"' || (*input)[*i] == '\'')
-				remove_from_line(input, *i);
-			(*i)++;
+			if ((*input)[i] == '"' || (*input)[i] == '\'')
+				remove_from_line(input, i);
+			i++;
 		}
+		i--;
+		return (i);
 	}
+	return (i);
 }
 
 char	*env_replace_hd(t_shell *shell, char *limiter)
