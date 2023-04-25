@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/25 14:58:51 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/25 16:23:47 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	check_meta_syntax(char *line, int i)
 		i++;
 	if ((is_meta_char(line[i]) || !line[i]) && check == 0)
 		return (0);
-	if (line[i] == '|' && check == 1)
+	if ((line[i] == '|' || !line[i]) && check == 1)
 		return (0);
 	return (1);
 }

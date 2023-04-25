@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/25 13:30:08 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/25 16:21:33 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	remove_from_line(char **input, int i)
 	}
 	if ((*input)[start] == '"' || (*input)[start] == '\'')
 		remove_from_line(input, start);
-	printf("%s\n", *input);
 }
 
 int	assign_meta(char **input, char *quote, int i)
