@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 22:34:43 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/25 15:36:17 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/25 20:38:28 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,13 @@ char	**cmd_args_transfer(t_list *section, int no_of_cmd_args)
 	search = section;
 	while (i < no_of_cmd_args)
 	{
-		if (is_str_redir(search->content))
-			search = search->next;
-		else
+		if (!is_str_redir(search->content))
 		{
 			edge_case(search);
-			args[i] = ft_strdup(search->content);
+			if (ft_strchr((char *)search->content, '\\'))
+				args[i] = ft_strdup(search->content + 1);
+			else
+				args[i] = ft_strdup(search->content);
 			i++;
 		}
 		search = search->next;
