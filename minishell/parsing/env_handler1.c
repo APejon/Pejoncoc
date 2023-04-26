@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/26 15:54:09 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 16:09:59 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,5 @@ int	env_resolver(t_shell *data, char **input)
 		if (!(*input)[i])
 			break ;
 	}
-	msh_free(&input);
 	return (1);
 }

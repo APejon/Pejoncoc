@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/26 15:50:15 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 16:06:42 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,21 +115,23 @@ static int	parser_error(t_shell *data, t_list **lexar, char **line,
 the Parser, The Command List, and Freeing the Parser */
 int	parser(t_shell *data, char **line)
 {
+	char	*exp_line;
+	
 	if (!env_resolver(data, line))
 		return (free_parser(data, NULL, line, 2));
-	*line = ft_strtrim(*line, " \v\t\f\r\n\\");
-	printf("%s LINE\n", *line);
-	if (*line[0] == '\0')
-		return (free_parser(data, NULL, line, 1));
-	if (!check_syntax(data, *line))
-		return (parser_error(data, NULL, line,
+	exp_line = ft_strtrim(*line, " \v\t\f\r\n\\");
+	msh_free(&(*line));
+	if (exp_line[0] == '\0')
+		return (free_parser(data, NULL, &exp_line, 1));
+	if (!check_syntax(data, exp_line))
+		return (parser_error(data, NULL, &exp_line,
 				"minishell: syntax error: near unexpected token: "));
 	data->par->error = 0;
-	if (!lexer(*line, &data->par->lexar))
-		return (parser_error(data, &data->par->lexar, line,
+	if (!lexer(exp_line, &data->par->lexar))
+		return (parser_error(data, &data->par->lexar, &exp_line,
 				"minishell: syntax error: unclosed quotes"));
 	split_into_commands(data, data->par->lexar);
-	free_parser(data, &data->par->lexar, line, 4);
+	free_parser(data, &data->par->lexar, &exp_line, 4);
 	if (data->par->pipe)
 		ft_lstclear(&data->par->pipe, free);
 	return (1);
