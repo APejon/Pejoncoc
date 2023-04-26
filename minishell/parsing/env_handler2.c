@@ -6,27 +6,30 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/25 20:23:18 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 14:08:49 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	remove_from_line(char **input, int i)
+int	remove_from_line(char *input, int i)
 {
 	int	start;
 
 	start = i;
-	if (((*input)[i] == '"' && (*input)[i + 1] == '"')
-		|| ((*input)[i] == '"' && (*input)[i - 1] == '"'))
-		return ;
-	while ((*input)[i])
+	if ((input[i] == '"' && input[i + 1] == '"')
+		|| (input[i] == '"' && input[i - 1] == '"')
+		|| (input[i] == '\'' && input[i + 1] == '\'')
+		|| (input[i] == '\'' && input[i - 1] == '\''))
+		return (start + 1);
+	while (input[i])
 	{
-		(*input)[i] = (*input)[i + 1];
+		input[i] = input[i + 1];
 		i++;
 	}
-	if ((*input)[start] == '"' || (*input)[start] == '\'')
+	if (input[start] == '"' || input[start] == '\'')
 		remove_from_line(input, start);
+	return (start);
 }
 
 int	assign_meta(char **input, char *quote, int i)
@@ -42,7 +45,7 @@ int	assign_meta(char **input, char *quote, int i)
 			&& (*input)[i] != '|') && (*input)[i])
 		{
 			if ((*input)[i] == '"' || (*input)[i] == '\'')
-				remove_from_line(input, i);
+				i = remove_from_line(*input, i);
 			else
 				i++;
 		}

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:47:35 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/25 20:38:37 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 13:27:55 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ static int	get_end(char *line, int *end)
 			return (0);
 		return (1);
 	}
+	else if (is_meta_char(line[*end]) && *end == 0)
+		get_metachar_end(line, end);
 	else if (is_meta_char(line[*end]) && line[*end - 1] != '\\')
 		get_metachar_end(line, end);
 	else

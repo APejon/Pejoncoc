@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:54:10 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/25 17:29:42 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 14:13:20 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void		free_array(char **arr);
 int			parser(t_shell *data, char **line);
 
 /* Env Handler 1 and 2 */
+int			remove_from_line(char *input, int i);
 int			assign_meta(char **input, char *quote, int i);
 char		*env_replace_hd(t_shell *shell, char *limiter);
 char		*replace_str_env(t_shell *data, char *input, int idx, int flag);
@@ -59,6 +60,7 @@ void		transfer_structs(t_shell *data, t_list *section, int i,
 				int p_count);
 
 /* ambigious.c */
+int			find_char(char *str, char c);
 int			ambigious_redir(char *str, int idx, int length, char *replacement);
 
 #endif

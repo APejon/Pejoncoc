@@ -6,11 +6,21 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:28:40 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/25 18:04:20 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 14:12:12 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	find_char(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != c)
+		i++;
+	return (i);
+}
 
 int	ambigious_redir(char *str, int idx, int length, char *replacement)
 {
