@@ -6,25 +6,25 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 19:45:57 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/22 13:02:24 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 19:31:03 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
+# include <limits.h>
+# include <stdbool.h>
 # include <stdint.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 }					t_list;
-
-# define INT_MIN -2147483648
 
 int			ft_isalpha(int c);
 int			ft_isdigit(int c);
@@ -47,6 +47,7 @@ void		*ft_memchr(const void *s, int c, size_t n);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
 char		*ft_strnstr(const char *haystack, const char *needle, size_t len);
 int			ft_atoi(const char *str);
+long		ft_atol(const char *str, bool *check);
 void		*ft_calloc(size_t count, size_t size);
 char		*ft_strdup(const char *s1);
 char		*ft_substr(const char *s, unsigned int start, size_t len);
@@ -73,6 +74,7 @@ t_list		*ft_lstmap(t_list *lst, void *(*f) (void *), void (*del) (void *));
 int			ft_check_doublequotes(char *command);
 int			ft_error_msg(char *err);
 void		ft_free(void *memory);
+int			ft_isspace(int c);
 void		ft_laddb(t_list **lst, t_list *new);
 t_list		*ft_ln(void *content);
 

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/26 16:09:59 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 20:22:56 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ int	env_resolver(t_shell *data, char **input)
 	i = -1;
 	while ((*input)[++i])
 	{
-		if ((!quote || quote == '"') && (*input)[i] == '$')
+		if ((!quote || quote == '"') && ((*input)[i] == '$'
+			&& !ft_isspace((*input)[i + 1])))
 		{
 			if (!(*input)[i + 1] || (*input)[i + 1] == '<'
 				|| (*input)[i + 1] == '>' || (*input)[i + 1] == '|')
@@ -114,8 +115,6 @@ int	env_resolver(t_shell *data, char **input)
 		}
 		else
 			i = assign_meta(input, &quote, i);
-		if (!(*input)[i])
-			break ;
 	}
 	return (1);
 }

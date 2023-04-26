@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:43:39 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/25 19:28:24 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 19:37:40 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ static	int	msh_count(char *target)
 
 	count[0] = 0;
 	count[1] = 0;
+	while (!ft_isdigit(target[count[0]]) && target[count[0]])
+		count[0]++;
 	while (target[count[0]] >= '0' && target[count[0]] <= '9')
 		count[0]++;
-	if (target[count[0]] == '\0' && count[0] != 0)
+	if (target[count[0]] == '\0' && ft_isdigit(target[count[0] - 1]))
 		count[1]++;
 	return (count[1]);
 }
@@ -39,13 +41,16 @@ static	int	msh_count(char *target)
  */
 void	msh_exit(t_shell *shell, t_command *command)
 {
-	int	count;
+	int		count;
+	bool	check;
 
+	check = true;
 	pt_printf("exit\n");
 	if (command->cmd_args[1])
 	{
 		count = msh_count(command->cmd_args[1]);
-		if (count == 0)
+		ft_atol(command->cmd_args[1], &check);
+		if (count == 0 || check == false)
 			msh_print_error(shell, command, "numeric argument required", 255);
 		else if (command->cmd_args[2])
 		{
@@ -53,7 +58,7 @@ void	msh_exit(t_shell *shell, t_command *command)
 			return ;
 		}
 		else
-			shell->exit_code = ft_atoi(command->cmd_args[1]);
+			shell->exit_code = ft_atol(command->cmd_args[1], &check);
 	}
 	msh_free_to_exit(shell);
 }

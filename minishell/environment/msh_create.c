@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 14:14:39 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/22 13:03:24 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 18:38:53 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ void	msh_create_denv(t_shell **shell, char **env)
 		head->value = msh_quotes(head->value);
 		i[0]++;
 	}
+	if (!msh_find_node(head, "OLDPWD"))
+		msh_create_node(head, "OLDPWD", NULL);
 }
 
 /**

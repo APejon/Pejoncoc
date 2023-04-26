@@ -6,13 +6,13 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:19:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/26 18:00:02 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 20:40:33 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	msh_check_dir(t_shell *shell, t_command *command, char *cmd,
+struct stat	msh_check_dir(t_shell *shell, t_command *command, char *cmd,
 			char **cmd_paths)
 {
 	int			i;
@@ -21,7 +21,7 @@ void	msh_check_dir(t_shell *shell, t_command *command, char *cmd,
 	info.st_mode = 0;
 	i = -1;
 	stat(cmd, &info);
-	if (S_ISDIR(info.st_mode))
+	if (ft_strchr(cmd, '/') && S_ISDIR(info.st_mode))
 	{
 		msh_print_error(shell, command, "is a directory", 126);
 		while (cmd_paths[++i])
@@ -37,6 +37,7 @@ void	msh_check_dir(t_shell *shell, t_command *command, char *cmd,
 		msh_free(&cmd_paths);
 		msh_free_to_exit(shell);
 	}
+	return (info);
 }
 
 /**
@@ -83,7 +84,7 @@ static char	*msh_retrieve_command(char **paths, char *cmd)
 	char	*temp;
 	char	*bash_command;
 
-	if (access(cmd, F_OK) == 0 && ft_strchr(cmd, '/'))
+	if (access(cmd, X_OK) == 0 && ft_strchr(cmd, '/'))
 		return (cmd);
 	while (*paths)
 	{
@@ -113,19 +114,23 @@ static char	*msh_retrieve_command(char **paths, char *cmd)
  */
 void	msh_execute(t_shell *shell, t_command *command, char **cmd_paths)
 {
-	int		i;
-	char	**envp;
-	char	*cmd;
+	int			i;
+	char		**envp;
+	char		*cmd;
+	struct stat	info;
 
 	i = -1;
-	msh_check_dir(shell, command, command->cmd_args[0], cmd_paths);
+	info = msh_check_dir(shell, command, command->cmd_args[0], cmd_paths);
 	cmd = msh_retrieve_command(cmd_paths, command->cmd_args[0]);
 	if (!cmd)
 	{
 		while (cmd_paths[++i])
 			msh_free(&cmd_paths[i]);
 		msh_free(&cmd_paths);
-		msh_print_error(shell, command, "command not found", 127);
+		if (access(command->cmd_args[0], F_OK) || S_ISDIR(info.st_mode))
+			msh_print_error(shell, command, "command not found", 127);
+		else
+			msh_print_error(shell, command, "Permission denied", 126);
 		msh_free_to_exit(shell);
 	}
 	envp = msh_convert(shell->env);

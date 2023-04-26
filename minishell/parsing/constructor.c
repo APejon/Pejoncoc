@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/26 18:07:30 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 20:21:21 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ static int	check_syntax(t_shell *data, char *line)
 		data->par->error = line[i];
 		if (line[0] == '|')
 			return (0);
+		if (line[i] == '"' || line[i] == '\'')
+		{
+			i++;
+			while ((line[i] != '"' || line[i] != '\'') && line[i])
+				i++;
+		}
 		if (is_meta_char(line[i]))
 		{
 			if (i != 0 && line[i - 1] == '\\')

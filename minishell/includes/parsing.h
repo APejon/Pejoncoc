@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:54:10 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/26 15:18:00 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 20:12:40 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void		transfer_structs(t_shell *data, t_list *section, int i,
 				int p_count);
 
 /* ambigious.c */
+int			find_dollar(char *input, int i);
 int			find_char(char *str, char c);
 int			ambigious_redir(char *str, int idx, int length, char *replacement);
 

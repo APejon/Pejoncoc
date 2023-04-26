@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/26 15:10:24 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 20:01:53 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,24 @@ int	remove_from_line(char *input, int i)
 	return (start);
 }
 
-int	assign_meta(char **input, char *quote, int i)
+int	assign_meta(char **inp, char *quote, int i)
 {
-	if (!(*quote) && ((*input)[i] == '\'' || (*input)[i] == '"'))
-		*quote = (*input)[i];
-	else if ((*quote) && (*input)[i] == (*quote))
+	if (!(*quote) && ((*inp)[i] == '\'' || (*inp)[i] == '"'))
+		*quote = (*inp)[i];
+	else if ((*quote) && (*inp)[i] == (*quote))
 		*quote = 0;
-	if ((*input)[i] == '<' && (*input)[i + 1] == '<')
+	if (((*inp)[i] == '<' && (*inp)[i + 1] == '<') && find_dollar(*inp, i))
 	{
 		i = i + 2;
-		while (((*input)[i] != '<' && (*input)[i] != '>'
-			&& (*input)[i] != '|') && (*input)[i])
+		while (((*inp)[i] != '<' && (*inp)[i] != '>'
+			&& (*inp)[i] != '|') && (*inp)[i])
 		{
-			if ((*input)[i] == '"' || (*input)[i] == '\'')
-				i = remove_from_line(*input, i);
+			if ((*inp)[i] == '"' || (*inp)[i] == '\'')
+				i = remove_from_line(*inp, i);
 			else
 				i++;
 		}
-		if (!(*input)[i])
+		if (!(*inp)[i])
 			i--;
 		return (--i);
 	}
