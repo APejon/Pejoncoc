@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 13:38:18 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/25 15:46:12 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 15:35:47 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@
  * 
  * @param command struct containing fd_in and fd_out
  */
-void	msh_update_fds(t_shell *shell, t_command *command)
+void	msh_update_fds(t_command *command)
 {
-	msh_check_dir(shell, command, command->cmd_args[0]);
 	if (command->fd_out != STDOUT_FILENO)
 		dup2(command->fd_out, STDOUT_FILENO);
 	if (command->fd_in != STDIN_FILENO)
@@ -45,7 +44,7 @@ void	msh_check_command_piped(t_shell *shell, t_command *cmd, int t_fd, int i)
 	{
 		if (cmd->cmd_args)
 		{
-			msh_update_fds(shell, cmd);
+			msh_update_fds(cmd);
 			msh_protected_close(cmd->p_fd[0], -1, -2);
 			msh_protected_close(t_fd, -1, -2);
 			msh_protected_close(cmd->p_fd[1], -1, -2);
@@ -83,7 +82,7 @@ void	msh_check_command(t_shell *shell, t_command *command)
 			command->pid = fork();
 			if (command->pid == 0)
 			{
-				msh_update_fds(shell, command);
+				msh_update_fds(command);
 				if (msh_is_child(command))
 					msh_allocate_child(shell, command);
 				else

@@ -6,36 +6,36 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 22:34:43 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/26 14:33:46 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 15:19:30 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 t_direct	*redir_content_init(t_shell *data, t_direct *redir,
-				t_list *search)
+				t_list **search)
 {
 	redir = ft_calloc(1, sizeof(t_direct));
-	if (!ft_strncmp(search->content, ">", 2))
+	if (!ft_strncmp((*search)->content, ">", 2))
 		redir->direct = RE_OUTPUT;
-	else if (!ft_strncmp(search->content, ">>", 3))
+	else if (!ft_strncmp((*search)->content, ">>", 3))
 		redir->direct = APPEND;
-	else if (!ft_strncmp(search->content, "<", 2))
+	else if (!ft_strncmp((*search)->content, "<", 2))
 		redir->direct = RE_INPUT;
-	else if (!ft_strncmp(search->content, "<<", 3))
+	else if (!ft_strncmp((*search)->content, "<<", 3))
 	{
 		data->nohd++;
 		redir->direct = HERE_DOC;
 	}
-	if (!ft_strncmp(search->content, "<<", 3))
+	if (!ft_strncmp((*search)->content, "<<", 3))
 	{
-		search = search->next;
-		redir->file = ft_strjoin(search->content, "\n");
+		(*search) = (*search)->next;
+		redir->file = ft_strjoin((*search)->content, "\n");
 	}
 	else
 	{
-		search = search->next;
-		redir->file = ft_strdup(search->content);
+		(*search) = (*search)->next;
+		redir->file = ft_strdup((*search)->content);
 	}
 	redir->hd_content = NULL;
 	redir->fd = 0;
@@ -57,7 +57,11 @@ t_direct	**redirs_transfer(t_shell *data, t_list *section, int no_of_redirs)
 	{
 		if (is_str_redir(search->content))
 		{
-			redirs[i] = redir_content_init(data, redirs[i], search);
+			redirs[i] = redir_content_init(data, redirs[i], &search);
+			printf("%s\n", (char *)search->content);
+			while (ft_strchr((char *)search->content, '\\'))
+				remove_from_line(search->content,
+					find_char((char *)search->content, '\\'));
 			i++;
 		}
 		search = search->next;

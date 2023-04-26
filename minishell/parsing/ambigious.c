@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:28:40 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/26 14:12:12 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 15:53:07 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,11 @@ int	ambigious_redir(char *str, int idx, int length, char *replacement)
 		if (replacement[0] == '\0' && str[length] != '\0')
 		{
 			while (ft_isspace(str[i[0]]))
+			{
+				if (i[0] == 0)
+					break ;
 				i[0]--;
+			}
 			if (str[i[0]] == '<' || str[i[0]] == '>')
 			{
 				while (ft_isspace(str[i[1]]))

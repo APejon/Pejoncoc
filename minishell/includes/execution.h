@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:53:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/25 15:45:55 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 15:35:25 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define EXECUTION_H
 
 /*-------- msh_a_check.c --------*/
-void	msh_update_fds(t_shell *shell, t_command *command);
+void	msh_update_fds(t_command *command);
 void	msh_check_command_piped(t_shell *shell, t_command *command, int tmp_fd,
 			int i);
 void	msh_check_command(t_shell *shell, t_command *command);

@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/25 20:25:17 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 15:50:15 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ static int	check_syntax(t_shell *data, char *line)
 			return (0);
 		if (is_meta_char(line[i]))
 		{
+			if (i != 0 && line[i - 1] == '\\')
+			{
+				i++;
+				continue ;
+			}
 			if ((line[i] == '<' || line[i] == '>') && line[i] == line[i + 1])
 				i++;
 			if (!check_meta_syntax(line, i))
@@ -112,6 +117,8 @@ int	parser(t_shell *data, char **line)
 {
 	if (!env_resolver(data, line))
 		return (free_parser(data, NULL, line, 2));
+	*line = ft_strtrim(*line, " \v\t\f\r\n\\");
+	printf("%s LINE\n", *line);
 	if (*line[0] == '\0')
 		return (free_parser(data, NULL, line, 1));
 	if (!check_syntax(data, *line))

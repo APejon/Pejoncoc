@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:54:10 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/26 14:13:20 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 15:18:00 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int			is_meta_char(int c);
 /* tansferstructs.c */
 
 t_direct	*redir_content_init(t_shell *data, t_direct *redir,
-				t_list *search);
+				t_list **search);
 t_direct	**redirs_transfer(t_shell *data, t_list *section, int no_of_redirs);
 char		**cmd_args_transfer(t_list *section, int no_of_cmd_args);
 void		count_inputs(t_shell *data, t_list *section);
