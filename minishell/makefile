@@ -6,7 +6,7 @@
 #    By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 14:11:12 by amalbrei          #+#    #+#              #
-#    Updated: 2023/04/26 13:36:55 by amalbrei         ###   ########.fr        #
+#    Updated: 2023/04/26 16:46:36 by amalbrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -126,7 +126,7 @@ $(SUB_LIB):
 $(OBJ_DIR)/%.o: $(BUILTINS_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
 	@printf "\033[A\033[2K\r$(G)Compiling:"
-	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) $(INC_DIR)  -c $< -o $@
 
 $(OBJ_DIR)/%.o: $(ENVIRONMENT_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
@@ -154,7 +154,7 @@ $(OBJ_DIR)/%.o: $(MAIN_DIR)/%.c
 	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(INC_DIR) $(OBJ) $(LIBFT) $(MINI_FLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(INC_DIR) $(OBJ)  $(LIBFT) $(MINI_FLAGS) -o $(NAME)
 	@echo "$(PEJON)"
 	@printf "$(C)\n==========================\n"
 	@printf "$(C) MINISHELL COMPILED\n"

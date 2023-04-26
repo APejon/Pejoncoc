@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 22:34:43 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/26 15:19:30 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 18:07:43 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ t_direct	**redirs_transfer(t_shell *data, t_list *section, int no_of_redirs)
 		if (is_str_redir(search->content))
 		{
 			redirs[i] = redir_content_init(data, redirs[i], &search);
-			printf("%s\n", (char *)search->content);
 			while (ft_strchr((char *)search->content, '\\'))
 				remove_from_line(search->content,
 					find_char((char *)search->content, '\\'));

@@ -6,26 +6,35 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:19:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/26 15:46:23 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 18:00:02 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	msh_check_dir(t_shell *shell, t_command *command, char *cmd)
+void	msh_check_dir(t_shell *shell, t_command *command, char *cmd,
+			char **cmd_paths)
 {
+	int			i;
 	struct stat	info;
 
 	info.st_mode = 0;
+	i = -1;
 	stat(cmd, &info);
 	if (S_ISDIR(info.st_mode))
 	{
 		msh_print_error(shell, command, "is a directory", 126);
+		while (cmd_paths[++i])
+			msh_free(&cmd_paths[i]);
+		msh_free(&cmd_paths);
 		msh_free_to_exit(shell);
 	}
 	if (ft_strchr(cmd, '/') && access(cmd, F_OK))
 	{
 		msh_print_error(shell, command, "No such file or directory", 127);
+		while (cmd_paths[++i])
+			msh_free(&cmd_paths[i]);
+		msh_free(&cmd_paths);
 		msh_free_to_exit(shell);
 	}
 }
@@ -74,7 +83,7 @@ static char	*msh_retrieve_command(char **paths, char *cmd)
 	char	*temp;
 	char	*bash_command;
 
-	if (access(cmd, X_OK) == 0 && ft_strchr(cmd, '/'))
+	if (access(cmd, F_OK) == 0 && ft_strchr(cmd, '/'))
 		return (cmd);
 	while (*paths)
 	{
@@ -109,13 +118,13 @@ void	msh_execute(t_shell *shell, t_command *command, char **cmd_paths)
 	char	*cmd;
 
 	i = -1;
+	msh_check_dir(shell, command, command->cmd_args[0], cmd_paths);
 	cmd = msh_retrieve_command(cmd_paths, command->cmd_args[0]);
 	if (!cmd)
 	{
 		while (cmd_paths[++i])
 			msh_free(&cmd_paths[i]);
 		msh_free(&cmd_paths);
-		msh_check_dir(shell, command, command->cmd_args[0]);
 		msh_print_error(shell, command, "command not found", 127);
 		msh_free_to_exit(shell);
 	}

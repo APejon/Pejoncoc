@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/26 16:06:42 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 18:07:30 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ the Parser, The Command List, and Freeing the Parser */
 int	parser(t_shell *data, char **line)
 {
 	char	*exp_line;
-	
+
 	if (!env_resolver(data, line))
 		return (free_parser(data, NULL, line, 2));
 	exp_line = ft_strtrim(*line, " \v\t\f\r\n\\");

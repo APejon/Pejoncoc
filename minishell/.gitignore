@@ -16,3 +16,4 @@ minishell
 command+argument.sh
 single_command.sh
 valgrind
+minishell_tester

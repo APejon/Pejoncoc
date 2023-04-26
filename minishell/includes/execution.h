@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:53:41 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/26 15:35:25 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/26 18:00:22 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	msh_check_link(t_shell *shell);
 void	msh_command_dispenser(t_shell *shell);
 
 /*-------- msh_execute.c --------*/
-void	msh_check_dir(t_shell *shell, t_command *command, char *cmd);
+void	msh_check_dir(t_shell *shell, t_command *command, char *cmd,
+			char **cmd_paths);
 char	**msh_convert(t_env *enviro);
 void	msh_execute(t_shell *shell, t_command *command, char **cmd_paths);
 
