@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/26 20:01:53 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:02:43 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,11 @@ char	*str_replace_str_at(char *str, int idx, int length, char *replacement)
 	if (length > (int)ft_strlen(&str[idx]))
 		length = (int)ft_strlen(&str[idx]);
 	str[idx] = '\0';
-	tmp = ft_strjoin("\\", replacement);
+	if (replacement[0] == '\0')
+		tmp = ft_strdup("");
+	else
+		tmp = ft_strjoin("\\", replacement);
 	tmp = ft_free_strjoin(str, tmp, 3);
-	if (!tmp)
-		return (NULL);
 	new_str = ft_strjoin(tmp, &str[idx + length]);
 	free(tmp);
 	tmp = NULL;

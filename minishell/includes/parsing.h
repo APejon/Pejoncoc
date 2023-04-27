@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:54:10 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/26 20:12:40 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:17:30 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int			remove_from_line(char *input, int i);
 int			assign_meta(char **input, char *quote, int i);
 char		*env_replace_hd(t_shell *shell, char *limiter);
 char		*replace_str_env(t_shell *data, char *input, int idx, int flag);
-int			env_resolver(t_shell *data, char **input);
+int			env_resolver(t_shell *data, char **input, int i);
 char		*str_replace_str_at(char *str, int idx, int length,
 				char *replacement);
 char		*get_env_value(t_env **env, char *variable);

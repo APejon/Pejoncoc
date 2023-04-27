@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/26 20:22:56 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:26:50 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,12 @@ static char	*check_and_get_env(t_shell *data, char *input, int idx)
 
 /* Checks All ENV Variables in the String \
    and Resolves them */
-int	env_resolver(t_shell *data, char **input)
+int	env_resolver(t_shell *data, char **input, int i)
 {
-	int		i;
 	char	quote;
 	char	*tmp;
 
 	quote = 0;
-	i = -1;
 	while ((*input)[++i])
 	{
 		if ((!quote || quote == '"') && ((*input)[i] == '$'
@@ -115,6 +113,8 @@ int	env_resolver(t_shell *data, char **input)
 		}
 		else
 			i = assign_meta(input, &quote, i);
+		if (!(*input)[i])
+			break ;
 	}
 	return (1);
 }

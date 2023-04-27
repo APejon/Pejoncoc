@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/27 11:40:36 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:36:01 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ static int	check_meta_syntax(char *line, int i)
 
 static int	check_syntax(t_shell *data, char *line, int i)
 {
-	while (line[++i])
+	while (line[i])
 	{
 		data->par->error = line[i];
 		if (line[i] == '"' || line[i] == '\'')
 		{
 			i++;
-			while ((line[i] != '"' || line[i] != '\'') && line[i])
+			while ((line[i] != '"' && line[i] != '\'') && line[i])
 				i++;
 		}
 		if (is_meta_char(line[i]))
@@ -52,6 +52,8 @@ static int	check_syntax(t_shell *data, char *line, int i)
 			if (!check_meta_syntax(line, i))
 				return (0);
 		}
+		if (line[i])
+			i++;
 	}
 	return (1);
 }
@@ -97,7 +99,10 @@ static int	parser_error(t_shell *data, t_list **lexar, char **line,
 		{
 			ft_putstr_fd(err, 2);
 			ft_putstr_fd("\'", 2);
-			ft_putchar_fd(data->par->error, 2);
+			if (*line[0] == '|')
+				ft_putchar_fd('|', 2);
+			else
+				ft_putchar_fd(data->par->error, 2);
 			ft_putendl_fd("\'", 2);
 			free_parser(data, lexar, line, 1);
 		}
@@ -117,13 +122,13 @@ int	parser(t_shell *data, char **line)
 {
 	char	*exp_line;
 
-	if (!env_resolver(data, line))
+	if (!env_resolver(data, line, -1))
 		return (free_parser(data, NULL, line, 2));
-	exp_line = ft_strtrim(*line, " \v\t\f\r\n\\");
+	exp_line = ft_strtrim(*line, " \v\t\f\r\n");
 	msh_free(&(*line));
 	if (exp_line[0] == '\0')
 		return (free_parser(data, NULL, &exp_line, 1));
-	if (!check_syntax(data, exp_line, -1) || exp_line[0] == '|')
+	if (!check_syntax(data, exp_line, 0) || exp_line[0] == '|')
 		return (parser_error(data, NULL, &exp_line,
 				"minishell: syntax error: near unexpected token: "));
 	data->par->error = 0;
