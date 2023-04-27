@@ -6,11 +6,27 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:19:12 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/26 20:40:33 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/27 11:33:17 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	msh_find_redirin(t_direct **redir)
+{
+	int	i;
+
+	i = -1;
+	if (redir)
+	{
+		while (redir[++i])
+		{
+			if (redir[i]->direct == RE_INPUT || redir[i]->direct == HERE_DOC)
+				return (1);
+		}
+	}
+	return (0);
+}
 
 struct stat	msh_check_dir(t_shell *shell, t_command *command, char *cmd,
 			char **cmd_paths)

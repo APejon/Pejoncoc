@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 23:47:19 by yhaidar           #+#    #+#             */
-/*   Updated: 2023/04/26 20:21:21 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/27 11:40:36 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,11 @@ static int	check_meta_syntax(char *line, int i)
 	return (1);
 }
 
-static int	check_syntax(t_shell *data, char *line)
+static int	check_syntax(t_shell *data, char *line, int i)
 {
-	int	i;
-
-	i = 0;
-	while (line[i])
+	while (line[++i])
 	{
 		data->par->error = line[i];
-		if (line[0] == '|')
-			return (0);
 		if (line[i] == '"' || line[i] == '\'')
 		{
 			i++;
@@ -57,7 +52,6 @@ static int	check_syntax(t_shell *data, char *line)
 			if (!check_meta_syntax(line, i))
 				return (0);
 		}
-		i++;
 	}
 	return (1);
 }
@@ -129,7 +123,7 @@ int	parser(t_shell *data, char **line)
 	msh_free(&(*line));
 	if (exp_line[0] == '\0')
 		return (free_parser(data, NULL, &exp_line, 1));
-	if (!check_syntax(data, exp_line))
+	if (!check_syntax(data, exp_line, -1) || exp_line[0] == '|')
 		return (parser_error(data, NULL, &exp_line,
 				"minishell: syntax error: near unexpected token: "));
 	data->par->error = 0;

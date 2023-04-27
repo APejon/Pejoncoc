@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:28:47 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/26 15:00:14 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/27 11:32:10 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ bool	msh_is_child(t_command *command)
 
 void	msh_allocate_child_piped(t_shell *shell, t_command *command, int i)
 {
-	if (command->last_cmd || (shell->command[i + 1]->cmd_args))
+	if (command->last_cmd || ((shell->command[i + 1]->cmd_args)
+			&& !msh_find_redirin(shell->command[i + 1]->redir)))
 	{
 		if (!ft_strncmp(command->cmd_args[0], "cd", 3))
 			msh_cd(shell, command);
