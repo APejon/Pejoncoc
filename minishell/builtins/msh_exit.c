@@ -6,7 +6,7 @@
 /*   By: amalbrei <amalbrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:43:39 by amalbrei          #+#    #+#             */
-/*   Updated: 2023/04/27 12:57:42 by amalbrei         ###   ########.fr       */
+/*   Updated: 2023/04/30 14:41:57 by amalbrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static	int	msh_count(char *target)
 
 	count[0] = 0;
 	count[1] = 0;
-	while (!ft_isdigit(target[count[0]]) && target[count[0]])
+	while (ft_isspace(target[count[0]]) && target[count[0]])
 		count[0]++;
 	while (target[count[0]] >= '0' && target[count[0]] <= '9')
 		count[0]++;
